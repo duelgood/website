@@ -1,0 +1,37 @@
+<!--This will be the about page eventually-->
+!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DuelGood</title>
+    <link rel="stylesheet" href="static/style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="logo">
+        <a href="index.html"
+          ><img src="static/logo.png" alt="Duelgood Logo"
+        /></a>
+      </div>
+      <nav>
+        <input type="checkbox" id="menu-toggle" />
+        <label for="menu-toggle" class="menu-icon">&#9776;</label>
+        <div class="nav-links">
+          <a href="about.html">About</a>
+          <a href="research.html">Research</a>
+          <a href="transparency.html">Transparency</a>
+          <!-- <a href="#legal">Legal</a> -->
+        </div>
+        <a href="#donate" class="donate-btn">Donate</a>
+      </nav>
+    </header>
+
+    <main>
+      <p>
+        Donatations haven't been set up yet. Check back later for live
+        statistics!
+      </p>
+    </main>
+  </body>
+</html>

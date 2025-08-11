@@ -1,0 +1,76 @@
+<!--This will be the about page eventually-->
+!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DuelGood</title>
+    <link rel="stylesheet" href="static/style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="logo">
+        <a href="index.html"><img src="static/logo.png" alt="Duelgood Logo" /></a>
+      </div>
+      <nav>
+      <input type="checkbox" id="menu-toggle" />
+      <label for="menu-toggle" class="menu-icon">&#9776;</label>
+      <div class="nav-links">
+        <a href="about.html">About</a>
+        <a href="research.html">Research</a>
+        <a href="transparency.html">FAQ</a>
+        <!-- <a href="#legal">Legal</a> -->
+      </div>
+      <a href="#donate" class="donate-btn">Donate</a>
+    </nav>
+    </header>
+
+    <main>
+      <p>
+        DuelGood cancels out donations to opposing political parties and directs
+        the difference to charity.
+      </p>
+      <div class="container">
+        <div class="bar bar-1">A</div>
+        <div class="bar bar-2">B</div>
+        <div class="bar bar-3">C</div>
+        <div class="top-rectangle">A</div>
+        <div class="symbol minus"></div>
+        <div class="symbol equals-top"></div>
+        <div class="symbol equals-bottom"></div>
+      </div>
+      <div class="row">
+        <div class="column">
+          <h3>Less waste, more good.</h3>
+          <p>
+          <div class="background-symbol">🌐</div>
+          Instead of funding net zero campaigning,
+          accomplish the same political outcome <em>and</em> save lives.
+          </p>
+        </div>
+        <div class="column">
+          <h3>Highest impact charity.</h3>
+          <p>
+            <div class="background-symbol">1</div>
+          We've reviewed hundreds of charities and selected the most effective,
+          research-backed, and transparent.
+        </p>
+          
+        </div>
+        <div class="column">
+          <h3>DuelGood takes no cut.</h3>
+          <p>
+            <div class="background-symbol">$</div>
+            Our operations are funded by donors who choose to support us. 100% of
+            all other donations (minus standard bank and credit card fees) go
+            to charity or the party of your choice.
+          </p>
+        </div>
+      </div>
+      <p>
+        Each day at 7:00 PM EST, the day's donatations are compared and 
+        sent. Up until that time you can cancel or edit your donation. 
+      </p>
+    </main>
+  </body>
+</html>
