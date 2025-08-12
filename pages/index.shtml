@@ -2,7 +2,8 @@
 <!--#include virtual="/includes/header" -->
 <main>
   <p>
-    Donations haven't been set up yet. Check back later for live statistics!
+    Donations haven't been set up yet. Check back later for live statistics, 
+    leaderboards, and donation totals!
   </p>
 </main>
 <!--#include virtual="/includes/footer.html" -->
