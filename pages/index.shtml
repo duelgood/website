@@ -1,4 +1,3 @@
-<!--This will be the about page eventually-->
 !DOCTYPE html>
 <html lang="en">
   <head>
@@ -9,30 +8,13 @@
     <link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
   </head>
   <body>
-    <header>
-      <div class="logo">
-        <a href="index.shtml"
-          ><img src="static/logo.png" alt="Duelgood Logo"
-        /></a>
-      </div>
-      <nav>
-        <input type="checkbox" id="menu-toggle" />
-        <label for="menu-toggle" class="menu-icon">&#9776;</label>
-        <div class="nav-links">
-          <a href="about.shtml">About</a>
-          <a href="research.shtml">Research</a>
-          <a href="transparency.shtml">Transparency</a>
-          <!-- <a href="#legal">Legal</a> -->
-        </div>
-        <a href="#donate" class="donate-btn">Donate</a>
-      </nav>
-    </header>
-
+    <!--#include virtual="/includes/header.html" -->
     <main>
       <p>
         Donatations haven't been set up yet. Check back later for live
         statistics!
       </p>
     </main>
+    <!--#include virtual="/includes/footer.html" -->
   </body>
 </html>
