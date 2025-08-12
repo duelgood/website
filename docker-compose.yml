@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  web:
+    image: zkeulr/duelgood:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      # Mount source files for development (remove for production)
+      - ./pages:/usr/share/nginx/html:ro
+      - ./static:/usr/share/nginx/html/static:ro
+      - ./includes:/usr/share/nginx/html/includes:ro
+    restart: unless-stopped
+    container_name: duelgood-web
