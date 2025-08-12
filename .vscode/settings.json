@@ -1,12 +1,6 @@
 {
-  "files.associations": {
-    "**/includes/*.html": "html"
-  },
+  "prettier.htmlWhitespaceSensitivity": "ignore",
   "[html]": {
-    "editor.formatOnSave": true
-  },
-  "[html][includes]": {
-    "editor.formatOnSave": false
-  },
-  "editor.formatOnSaveTimeout": 750
+    "editor.defaultFormatter": null
+  }
 }

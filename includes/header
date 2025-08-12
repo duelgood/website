@@ -1,4 +1,4 @@
-<!-- includes/header.html -->
+<!-- includes/header -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -27,5 +27,3 @@
         <a href="/donate" class="donate-btn">Donate</a>
       </nav>
     </header>
-  </body>
-</html>

@@ -1,5 +1,5 @@
 <!-- pages/index.shtml -->
-<!--#include virtual="/includes/header.html" -->
+<!--#include virtual="/includes/header" -->
 <main>
   <p>
     Donations haven't been set up yet. Check back later for live statistics!
