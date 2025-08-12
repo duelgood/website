@@ -5,12 +5,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DuelGood</title>
-    <link rel="stylesheet" href="static/style.css" />
+    <link rel="stylesheet" href="../static/style.css" />
   </head>
   <body>
     <header>
       <div class="logo">
-        <a href="index.html"><img src="static/logo.png" alt="Duelgood Logo" /></a>
+        <a href="index.html"><img src="../static/logo.png" alt="Duelgood Logo" /></a>
       </div>
       <nav>
       <input type="checkbox" id="menu-toggle" />
@@ -28,7 +28,7 @@
     <main>
       <p>
         DuelGood cancels out donations to opposing political parties and directs
-        the difference to charity.
+        the difference to charity. 
       </p>
       <div class="container">
         <div class="bar bar-1">A</div>
@@ -68,8 +68,23 @@
         </div>
       </div>
       <p>
-        Each day at 7:00 PM EST, the day's donatations are compared and 
+        Matched amounts go directly to <a href="https://www.givewell.org/charities/top-charities">
+        GiveWell's Top Charities Fund</a>, high-impact and cost-effective programs 
+        that save or improve lives the most per dollar. GiveWell is a highly transparent, 
+        reputable, and research-backed organization whose selected charities are the 
+        gold standard for impact. <a href="https://www.givewell.org/about">More about GiveWell</a>. 
+      </p>
+      <p>
+        The remainder will go to whichever party received more donations. This 
+        ensures that donating through DuelGood has the same political impact 
+        as donating directly to a political party, in addition to saving lives. 
+      </p>
+      <p>
+        Each day at 7:00 PM EST, the day's donations are compared and 
         sent. Up until that time you can cancel or edit your donation. 
+        Transactions are processed through the most secure and proven 
+        payment processors in the industry, so your financial details 
+        are safe. 
       </p>
     </main>
   </body>
