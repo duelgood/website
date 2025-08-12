@@ -1,0 +1,12 @@
+{
+  "files.associations": {
+    "**/includes/*.html": "html"
+  },
+  "[html]": {
+    "editor.formatOnSave": true
+  },
+  "[html][includes]": {
+    "editor.formatOnSave": false
+  },
+  "editor.formatOnSaveTimeout": 750
+}
