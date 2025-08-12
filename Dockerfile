@@ -1,13 +1,10 @@
 FROM nginx:alpine
 
-# Enable SSI and set index.shtml as default index
+# Enable SSI and configure index files, and set SSI for text/html (covers .shtml)
 RUN sed -i '/location \/ {/a \
     ssi on;\
-    ssi_types text/shtml;\
+    ssi_types text/html;\
     index index.shtml index.html index.htm;' /etc/nginx/conf.d/default.conf
-
-# Add 'text/shtml shtml;' inside the existing types block in mime.types
-RUN sed -i '/types {/a \    text/shtml shtml;' /etc/nginx/mime.types
 
 COPY pages/ /usr/share/nginx/html/
 COPY includes/ /usr/share/nginx/html/includes/
