@@ -1,20 +1,8 @@
-!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DuelGood</title>
-    <link rel="stylesheet" href="static/style.css" />
-    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
-  </head>
-  <body>
-    <!--#include virtual="/includes/header.html" -->
-    <main>
-      <p>
-        Donatations haven't been set up yet. Check back later for live
-        statistics!
-      </p>
-    </main>
-    <!--#include virtual="/includes/footer.html" -->
-  </body>
-</html>
+<!-- pages/index.shtml -->
+<!--#include virtual="/includes/header.html" -->
+<main>
+  <p>
+    Donations haven't been set up yet. Check back later for live statistics!
+  </p>
+</main>
+<!--#include virtual="/includes/footer.html" -->

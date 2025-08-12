@@ -1,14 +1,5 @@
-!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DuelGood</title>
-    <link rel="stylesheet" href="../static/style.css" />
-    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
-  </head>
-  <body>
-    <!--#include virtual="/includes/header.html" -->
+<!-- pages/about.shtml -->
+<!--#include virtual="/includes/header.html" -->
     <main>
       <p>
         DuelGood cancels out donations to opposing political parties and directs
@@ -71,6 +62,4 @@
         are safe. 
       </p>
     </main>
-    <!--#include virtual="/includes/footer.html" -->
-  </body>
-</html>
+<!--#include virtual="/includes/footer.html" -->
