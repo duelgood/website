@@ -4,6 +4,9 @@ FROM nginx:alpine
 # Remove default nginx website
 RUN rm -rf /usr/share/nginx/html/*
 
+# Add shtml MIME type to nginx
+RUN sed -i '/text\/html/a\    text\/html                            shtml;' /etc/nginx/mime.types
+
 # Copy website files
 COPY pages/ /usr/share/nginx/html/
 COPY includes/ /usr/share/nginx/html/includes/
@@ -21,7 +24,6 @@ server {
     # Enable Server Side Includes
     ssi on;
     ssi_silent_errors off;
-    ssi_types text/shtml;
     
     # Handle .shtml files
     location ~ \.shtml$ {
