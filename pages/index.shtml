@@ -10,7 +10,7 @@
   <body>
     <header>
       <div class="logo">
-        <a href="index.html"
+        <a href="index.shtml"
           ><img src="static/logo.png" alt="Duelgood Logo"
         /></a>
       </div>
@@ -18,9 +18,9 @@
         <input type="checkbox" id="menu-toggle" />
         <label for="menu-toggle" class="menu-icon">&#9776;</label>
         <div class="nav-links">
-          <a href="about.html">About</a>
-          <a href="research.html">Research</a>
-          <a href="transparency.html">Transparency</a>
+          <a href="about.shtml">About</a>
+          <a href="research.shtml">Research</a>
+          <a href="transparency.shtml">Transparency</a>
           <!-- <a href="#legal">Legal</a> -->
         </div>
         <a href="#donate" class="donate-btn">Donate</a>
