@@ -8,6 +8,8 @@ git:
 	git push
 
 dev:
+	docker stop $(CONTAINER_NAME)-dev 2>/dev/null || true
+	docker rm $(CONTAINER_NAME)-dev 2>/dev/null || true
 	docker build -f Dockerfile.dev -t $(IMAGE_NAME):dev .
 	docker run -d --name $(CONTAINER_NAME)-dev -p 80:80 $(IMAGE_NAME):dev
 
@@ -20,4 +22,11 @@ docker:
 		--push \
 		.
 
-.PHONY: git docker dev run stop stop-dev
+stop-dev:
+	docker stop $(CONTAINER_NAME)-dev 2>/dev/null || true
+	docker rm $(CONTAINER_NAME)-dev 2>/dev/null || true
+
+clean: 
+	docker container prune -f
+
+.PHONY: git docker dev stop-dev clean
