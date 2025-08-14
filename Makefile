@@ -7,7 +7,7 @@ git:
 	git commit -m "Update $(TIMESTAMP)" || echo "No changes to commit"
 	git push
 
-push: 
+docker: 
 	docker buildx create --use --name multiarch-builder 2>/dev/null || true
 	docker buildx build \
 		--platform linux/amd64,linux/arm64 \
