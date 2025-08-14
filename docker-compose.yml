@@ -7,31 +7,6 @@ services:
     ports:
       - "80:80"
       - "443:443"
-    volumes:
-      # Mount logs for debugging
-      - ./logs:/var/log/nginx
-      # Optional: Mount SSL certificates from host (for custom certificates)
-      # - ./ssl:/etc/nginx/ssl:ro
-    environment:
-      - NGINX_ENVSUBST_OUTPUT_DIR=/etc/nginx
-    networks:
-      - duelgood-network
-    labels:
-      - "com.centurylinklabs.watchtower.enable=true"
-    healthcheck:
-      test:
-        [
-          "CMD",
-          "wget",
-          "--no-verbose",
-          "--tries=1",
-          "--spider",
-          "http://localhost/health",
-        ]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
 
 networks:
   duelgood-network:
