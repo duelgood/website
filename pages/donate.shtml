@@ -14,15 +14,15 @@
 
     <fieldset>
       <legend>Donation Type</legend>
-      <label><input type="radio" name="type" value="one-time" checked> One-time</label>
-      <label><input type="radio" name="type" value="monthly"> Monthly</label>
-      <label><input type="radio" name="type" value="yearly"> Yearly</label>
+      <label><input type="radio" name="type" value="one-time" checked>One-time</label>
+      <label><input type="radio" name="type" value="monthly">Monthly</label>
+      <label><input type="radio" name="type" value="yearly">Yearly</label>
     </fieldset>
 
     <fieldset>
-      <legend>Political Party Preference</legend>
-      <label><input type="radio" name="party" value="gop"> GOP</label>
-      <label><input type="radio" name="party" value="democrat"> Democratic</label>
+      <legend>Political Party</legend>
+      <label><input type="radio" name="party" value="gop">Democratic</label>
+      <label><input type="radio" name="party" value="democrat">Republican</label>
     </fieldset>
 
     <fieldset>
@@ -33,12 +33,10 @@
     <fieldset>
       <legend>Payment Method</legend>
       <label>
-        <input type="radio" name="payment_method" value="stripe" checked>
-        Credit/Debit Card (via Stripe)
+        <input type="radio" name="payment_method" value="stripe" checked>Credit/Debit Card (via Stripe)
       </label>
       <label>
-        <input type="radio" name="payment_method" value="ach">
-        Bank Transfer (Plaid)
+        <input type="radio" name="payment_method" value="ach">Bank Transfer (Plaid)
       </label>
     </fieldset>
 

@@ -1,13 +1,12 @@
-<!-- includes/footer -->
- <footer>
-    <div class="footer-content">
-        <p>&copy; 2025 DuelGood.org. All rights reserved.</p>
-        <nav class="footer-nav">
-            <a href="/privacy">Privacy Policy</a>
-            <a href="/terms">Terms of Service</a>
-            <a href="/contact">Contact</a>
-        </nav>
-    </div>
+<footer>
+  <div class="footer-content">
+    <p>&copy; 2025 DuelGood.org. All rights reserved.</p>
+    <nav class="footer-nav">
+      <a href="/privacy" class="hover-underline">Privacy Policy</a>
+      <a href="/terms" class="hover-underline">Terms of Service</a>
+      <a href="/contact" class="hover-underline">Contact</a>
+    </nav>
+  </div>
 </footer>
 </body>
 </html>

@@ -1,3 +1,4 @@
+/* -------------------- Base Styles -------------------- */
 body {
   margin: 0;
   font-family: serif;
@@ -5,7 +6,7 @@ body {
   color: #000;
 }
 
-/* Header */
+/* -------------------- Header & Navigation -------------------- */
 header {
   position: fixed;
   top: 0;
@@ -24,12 +25,10 @@ header img {
   height: 40px;
 }
 
-/* Hide the checkbox itself */
 #menu-toggle {
-  display: none;
+  display: none; /* hide the mobile nav checkbox */
 }
 
-/* Navigation container */
 nav {
   display: flex;
   align-items: center;
@@ -37,21 +36,14 @@ nav {
   flex-grow: 1;
 }
 
-/* Nav links container */
 .nav-links {
   display: flex;
   gap: 20px;
   flex-grow: 1;
   justify-content: flex-end;
-  position: static;
-  background: none;
-  box-shadow: none;
-  border-radius: 0;
-  z-index: 0;
   margin-right: 20px;
 }
 
-/* Navigation links */
 nav a {
   color: black;
   text-decoration: none;
@@ -62,7 +54,6 @@ nav a:hover {
   color: darkgreen;
 }
 
-/* Donate button */
 .donate-btn {
   background-color: orange;
   color: white;
@@ -71,278 +62,47 @@ nav a:hover {
   text-decoration: none;
   font-weight: bold;
   margin-right: 40px;
-  flex-shrink: 0; /* Prevent button from shrinking */
+  flex-shrink: 0;
 }
 
 .donate-btn:hover {
   background-color: #e69500;
 }
 
-/* Mobile styles */
-@media (max-width: 599px) {
-  .nav-links {
-    display: none;
-    position: absolute;
-    top: 60px;
-    left: 0;
-    background: white;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    flex-direction: column;
-    padding: 10px;
-    border-radius: 4px;
-    z-index: 1100;
-    width: auto;
-    min-width: 150px;
-    margin-right: 0; /* Reset margin on mobile */
-  }
-
-  #menu-toggle:checked + .menu-icon + .nav-links {
-    display: flex;
-  }
-
-  .menu-icon {
-    display: block;
-    cursor: pointer;
-    font-size: 18px;
-    margin-left: auto; /* Change from 'margin: auto' to this */
-    margin-right: 20px; /* Add space between hamburger and donate button */
-  }
-
-  .donate-btn {
-    position: relative;
-    z-index: 1000;
-  }
-}
-
-/* Desktop styles */
-@media (min-width: 600px) {
-  .menu-icon {
-    display: none;
-  }
-
-  .nav-links {
-    display: flex !important;
-    position: static;
-    box-shadow: none;
-    padding: 0;
-    background: none;
-    flex-grow: 1;
-  }
-
-  .donate-btn {
-    position: relative;
-    z-index: 1000;
-  }
-}
-
-/* Page content */
-main {
-  max-width: 800px;
-  margin: 100px auto 40px;
-  padding: 0 20px;
-  line-height: 1.6;
-}
-
-/* Difference of rectangles graphic */
-.container {
-  display: flex;
-  width: 80%;
-  height: 400px;
-  align-items: flex-end;
-  justify-content: space-around;
+/* -------------------- Header & Navigation Links Hover Effects -------------------- */
+.nav-links a {
+  color: black;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 8px 12px;
+  border-radius: 4px;
   position: relative;
-  margin: 30px auto;
+  transition: all 0.3s ease;
 }
 
-.bar {
+.nav-links a:hover {
+  color: darkgreen;
+  background-color: rgba(0, 100, 0, 0.05); /* Add background box like footer */
+  transform: translateY(-1px); /* Add rising effect like footer */
+}
+
+.nav-links a::after {
+  content: "";
   position: absolute;
   bottom: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 16pt; /* Adjust size as needed */
-  font-weight: bold;
-}
-
-.bar-1 {
-  left: 10%;
-  width: 10%;
-  height: 85%;
-  background-color: #0a3161;
-}
-
-.bar-2 {
-  left: 40%;
-  width: 10%;
-  height: 75%;
-  background-color: #b31942;
-}
-
-.bar-3 {
-  left: 70%;
-  width: 10%;
-  height: 75%;
-  background-color: darkgreen;
-}
-
-.top-rectangle {
-  position: absolute;
-  bottom: 80%;
-  left: 70%;
-  width: 10%;
-  height: 10%;
-  background-color: #0a3161;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 16pt; /* Adjust size as needed */
-  font-weight: bold;
-}
-
-.symbol {
-  background-color: black;
-  position: absolute;
-}
-
-.minus {
-  bottom: 35%;
-  left: 28.5%;
-  width: 3%;
-  height: 1%;
-}
-
-.equals-top {
-  bottom: 37%;
-  left: 58%;
-  width: 3%;
-  height: 1%;
-}
-
-.equals-bottom {
-  bottom: 35%;
-  left: 58%;
-  width: 3%;
-  height: 1%;
-}
-
-/* Columns */
-.row {
-  display: flex;
-  gap: 2%;
-}
-
-.column {
-  flex: 1;
-  position: relative;
-  padding: 1rem;
-  background: white;
-  overflow: hidden;
-}
-
-.background-symbol {
-  position: absolute;
-  top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 128pt;
-  color: rgba(0, 200, 0, 0.1);
-  z-index: 0;
-  pointer-events: none;
-  user-select: none;
-  -webkit-user-select: none; /* Safari compatibility */
-  -moz-user-select: none; /* Firefox compatibility */
-  -ms-user-select: none; /* IE/Edge compatibility */
+  width: 0;
+  height: 2px;
+  background-color: darkgreen; /* Change to match hover color */
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
 }
 
-.column h3,
-.column p,
-.column em {
-  position: relative;
-  z-index: 1;
-}
-body {
-  margin: 0;
-  font-family: serif;
-  background-color: #ffffff;
-  color: #000;
+.nav-links a:hover::after {
+  width: 80%;
 }
 
-/* Header */
-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background-color: white;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 20px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-}
-
-header img {
-  height: 40px;
-}
-
-/* Hide the checkbox itself */
-#menu-toggle {
-  display: none;
-}
-
-/* Navigation container */
-nav {
-  display: flex;
-  align-items: center;
-  position: relative;
-  flex-grow: 1;
-}
-
-/* Nav links container */
-.nav-links {
-  display: flex;
-  gap: 20px;
-  flex-grow: 1;
-  justify-content: flex-end;
-  position: static;
-  background: none;
-  box-shadow: none;
-  border-radius: 0;
-  z-index: 0;
-  margin-right: 20px;
-}
-
-/* Navigation links */
-nav a {
-  color: black;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-nav a:hover {
-  color: darkgreen;
-}
-
-/* Donate button */
-.donate-btn {
-  background-color: orange;
-  color: white;
-  padding: 12px 18px;
-  border-radius: 4px;
-  text-decoration: none;
-  font-weight: bold;
-  margin-right: 40px;
-  flex-shrink: 0; /* Prevent button from shrinking */
-}
-
-.donate-btn:hover {
-  background-color: #e69500;
-}
-
-/* Mobile styles */
+/* -------------------- Mobile Navigation -------------------- */
 @media (max-width: 599px) {
   .nav-links {
     display: none;
@@ -355,9 +115,8 @@ nav a:hover {
     padding: 10px;
     border-radius: 4px;
     z-index: 1100;
-    width: auto;
     min-width: 150px;
-    margin-right: 0; /* Reset margin on mobile */
+    margin-right: 0;
   }
 
   #menu-toggle:checked + .menu-icon + .nav-links {
@@ -368,8 +127,8 @@ nav a:hover {
     display: block;
     cursor: pointer;
     font-size: 18px;
-    margin-left: auto; /* Change from 'margin: auto' to this */
-    margin-right: 20px; /* Add space between hamburger and donate button */
+    margin-left: auto;
+    margin-right: 20px;
   }
 
   .donate-btn {
@@ -378,7 +137,7 @@ nav a:hover {
   }
 }
 
-/* Desktop styles */
+/* -------------------- Desktop Navigation -------------------- */
 @media (min-width: 600px) {
   .menu-icon {
     display: none;
@@ -390,7 +149,6 @@ nav a:hover {
     box-shadow: none;
     padding: 0;
     background: none;
-    flex-grow: 1;
   }
 
   .donate-btn {
@@ -399,7 +157,7 @@ nav a:hover {
   }
 }
 
-/* Page content */
+/* -------------------- Main Content -------------------- */
 main {
   max-width: 800px;
   margin: 100px auto 40px;
@@ -407,11 +165,7 @@ main {
   line-height: 1.6;
 }
 
-h1 {
-  color: #b31942;
-}
-
-/* Difference of rectangles graphic */
+/* -------------------- Graphic: Difference of Rectangles -------------------- */
 .container {
   display: flex;
   width: 80%;
@@ -429,28 +183,28 @@ h1 {
   align-items: center;
   justify-content: center;
   color: white;
-  font-size: 16pt; /* Adjust size as needed */
+  font-size: 16pt;
   font-weight: bold;
 }
 
 .bar-1 {
   left: 10%;
   width: 10%;
-  height: 85%;
+  height: 45%;
   background-color: #0a3161;
 }
 
 .bar-2 {
   left: 40%;
   width: 10%;
-  height: 75%;
+  height: 35%;
   background-color: #b31942;
 }
 
 .bar-3 {
   left: 70%;
   width: 10%;
-  height: 75%;
+  height: 70%;
   background-color: darkgreen;
 }
 
@@ -465,7 +219,7 @@ h1 {
   align-items: center;
   justify-content: center;
   color: white;
-  font-size: 16pt; /* Adjust size as needed */
+  font-size: 16pt;
   font-weight: bold;
 }
 
@@ -495,7 +249,7 @@ h1 {
   height: 1%;
 }
 
-/* Columns */
+/* -------------------- Columns -------------------- */
 .row {
   display: flex;
   gap: 2%;
@@ -527,11 +281,11 @@ h1 {
   z-index: 1;
 }
 
-/* Footer */
+/* -------------------- Footer -------------------- */
 footer {
   background-color: white;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
-  padding: 30px 0 20px 0;
+  padding: 30px 0 20px;
   margin-top: 60px;
   position: relative;
   box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
@@ -576,10 +330,10 @@ footer::before {
   text-decoration: none;
   font-size: 14px;
   font-weight: 500;
-  transition: all 0.3s ease;
   padding: 8px 12px;
   border-radius: 4px;
   position: relative;
+  transition: all 0.3s ease;
 }
 
 .footer-nav a:hover {
@@ -606,7 +360,7 @@ footer::before {
 
 @media (max-width: 600px) {
   footer {
-    padding: 25px 0 15px 0;
+    padding: 25px 0 15px;
     margin-top: 40px;
   }
 
@@ -622,18 +376,13 @@ footer::before {
     gap: 15px;
   }
 
-  /* Remove separators on mobile for cleaner look */
-  .footer-nav a:not(:last-child)::before {
-    display: none;
-  }
-
   .footer-nav a {
     padding: 6px 10px;
     font-size: 13px;
   }
 }
 
-/* Form styling for donate page */
+/* -------------------- Forms -------------------- */
 form {
   max-width: 600px;
   margin: 20px 0;
@@ -686,55 +435,68 @@ button[type="submit"]:hover {
   background-color: #218838;
 }
 
-/* Form styling for donate page */
-form {
-  max-width: 600px;
-  margin: 20px 0;
+/* -------------------- FAQ -------------------- */
+main {
+  max-width: 800px;
+  margin: auto;
+  padding-top: 80px;
 }
 
-fieldset {
+.faq-section {
+  margin-bottom: 2rem;
+}
+
+.faq-section h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: #333;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 0.25rem;
+}
+
+.faq-question {
   border: 1px solid #ddd;
-  border-radius: 4px;
-  padding: 15px;
-  margin-bottom: 15px;
+  border-radius: 6px;
+  margin-bottom: 0.75rem;
+  background: #fafafa;
+  transition: border-color 0.25s ease, background 0.25s ease;
 }
 
-legend {
-  font-weight: bold;
-  padding: 0 10px;
+.faq-question[open] {
+  background: #fff;
+  border-color: #bbb;
 }
 
-label {
-  display: block;
-  margin-bottom: 8px;
+.faq-question summary {
   cursor: pointer;
-}
-
-input[type="number"],
-input[type="email"] {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 16px;
-}
-
-input[type="radio"] {
-  margin-right: 8px;
-}
-
-button[type="submit"] {
-  background-color: #28a745;
-  color: white;
-  padding: 12px 24px;
-  border: none;
-  border-radius: 4px;
-  font-size: 16px;
+  list-style: none;
   font-weight: bold;
-  cursor: pointer;
-  margin-top: 10px;
+  padding: 0.5rem 0.75rem;
+  display: flex;
+  align-items: center;
 }
 
-button[type="submit"]:hover {
-  background-color: #218838;
+.faq-question summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-question summary::before {
+  content: "▸";
+  display: inline-block;
+  margin-right: 0.5em;
+  transition: transform 0.25s ease;
+}
+
+.faq-question[open] summary::before {
+  transform: rotate(90deg);
+}
+
+.faq-answer {
+  overflow: hidden;
+  transition: all 0.3s ease;
+  padding: 0 0.75rem 0.75rem 0.75rem;
+}
+
+.faq-answer p {
+  margin: 0.5rem 0 0 0;
 }

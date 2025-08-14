@@ -1,4 +1,3 @@
-<!-- includes/header -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -19,10 +18,9 @@
         <input type="checkbox" id="menu-toggle" />
         <label for="menu-toggle" class="menu-icon">&#9776;</label>
         <div class="nav-links">
-          <a href="/about">About</a>
-          <a href="/research">Research</a>
-          <a href="/faq">FAQ</a>
-          <!-- <a href="#legal">Legal</a> -->
+          <a href="/about" class="hover-underline">About</a>
+          <a href="/research" class="hover-underline">Research</a>
+          <a href="/faq" class="hover-underline">FAQ</a>
         </div>
         <a href="/donate" class="donate-btn">Donate</a>
       </nav>
