@@ -21,7 +21,13 @@ RUN mkdir -p /var/log/nginx && \
 EXPOSE 80 443
 
 # Fetch cert + key from Vault at container start, then run nginx
+RUN apk add --no-cache python3 py3-pip bash curl jq && \
+    python3 -m venv /opt/venv && \
+    /opt/venv/bin/pip install oci-cli && \
+    mkdir -p /etc/ssl/cloudflare && chmod 700 /etc/ssl/cloudflare
+
 ENTRYPOINT bash -c "\
+    export PATH=/opt/venv/bin:$PATH && \
     echo '[INFO] Fetching Cloudflare Origin certs from OCI Vault...' && \
     oci secrets secret-bundle get \
         --secret-id ocid1.vaultsecret.oc1..CERT_SECRET_ID \
