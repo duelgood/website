@@ -2,26 +2,33 @@ IMAGE_NAME := zkeulr/duelgood
 TIMESTAMP := $(shell date +%Y%m%d-%H%M%S)
 CONTAINER_NAME := duelgood-web
 
-# Development commands
-dev:
-	@echo "Starting development server..."
-	docker-compose -f docker-compose.yml.dev up --build
+# Load environment variables from .env file if it exists
+ifneq (,$(wildcard ./.env))
+	include .env
+	export
+endif
 
-dev-down:
-	@echo "Stopping development server..."
-	docker-compose -f docker-compose.yml.dev down
+# Determine which compose file to use based on ENVIRONMENT variable
+ifeq ($(ENVIRONMENT),production)
+	COMPOSE_FILE := docker-compose.yml
+	COMPOSE_FLAGS := -d
+else
+	COMPOSE_FILE := docker-compose.yml.dev
+	COMPOSE_FLAGS := 
+endif
 
-dev-logs:
-	docker-compose -f docker-compose.yml.dev logs -f
+# Main commands - automatically use dev or prod based on .env
+up:
+	@echo "Starting $(ENVIRONMENT) server..."
+	docker-compose -f $(COMPOSE_FILE) down --remove-orphans 2>/dev/null || true
+	docker-compose -f $(COMPOSE_FILE) up --build $(COMPOSE_FLAGS)
 
-# Production commands
-prod:
-	@echo "Starting production server..."
-	docker-compose up --build -d
+down:
+	@echo "Stopping server..."
+	docker-compose -f $(COMPOSE_FILE) down --remove-orphans
 
-prod-down:
-	@echo "Stopping production server..."
-	docker-compose down
+logs:
+	docker-compose -f $(COMPOSE_FILE) logs -f
 
 # Build and push to registry
 build-push:
@@ -48,4 +55,4 @@ clean:
 health:
 	curl -f http://localhost/health || echo "Service not healthy"
 
-.PHONY: dev dev-down dev-logs prod prod-down build-push git clean health
+.PHONY: up down logs build-push git clean health
