@@ -1,7 +1,50 @@
 <!--#include virtual="/includes/header" -->
 <main>
-  <p>
-    Donations haven't been set up yet. Check back later!
-  </p>
+  <h1>Donate through DuelGood</h1>
+  <p>Cancel opposing political donations and direct the difference to charity automatically.</p>
+
+  <form action="/donate" method="POST">
+    <fieldset>
+      <legend>Donation Amount</legend>
+      <label>
+        <input type="number" name="amount" min="1" required>
+        USD
+      </label>
+    </fieldset>
+
+    <fieldset>
+      <legend>Donation Type</legend>
+      <label><input type="radio" name="type" value="one-time" checked> One-time</label>
+      <label><input type="radio" name="type" value="monthly"> Monthly</label>
+      <label><input type="radio" name="type" value="yearly"> Yearly</label>
+    </fieldset>
+
+    <fieldset>
+      <legend>Political Party Preference</legend>
+      <label><input type="radio" name="party" value="gop"> GOP</label>
+      <label><input type="radio" name="party" value="democrat"> Democratic</label>
+    </fieldset>
+
+    <fieldset>
+      <legend>Email</legend>
+      <input type="email" name="email" placeholder="you@example.com" required>
+    </fieldset>
+
+    <fieldset>
+      <legend>Payment Method</legend>
+      <label>
+        <input type="radio" name="payment_method" value="stripe" checked>
+        Credit/Debit Card (via Stripe)
+      </label>
+      <label>
+        <input type="radio" name="payment_method" value="ach">
+        Bank Transfer (Plaid)
+      </label>
+    </fieldset>
+
+    <button type="submit">Donate</button>
+  </form>
+
+  <p>All donations are processed securely. You can edit or cancel your donation until 7:00 PM EST the same day.</p>
 </main>
 <!--#include virtual="/includes/footer" -->

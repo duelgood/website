@@ -1,22 +1,27 @@
 FROM nginx:alpine
 
-# Install OpenSSL for generating self-signed certificates if needed
-RUN apk add --no-cache openssl
+# Install required packages
+RUN apk add --no-cache \
+    openssl \
+    curl \
+    ca-certificates \
+    python3 \
+    py3-pip \
+    jq
+
+# Create directories
+RUN mkdir -p /var/www/html /var/log/nginx /etc/ssl/cloudflare
 
 # Copy website files
-COPY pages/ /var/www/html/
+COPY pages/ /var/www/html/pages/
 COPY includes/ /var/www/html/includes/
 COPY static/ /var/www/html/static/
 
 # Copy nginx configuration
 COPY nginx.conf /etc/nginx/nginx.conf
 
-# Create log directory
-RUN mkdir -p /var/log/nginx
-
 # Set permissions
-RUN chown -R nginx:nginx /var/www/html && \
-    chmod -R 755 /var/www/html
+RUN chown -R nginx:nginx /var/www/html && chmod -R 755 /var/www/html
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
@@ -24,4 +29,5 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
 
 EXPOSE 80 443
 
+# Start nginx in foreground
 CMD ["nginx", "-g", "daemon off;"]

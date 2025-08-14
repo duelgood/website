@@ -7,6 +7,14 @@ services:
     ports:
       - "80:80"
       - "443:443"
+    volumes:
+      # Local development mounts
+      - ./pages:/var/www/html/pages
+      - ./includes:/var/www/html/includes
+      - ./static:/var/www/html/static
+      - nginx-logs:/var/log/nginx
+    networks:
+      - duelgood-network
 
 networks:
   duelgood-network:
