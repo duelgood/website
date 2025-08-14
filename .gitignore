@@ -66,14 +66,6 @@ coverage/
 docker-compose.override.yml
 docker-compose.local.yml
 
-# Git
-.git/
-.gitignore
-
-# Documentation
-README.md
-docs/
-
 # Configuration overrides
 nginx.local.conf
 config.local.*
