@@ -1,0 +1,13 @@
+<!--#include virtual="/includes/header" -->
+<main>
+  <h1>Contact</h1>
+  
+  <div class="contact-intro">
+    <p>Get in touch with questions, feedback, or suggestions at 
+        <a href="mailto:contact@duelgood.org" class="email-link">contact@duelgood.org</a>
+    </p>
+  </div>
+    
+  </div>
+</main>
+<!--#include virtual="/includes/footer" -->

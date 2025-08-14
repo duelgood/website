@@ -1,0 +1,161 @@
+<!--#include virtual="/includes/header" -->
+<main>
+    <h1>Terms of Service</h1>
+    <p class="meta" id="last-updated">Last Updated: <time datetime="2025-08-14">August 14, 2025</time></p>
+    <p class="lead">Welcome to <strong>DuelGood</strong> 
+    ("DuelGood," "we," "us," or "our"). By using our platform 
+    (hereafter referred to as the "Service"), you agree to these 
+    Terms of Service (the "Terms").</p>
+    <div class="toc" aria-labelledby="toc-heading">
+    <h2 id="toc-heading">Contents</h2>
+    <ol>
+        <li><a href="#purpose">Purpose of Service</a></li>
+        <li><a href="#eligibility">Eligibility</a></li>
+        <li><a href="#donations">Donations & Processing</a></li>
+        <li><a href="#political-compliance">Political Donation Compliance</a></li>
+        <li><a href="#charities">Charities</a></li>
+        <li><a href="#reporting">Receipts & Reporting</a></li>
+        <li><a href="#no-guarantee">No Guarantee of Outcomes</a></li>
+        <li><a href="#user-conduct">User Conduct</a></li>
+        <li><a href="#privacy">Privacy</a></li>
+        <li><a href="#ip">Intellectual Property</a></li>
+        <li><a href="#termination">Termination</a></li>
+        <li><a href="#disclaimers">Disclaimers</a></li>
+        <li><a href="#liability">Limitation of Liability</a></li>
+        <li><a href="#indemnity">Indemnity</a></li>
+        <li><a href="#law">Governing Law & Venue</a></li>
+        <li><a href="#changes">Changes to Terms</a></li>
+    </ol>
+    </div>
+
+    <section id="purpose" class="section">
+      <h2>1. Purpose of Service</h2>
+      <p>DuelGood enables users to offset donations to opposing political parties and direct the net difference to charitable causes. Each day at <strong>7:00 PM Eastern Time (ET)</strong), we compare donations submitted that day:</p>
+      <ul class="list-tight">
+        <li>Equal amounts to opposing parties are <em>canceled out</em>.</li>
+        <li>The <strong>difference</strong> is donated to <a href="https://www.givewell.org/charities/top-charities" rel="noopener noreferrer">GiveWell’s Top Charities Fund</a> (or another high-impact charity designated by DuelGood).</li>
+        <li>The <strong>remainder</strong> (if any) is sent to the political party that received the higher total that day—ensuring your donation has the same political impact as donating directly.</li>
+      </ul>
+      <p class="note" role="note"><strong>Transparency:</strong> DuelGood takes <strong>no cut</strong>. 100% of donations, minus standard bank or card processing fees, are passed through to the designated recipients.</p>
+    </section>
+
+    <section id="eligibility" class="section">
+      <h2>2. Eligibility</h2>
+      <ul class="list-tight">
+        <li>You are at least 18 years old (or the age of majority in your jurisdiction).</li>
+        <li>You are legally permitted to donate to political parties and charities in your jurisdiction.</li>
+        <li>You use your own funds or funds you are authorized to contribute.</li>
+      </ul>
+    </section>
+
+    <section id="donations" class="section">
+      <h2>3. Donations & Processing</h2>
+      <div class="grid">
+        <div>
+          <h3 id="processing">a. Processing</h3>
+          <ul class="list-tight">
+            <li>Payments are processed by secure, reputable third-party payment processors. We do not store full card numbers.</li>
+            <li>Transactions submitted after 7:00 PM ET are included in the next day’s comparison.</li>
+          </ul>
+        </div>
+        <div>
+          <h3 id="cancellations">b. Timing, Cancellation & Refunds</h3>
+          <ul class="list-tight">
+            <li>You may cancel or edit a pending donation until <strong>7:00 PM ET</strong> on the same day.</li>
+            <li>After processing, donations are final and non-refundable, except as required by law or at our sole discretion in cases of error or fraud.</li>
+          </ul>
+        </div>
+      </div>
+      <h3 id="allocation">c. Allocation Mechanism</h3>
+      <ul class="list-tight">
+        <li>Donation amounts are net of processor fees.</li>
+        <li>When applicable, we transfer funds to the designated party/parties and charity in accordance with the offset calculation described in Section 1.</li>
+        <li>We may pause or adjust disbursements for compliance, fraud prevention, or operational issues; pending funds will be held in a segregated account or equivalent until resolution.</li>
+      </ul>
+    </section>
+
+    <section id="political-compliance" class="section">
+      <h2>4. Political Donation Compliance</h2>
+      <ul class="list-tight">
+        <li><strong>Your responsibility:</strong> You are solely responsible for complying with all applicable campaign-finance laws, contribution limits, source restrictions, and reporting obligations in your jurisdiction (e.g., U.S. federal/state/local rules).</li>
+        <li>We may require additional identity information to satisfy legal obligations (e.g., Know-Your-Customer, anti-money-laundering, or political contribution reporting).</li>
+        <li>We may reject, refund, or withhold any contribution that appears non-compliant or fraudulent.</li>
+      </ul>
+    </section>
+
+    <section id="charities" class="section">
+      <h2>5. Charities</h2>
+      <ul class="list-tight">
+        <li>We review charities for effectiveness, transparency, and impact and may update supported charities at any time.</li>
+        <li>Information about <a href="https://www.givewell.org/about" rel="noopener noreferrer">GiveWell</a> is provided for transparency and does not constitute an endorsement by GiveWell of DuelGood.</li>
+      </ul>
+    </section>
+
+    <section id="reporting" class="section">
+      <h2>6. Receipts & Reporting</h2>
+      <ul class="list-tight">
+        <li>You will receive a receipt for each transaction. Tax deductibility depends on where funds ultimately go. Political contributions are generally <em>not</em> tax-deductible.</li>
+        <li>Charitable contributions may be tax-deductible depending on the charity and your jurisdiction; consult a tax advisor.</li>
+      </ul>
+    </section>
+
+    <section id="no-guarantee" class="section">
+      <h2>7. No Guarantee of Outcomes</h2>
+      <p>We strive to maximize impact but do not guarantee specific political or charitable outcomes, results, or effectiveness.</p>
+    </section>
+
+    <section id="user-conduct" class="section">
+      <h2>8. User Conduct</h2>
+      <ul class="list-tight">
+        <li>Do not use the Service for unlawful purposes or in violation of third-party rights.</li>
+        <li>Do not submit false, misleading, or unauthorized information.</li>
+        <li>Do not disrupt or attempt to compromise the security or availability of the Service.</li>
+      </ul>
+    </section>
+
+    <section id="privacy" class="section">
+      <h2>9. Privacy</h2>
+      <p>Your use of the Service is subject to our <a href="/privacy" aria-label="Privacy Policy link">Privacy Policy</a>, which describes how we collect, use, and safeguard personal data.</p>
+    </section>
+
+    <section id="ip" class="section">
+      <h2>10. Intellectual Property</h2>
+      <p>The Service, including text, graphics, logos, and software, is owned by DuelGood or its licensors and protected by intellectual-property laws. You may not reproduce, modify, or create derivative works except as expressly permitted.</p>
+    </section>
+
+    <section id="termination" class="section">
+      <h2>11. Termination</h2>
+      <p>We may suspend or terminate access immediately for any breach of these Terms or as necessary to comply with law, protect users, or ensure platform integrity. Upon termination, certain sections (e.g., Disclaimers, Limitation of Liability, Indemnity) survive.</p>
+    </section>
+
+    <section id="disclaimers" class="section">
+      <h2>12. Disclaimers</h2>
+      <ul class="list-tight">
+        <li>The Service is provided on an <strong>“AS IS”</strong> and <strong>“AS AVAILABLE”</strong> basis without warranties of any kind, express or implied.</li>
+        <li>We disclaim implied warranties of merchantability, fitness for a particular purpose, and non-infringement to the fullest extent permitted by law.</li>
+      </ul>
+    </section>
+
+    <section id="liability" class="section">
+      <h2>13. Limitation of Liability</h2>
+      <p>To the maximum extent permitted by law, DuelGood and its affiliates will not be liable for any indirect, incidental, special, consequential, exemplary, or punitive damages, or any loss of profits, data, goodwill, or other intangible losses, arising from or relating to your use of the Service.</p>
+    </section>
+
+    <section id="indemnity" class="section">
+      <h2>14. Indemnity</h2>
+      <p>You agree to defend, indemnify, and hold harmless DuelGood and its officers, directors, employees, and agents from any claims, liabilities, damages, losses, and expenses (including reasonable attorneys’ fees) arising out of or in any way connected with your use of the Service or violation of these Terms.</p>
+    </section>
+
+    <section id="law" class="section">
+      <h2>15. Governing Law & Venue</h2>
+      <p>These Terms are governed by the laws of the State of Indiana, USA, without regard to 
+        conflict-of-law principles. You agree to the exclusive jurisdiction and venue of the 
+        courts located in Indiana for all disputes arising out of or relating to the Terms or the Service.</p>
+    </section>
+
+    <section id="changes" class="section">
+      <h2>16. Changes to Terms</h2>
+      <p>We may update these Terms from time to time. If changes are material, we will provide notice (e.g., by email or by posting a notice on the Service) before the changes take effect. Continued use after changes become effective constitutes acceptance.</p>
+    </section>
+</main>
+<!--#include virtual="/includes/footer" -->
