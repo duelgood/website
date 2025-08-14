@@ -66,6 +66,7 @@ coverage/
 docker-compose.override.yml
 docker-compose.local.yml
 TODO.md
+*.dev
 
 # Configuration overrides
 nginx.local.conf
