@@ -2,18 +2,29 @@ IMAGE_NAME := zkeulr/duelgood
 TIMESTAMP := $(shell date +%Y%m%d-%H%M%S)
 CONTAINER_NAME := duelgood-web
 
-git: 
-	git add .
-	git commit -m "Update $(TIMESTAMP)" || echo "No changes to commit"
-	git push
-
+# Development commands
 dev:
-	docker stop $(CONTAINER_NAME)-dev 2>/dev/null || true
-	docker rm $(CONTAINER_NAME)-dev 2>/dev/null || true
-	docker build -f Dockerfile.dev -t $(IMAGE_NAME):dev .
-	docker run -d --name $(CONTAINER_NAME)-dev -p 80:80 $(IMAGE_NAME):dev
+	@echo "Starting development server..."
+	docker-compose -f docker-compose.yml.dev up --build
 
-docker: 
+dev-down:
+	@echo "Stopping development server..."
+	docker-compose -f docker-compose.yml.dev down
+
+dev-logs:
+	docker-compose -f docker-compose.yml.dev logs -f
+
+# Production commands
+prod:
+	@echo "Starting production server..."
+	docker-compose up --build -d
+
+prod-down:
+	@echo "Stopping production server..."
+	docker-compose down
+
+# Build and push to registry
+build-push:
 	docker buildx create --use --name multiarch-builder 2>/dev/null || true
 	docker buildx build \
 		--platform linux/amd64,linux/arm64 \
@@ -22,11 +33,19 @@ docker:
 		--push \
 		.
 
-stop-dev:
-	docker stop $(CONTAINER_NAME)-dev 2>/dev/null || true
-	docker rm $(CONTAINER_NAME)-dev 2>/dev/null || true
+# Git operations
+git: 
+	git add .
+	git commit -m "Update $(TIMESTAMP)" || echo "No changes to commit"
+	git push
 
+# Cleanup
 clean: 
-	docker container prune -f
+	docker system prune -f
+	docker volume prune -f
 
-.PHONY: git docker dev stop-dev clean
+# Health check
+health:
+	curl -f http://localhost/health || echo "Service not healthy"
+
+.PHONY: dev dev-down dev-logs prod prod-down build-push git clean health
