@@ -5,6 +5,7 @@ CONTAINER_NAME := duelgood-web
 git: 
 	git add .
 	git commit -m "Update $(TIMESTAMP)" || echo "No changes to commit"
+	git push
 
 push: 
 	docker buildx create --use --name multiarch-builder 2>/dev/null || true
