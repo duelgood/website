@@ -1,0 +1,7 @@
+<!--#include virtual="/includes/header" -->
+<main>
+  <p>
+    Donations haven't been set up yet. Check back later!
+  </p>
+</main>
+<!--#include virtual="/includes/footer" -->

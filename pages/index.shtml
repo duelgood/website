@@ -1,9 +1,7 @@
-<!-- pages/index.shtml -->
 <!--#include virtual="/includes/header" -->
 <main>
   <p>
-    Donations haven't been set up yet. Check back later for live statistics, 
-    leaderboards, and donation totals!
+    The homepage hasn't been set up yet. Check back later!
   </p>
 </main>
 <!--#include virtual="/includes/footer" -->

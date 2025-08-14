@@ -1,0 +1,8 @@
+<!--#include virtual="/includes/header" -->
+<main>
+  <p>
+    The research page hasn't been set up yet. Check 
+    back later!
+  </p>
+</main>
+<!--#include virtual="/includes/footer" -->
