@@ -16,7 +16,7 @@ docker:
 		--push \
 		.
 
-run:
+run: docker
 	docker-compose down 2>/dev/null || true
 	docker pull $(IMAGE_NAME):latest
 	docker-compose up -d
