@@ -5,30 +5,10 @@ logs/
 # Docker
 .dockerignore
 
-# Backup files
-backup-*.tar.gz
-
 # Temporary files
 *.tmp
 *.temp
 .DS_Store
-Thumbs.db
-
-# Editor files
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-.vim/
-
-# OS generated files
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
 Thumbs.db
 
 # SSL certificates (if storing locally)
@@ -43,31 +23,18 @@ ssl/
 .env.local
 .env.production
 
-# Node modules (if using any build tools)
-node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
 # Build artifacts
 dist/
 build/
 
 # Cache directories
 .cache/
-.parcel-cache/
 
-# Development tools
-.sass-cache/
-.nyc_output/
-coverage/
-
-# Local development
+# Local development overrides
 docker-compose.override.yml
 docker-compose.local.yml
-TODO.md
-*.dev
-
-# Configuration overrides
 nginx.local.conf
 config.local.*
+
+# Development
+*.dev
