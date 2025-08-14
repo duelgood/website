@@ -6,4 +6,4 @@
     leaderboards, and donation totals!
   </p>
 </main>
-<!--#include virtual="/includes/footer.html" -->
+<!--#include virtual="/includes/footer" -->
