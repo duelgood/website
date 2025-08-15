@@ -38,4 +38,5 @@ config.local.*
 
 # Development
 *.dev
+*.bck
 TODO.md
