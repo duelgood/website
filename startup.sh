@@ -1,5 +1,5 @@
 #!/bin/bash
-set -euo pipefail
+set -uo pipefail
 
 # ====== CONFIG ======
 CERT_SECRET_OCID="ocid1.vaultsecret.oc1.iad.amaaaaaaah7zwoqaggtx3yt3g3zkogvafeqmfneoufymbkymkaicp65lhqsa"
@@ -19,9 +19,11 @@ sudo chown root:root "$SECRETS_DIR"
 sudo chmod 700 "$SECRETS_DIR"
 
 # ====== SET SSH TIMEOUT TO 24 HOURS ======
+sudo sed -i '/^ClientAliveInterval/d' /etc/ssh/sshd_config || true
+sudo sed -i '/^ClientAliveCountMax/d' /etc/ssh/sshd_config || true
 echo "ClientAliveInterval 3600" | sudo tee -a /etc/ssh/sshd_config
 echo "ClientAliveCountMax 24" | sudo tee -a /etc/ssh/sshd_config
-sudo systemctl restart sshd
+sudo systemctl restart sshd || true
 
 # ====== FETCH CERT & KEY FROM OCI VAULT ======
 if ! oci --auth instance_principal secrets secret-bundle get \
@@ -29,7 +31,6 @@ if ! oci --auth instance_principal secrets secret-bundle get \
     --query "data.\"secret-bundle-content\".content" \
     --raw-output | base64 --decode | sudo tee "$SECRETS_DIR/cert.pem" > /dev/null; then
     echo "ERROR: Failed to fetch the certificate from OCI Vault." >&2
-    echo "Please manually paste the certificate into $SECRETS_DIR/cert.pem" >&2
 fi
 
 if ! oci --auth instance_principal secrets secret-bundle get \
@@ -37,28 +38,38 @@ if ! oci --auth instance_principal secrets secret-bundle get \
     --query "data.\"secret-bundle-content\".content" \
     --raw-output | base64 --decode | sudo tee "$SECRETS_DIR/key.pem" > /dev/null; then
     echo "ERROR: Failed to fetch the key from OCI Vault." >&2
-    echo "Please manually paste the key into $SECRETS_DIR/key.pem" >&2
 fi
 
 sudo chmod 644 "$SECRETS_DIR/cert.pem" || true
 sudo chmod 600 "$SECRETS_DIR/key.pem" || true
 
 # ====== INSTALL DOCKER & COMPOSE ======
-sudo yum install -y yum-utils
-sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-sudo yum install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
-sudo systemctl enable --now docker
+if ! command -v docker &> /dev/null; then
+    sudo yum install -y yum-utils || true
+    sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo || true
+    sudo yum install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin || true
+    sudo systemctl enable --now docker || true
+else
+    echo "Docker already installed, skipping."
+fi
 
 # ====== ENABLE FIREWALL PORTS ======
 sudo firewall-cmd --permanent --add-service=http
 sudo firewall-cmd --permanent --add-service=https
 sudo firewall-cmd --reload || true
 
-# ====== RUN CONTAINER ======
-if ! sudo docker ps -a --format '{{.Names}}' | grep -q "^$CONTAINER_NAME$"; then
-    sudo docker rm -f $CONTAINER_NAME
+# ====== REMOVE OLD CONTAINER ======
+if sudo docker ps -a --format '{{.Names}}' | grep -q "^$CONTAINER_NAME$"; then
+    echo "Removing old container: $CONTAINER_NAME"
+    sudo docker rm -f "$CONTAINER_NAME"
 fi
 
+# ====== PULL LATEST IMAGE ======
+echo "Pulling latest image: $IMAGE_NAME"
+sudo docker pull "$IMAGE_NAME"
+
+# ====== RUN CONTAINER ======
+echo "Starting container: $CONTAINER_NAME"
 sudo docker run -d \
     --name "$CONTAINER_NAME" \
     --restart unless-stopped \
