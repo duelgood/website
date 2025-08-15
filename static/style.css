@@ -4,6 +4,9 @@ body {
   font-family: serif;
   background-color: #ffffff;
   color: #000;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 /* -------------------- Header & Navigation -------------------- */
@@ -163,6 +166,7 @@ main {
   margin: 100px auto 40px;
   padding: 0 20px;
   line-height: 1.6;
+  flex: 1;
 }
 
 /* -------------------- Graphic: Difference of Rectangles -------------------- */
@@ -229,21 +233,21 @@ main {
 }
 
 .minus {
-  bottom: 35%;
+  bottom: 15%;
   left: 28.5%;
   width: 3%;
   height: 1%;
 }
 
 .equals-top {
-  bottom: 37%;
+  bottom: 17%;
   left: 58%;
   width: 3%;
   height: 1%;
 }
 
 .equals-bottom {
-  bottom: 35%;
+  bottom: 15%;
   left: 58%;
   width: 3%;
   height: 1%;
@@ -286,19 +290,9 @@ footer {
   background-color: white;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   padding: 30px 0 20px;
-  margin-top: 60px;
+  margin-top: auto;
   position: relative;
   box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-}
-
-footer::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, #6c757d, transparent);
 }
 
 .footer-content {
@@ -499,4 +493,50 @@ main {
 
 .faq-answer p {
   margin: 0.5rem 0 0 0;
+}
+
+/* Language Switcher */
+.language-switcher {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-left: 15px;
+  padding-left: 15px;
+  border-left: 1px solid #ddd;
+}
+
+.lang-link {
+  color: #666 !important;
+  text-decoration: none !important;
+  font-size: 12px !important;
+  font-weight: normal !important;
+  padding: 4px 6px !important;
+  border-radius: 3px !important;
+  transition: all 0.3s ease !important;
+}
+
+.lang-link:hover {
+  color: darkgreen !important;
+  background-color: rgba(0, 100, 0, 0.05) !important;
+  transform: none !important; /* Override nav hover effect */
+}
+
+.lang-link.active {
+  color: darkgreen !important;
+  font-weight: bold !important;
+}
+
+.lang-separator {
+  color: #ccc;
+  font-size: 12px;
+}
+
+@media (max-width: 599px) {
+  .language-switcher {
+    border-left: none;
+    margin-left: 0;
+    padding-left: 0;
+    justify-content: center;
+    margin-top: 10px;
+  }
 }

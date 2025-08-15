@@ -2,58 +2,56 @@
 
 A website for canceling opposing political donations and directing the difference to charity.
 
-## Development
+## Getting an Instance
 
-Start the development server with live reload:
+This website is hosted with Oracle Cloud's always-free tier. Here's a
+script to aid in getting an always-free instance:
 
-```bash
-make dev
+Here is the shape to select:
+
+- Oracle Linux 9
+- ARM ec2.x.x.x.micro
+
+```js
+function keepSessionAlive() {
+  // Click the "Create" button
+  const buttons = Array.from(document.querySelectorAll("button"));
+  const createBtn = buttons.find((btn) => btn.textContent.trim() === "Create");
+
+  if (createBtn) {
+    createBtn.click();
+    console.log('Clicked "Create" at', new Date().toLocaleTimeString());
+  } else {
+    console.warn('"Create" button not found!');
+  }
+
+  // Simulate mouse movement
+  document.dispatchEvent(
+    new MouseEvent("mousemove", {
+      bubbles: true,
+      cancelable: true,
+      clientX: Math.random() * window.innerWidth,
+      clientY: Math.random() * window.innerHeight,
+    })
+  );
+
+  // Simulate key press
+  document.dispatchEvent(
+    new KeyboardEvent("keydown", { key: "Shift", bubbles: true })
+  );
+  document.dispatchEvent(
+    new KeyboardEvent("keyup", { key: "Shift", bubbles: true })
+  );
+
+  // Occasionally switch focus to mimic tab switching
+  if (Math.random() > 0.8) {
+    // ~20% of the time
+    window.blur();
+    setTimeout(() => window.focus(), 500);
+  }
+}
+
+// Run immediately, then every 30 seconds
+keepSessionAlive();
+setInterval(keepSessionAlive, 30000);
 ```
-
-Stop the development server:
-
-```bash
-make dev-down
-```
-
-View logs:
-
-```bash
-make dev-logs
-```
-
-## Production
-
-Start production server:
-
-```bash
-make prod
-```
-
-Stop production server:
-
-```bash
-make prod-down
-```
-
-## Project Structure
-
-- `pages/` - SHTML pages with server-side includes
-- `includes/` - Reusable header and footer components
-- `static/` - CSS, images, and other static assets
-- `nginx.conf` - Production nginx configuration with HTTPS
-- `nginx.conf.dev` - Development nginx configuration (HTTP only)
-
-## Deployment
-
-The site is containerized and ready for deployment. SSL certificates should be placed in `/etc/ssl/cloudflare/` in the production container.
-
-## Health Check
-
-Check if the service is running:
-
-```bash
-make health
-```
-
-Or visit: http://localhost/health

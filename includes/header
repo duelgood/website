@@ -1,5 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+  <script>
+    // Redirect Spanish speakers to Spanish version
+    const userLang = navigator.language || navigator.userLanguage;
+    if (userLang.startsWith('es') && !window.location.pathname.includes('/es/')) {
+      const currentPath = window.location.pathname;
+      const spanishPath = '/es/pages' + currentPath.replace('/pages', '');
+      window.location.href = spanishPath;
+    }
+  </script>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -21,6 +30,11 @@
           <a href="/about" class="hover-underline">About</a>
           <a href="/research" class="hover-underline">Research</a>
           <a href="/faq" class="hover-underline">FAQ</a>
+          <div class="language-switcher">
+              <a href="#" class="lang-link active">EN</a>
+              <span class="lang-separator">|</span>
+              <a href="/es/pages/" class="lang-link">ES</a>
+          </div>
         </div>
         <a href="/donate" class="donate-btn">Donate</a>
       </nav>

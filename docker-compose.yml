@@ -1,17 +1,15 @@
+version: "3.9"
+
 services:
   web:
-    build: .
-    image: ${IMAGE_NAME:-zkeulr/duelgood}:latest
-    container_name: ${CONTAINER_NAME:-duelgood-web}
+    image: zkeulr/duelgood:latest
+    container_name: duelgood-web
     restart: unless-stopped
     ports:
-      - "${PROD_HTTP_PORT:-80}:80"
-      - "${PROD_HTTPS_PORT:-443}:443"
+      - "80:80"
+      - "443:443"
     volumes:
-      # Production mounts
-      - ./pages:/var/www/html/pages
-      - ./includes:/var/www/html/includes
-      - ./static:/var/www/html/static
+      - /etc/ssl/cloudflare:/etc/ssl/cloudflare:ro
       - nginx-logs:/var/log/nginx
     networks:
       - duelgood-network
