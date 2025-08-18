@@ -10,8 +10,6 @@
     NOTICE: the statistics on this page are NOT correct. This is a test page.
   </p>
 
-  <h1 style="text-align:center; margin-bottom: 30px;">Impact Dashboard</h1>
-
   <!-- Stats Cards -->
   <section class="stats-grid">
     <div class="stat-card">
@@ -64,7 +62,7 @@
     <p style="text-align:center; font-size:0.9em;">Hover over a state to see totals</p>
   </section>
 
-
+1
 </main>
 <!--#include virtual="/includes/footer" -->
 
