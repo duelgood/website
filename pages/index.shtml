@@ -1,19 +1,144 @@
 <!--# include virtual="/includes/header" -->
 <main>
+  <noscript>
+    <div>
+      This page requires JavaScript to function properly.
+    </div>
+  </noscript>
+
   <p>
     The homepage hasn't been set up yet. Check back later!
   </p>
   <p>
+    Last updated: 
     Standings today: 
+
     Recent donations: 
     All-time highest donors: 
+    Map of where people donate the most from in the US: 
+    <!-- Hover over each state to see totals -->
+    
     Total to charity: 
-    Estimated lives saved: 
-    Total to Republican party. 
-    Total to Democratic party. 
+    This month: 
+
+    Total estimated lives saved:
+    This month: 
+
+    Total to cause A:
+    Total to cause B: 
+
+    
   </p>
-  <p>
-  </p>
+
+  <h1 style="text-align:center; margin-bottom: 30px;">Impact Dashboard</h1>
+
+  <!-- Stats Cards -->
+  <section class="stats-grid">
+    <div class="stat-card">
+      <h2>Total to Charity</h2>
+      <p class="counter" data-target="123456">$0</p>
+    </div>
+    <div class="stat-card">
+      <h2>This Month</h2>
+      <p class="counter" data-target="7890">$0</p>
+    </div>
+    <div class="stat-card">
+      <h2>Lives Saved</h2>
+      <p class="counter" data-target="4321">0</p>
+    </div>
+    <div class="stat-card">
+      <h2>Lives Saved This Month</h2>
+      <p class="counter" data-target="123">0</p>
+    </div>
+  </section>
+
+  <!-- Donors -->
+  <section class="list-section">
+    <h2>Recent Donations</h2>
+    <ul>
+      <li>Alice — $100</li>
+      <li>Bob — $50</li>
+      <li>Charlie — $200</li>
+    </ul>
+
+    <h2>Top Donors</h2>
+    <ul>
+      <li>Carol — $10,000</li>
+      <li>Dave — $8,000</li>
+      <li>Eve — $7,500</li>
+    </ul>
+  </section>
+
+  <!-- US Map Placeholder -->
+  <section>
+    <h2 style="margin-top:40px;">Donations Across the US</h2>
+    <div id="us-map"></div>
+    <p style="text-align:center; font-size:0.9em;">Hover over a state to see totals</p>
+  </section>
+
 
 </main>
 <!--#include virtual="/includes/footer" -->
+
+<!-- Chart.js + USA map plugin -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-chart-geo@4.3.0/build/index.umd.min.js"></script>
+
+<script>
+// Counter animation
+document.querySelectorAll('.counter').forEach(counter => {
+  const target = +counter.getAttribute('data-target');
+  let current = 0;
+  const increment = target / 100; // 100 steps
+  const update = () => {
+    current += increment;
+    if (current < target) {
+      counter.textContent = target > 1000 ? "$" + Math.floor(current).toLocaleString() : Math.floor(current).toLocaleString();
+      requestAnimationFrame(update);
+    } else {
+      counter.textContent = target > 1000 ? "$" + target.toLocaleString() : target.toLocaleString();
+    }
+  };
+  update();
+});
+
+// US Map
+fetch("https://cdn.jsdelivr.net/npm/us-atlas/states-10m.json")
+  .then(res => res.json())
+  .then(us => {
+    const ctx = document.getElementById("us-map").appendChild(document.createElement("canvas"));
+    const states = ChartGeo.topojson.feature(us, us.objects.states).features;
+
+    new Chart(ctx, {
+      type: 'choropleth',
+      data: {
+        labels: states.map(d => d.properties.name),
+        datasets: [{
+          label: "Donations by State",
+          data: states.map((d, i) => ({
+            feature: d,
+            value: Math.floor(Math.random() * 10000) // fake data
+          }))
+        }]
+      },
+      options: {
+        showOutline: true,
+        showGraticule: false,
+        scales: {
+          projection: {
+            axis: 'x',
+            projection: 'albersUsa'
+          }
+        },
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: ctx => `$${ctx.raw.value.toLocaleString()}`
+            }
+          }
+        }
+      }
+    });
+  });
+</script>

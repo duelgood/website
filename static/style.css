@@ -494,3 +494,61 @@ main {
 .faq-answer p {
   margin: 0.5rem 0 0 0;
 }
+
+/* Dashboard layout */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.stat-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  border-top: 6px solid darkgreen;
+}
+
+.stat-card:nth-child(2) {
+  border-top-color: #0a3161;
+}
+.stat-card:nth-child(3) {
+  border-top-color: #b31942;
+}
+.stat-card:nth-child(4) {
+  border-top-color: orange;
+}
+
+.stat-card h2 {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+
+.stat-card p {
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.list-section {
+  margin-top: 20px;
+}
+
+.list-section h2 {
+  color: #0a3161;
+  margin-top: 20px;
+}
+
+.list-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.list-section li {
+  background: rgba(0, 100, 0, 0.05);
+  margin: 5px 0;
+  padding: 8px 12px;
+  border-radius: 6px;
+}
