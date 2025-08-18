@@ -7,10 +7,10 @@
   </noscript>
 
   <p>
-    The homepage hasn't been set up yet. Check back later!
+    NOTICE: the statistics on this page are NOT correct. This is a test page.
   </p>
   <p>
-    Last updated: 
+    Last updated: {{ date }}
     Standings today: 
 
     Recent donations: 
@@ -48,6 +48,14 @@
     </div>
     <div class="stat-card">
       <h2>Lives Saved This Month</h2>
+      <p class="counter" data-target="123">0</p>
+    </div>
+    <div class="stat-card">
+      <h2>Total donated to Cause A</h2>
+      <p class="counter" data-target="123">0</p>
+    </div>
+    <div class="stat-card">
+      <h2>Total donated to Cause B</h2>
       <p class="counter" data-target="123">0</p>
     </div>
   </section>
