@@ -1,4 +1,4 @@
-<!--#include virtual="/includes/header" -->
+<!--# include virtual="/includes/header" -->
 <main>
     <h1>Terms of Service</h1>
     <p class="meta" id="last-updated">Last Updated: <time datetime="2025-08-14">August 14, 2025</time></p>

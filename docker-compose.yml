@@ -12,6 +12,18 @@ services:
     networks:
       - duelgood-network
 
+  mail:
+    image: boky/postfix:latest
+    container_name: duelgood-mail
+    restart: unless-stopped
+    environment:
+      - RELAYHOST= # empty for direct
+      - ALIASES=contact@duelgood.org:contact+ezekielulrich@gmail.com,media@duelgood.org:media+ezekielulrich@gmail.com
+    ports:
+      - "25:25"
+    networks:
+      - duelgood-network
+
 networks:
   duelgood-network:
     driver: bridge

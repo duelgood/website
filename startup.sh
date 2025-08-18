@@ -7,6 +7,7 @@ KEY_SECRET_OCID="ocid1.vaultsecret.oc1.iad.amaaaaaaah7zwoqahl3rucnxgfxjd5b5ldjb7
 SECRETS_DIR="/etc/ssl/cloudflare"
 IMAGE_NAME="zkeulr/duelgood"
 CONTAINER_NAME="duelgood-web"
+DOMAIN_NAME="duelgood.org"
 
 # ====== INSTALL OCI CLI ======
 sudo dnf -y update
@@ -40,8 +41,8 @@ if ! oci --auth instance_principal secrets secret-bundle get \
     echo "ERROR: Failed to fetch the key from OCI Vault." >&2
 fi
 
-sudo chmod 644 "$SECRETS_DIR/cert.pem" || true
-sudo chmod 600 "$SECRETS_DIR/key.pem" || true
+sudo chmod 644 "$SECRETS_DIR/cert.pem" 
+sudo chmod 600 "$SECRETS_DIR/key.pem" 
 
 # ====== INSTALL DOCKER & COMPOSE ======
 if ! command -v docker &> /dev/null; then
@@ -56,6 +57,7 @@ fi
 # ====== ENABLE FIREWALL PORTS ======
 sudo firewall-cmd --permanent --add-service=http
 sudo firewall-cmd --permanent --add-service=https
+sudo firewall-cmd --permanent --add-service=smtp
 sudo firewall-cmd --reload || true
 
 # ====== REMOVE OLD CONTAINER ======

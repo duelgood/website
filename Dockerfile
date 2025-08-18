@@ -14,7 +14,7 @@ RUN mkdir -p /var/www/html /var/log/nginx /etc/ssl/cloudflare
 
 # Copy website files
 COPY pages/ /var/www/html/pages/
-COPY includes/ /var/www/html/includes/
+COPY pages/includes/ /var/www/html/pages/includes/
 COPY static/ /var/www/html/static/
 
 # Copy nginx configuration
