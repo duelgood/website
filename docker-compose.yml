@@ -13,12 +13,13 @@ services:
       - duelgood-network
 
   mail:
-    image: boky/postfix:latest
+    image: boky/postfix
     container_name: duelgood-mail
     restart: unless-stopped
     environment:
-      - RELAYHOST= # empty for direct
-      - ALIASES=contact@duelgood.org:contact+ezekielulrich@gmail.com,media@duelgood.org:media+ezekielulrich@gmail.com
+      - ALIASES=media@duelgood.org=media+ezekielulrich@gmail.com,contact@duelgood.org=contact+ezekielulrich@gmail.com,legal@duelgood.org=contact+ezekielulrich@gmail.com
+      - MAILNAME=duelgood.org
+      - RELAYHOST=[smtp.gmail.com]:587
     ports:
       - "25:25"
     networks:

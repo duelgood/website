@@ -3,8 +3,13 @@
   <h1>Contact</h1>
   
   <div class="contact-intro">
-    <p>Get in touch with questions, feedback, or suggestions at 
-        <a href="mailto:contact@duelgood.org" class="email-link">contact@duelgood.org</a>.
+    <p>
+      For media inquiries, please contact 
+      <a href="mailto:media@duelgood.org" class="email-link">media@duelgood.org</a>.
+      For legal inquiries, please contact 
+      <a href="mailto:legal@duelgood.org" class="email-link">legal@duelgood.org</a>.
+      For all other inquiries, reach out to
+      <a href="mailto:contact@duelgood.org" class="email-link">contact@duelgood.org</a>.
     </p>
   </div>
     
