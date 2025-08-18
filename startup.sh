@@ -7,7 +7,6 @@ KEY_SECRET_OCID="ocid1.vaultsecret.oc1.iad.amaaaaaaah7zwoqahl3rucnxgfxjd5b5ldjb7
 SECRETS_DIR="/etc/ssl/cloudflare"
 IMAGE_NAME="zkeulr/duelgood"
 WEB_CONTAINER_NAME="duelgood-web"
-MAIL_CONTAINER_NAME="duelgood-mail"
 DOMAIN_NAME="duelgood.org"
 
 # ====== INSTALL OCI CLI ======
@@ -72,11 +71,9 @@ if sudo docker ps -a --format '{{.Names}}' | grep -q "^$MAIL_CONTAINER_NAME$"; t
 fi
 
 # ====== PULL LATEST IMAGE ======
-echo "Pulling latest image: $IMAGE_NAME"
 sudo docker pull "$IMAGE_NAME"
 
 # ====== RUN CONTAINERS ======
-echo "Starting web container: $WEB_CONTAINER_NAME"
 sudo docker run -d \
     --name "$WEB_CONTAINER_NAME" \
     --restart unless-stopped \
@@ -85,9 +82,3 @@ sudo docker run -d \
     -v "$SECRETS_DIR":"$SECRETS_DIR":ro \
     "$IMAGE_NAME"
 
-echo "Starting mail container: $MAIL_CONTAINER_NAME"
-sudo docker run -d \
-    --name "$MAIL_CONTAINER_NAME" \
-    --restart unless-stopped \
-    -p 25:25 \
-    "$IMAGE_NAME"
