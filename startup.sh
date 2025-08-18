@@ -57,17 +57,12 @@ fi
 # ====== ENABLE FIREWALL PORTS ======
 sudo firewall-cmd --permanent --add-service=http
 sudo firewall-cmd --permanent --add-service=https
-sudo firewall-cmd --permanent --add-service=smtp
 sudo firewall-cmd --reload || true
 
 # ====== REMOVE OLD CONTAINERS ======
 if sudo docker ps -a --format '{{.Names}}' | grep -q "^$WEB_CONTAINER_NAME$"; then
     echo "Removing old web container: $WEB_CONTAINER_NAME"
     sudo docker rm -f "$WEB_CONTAINER_NAME"
-fi
-if sudo docker ps -a --format '{{.Names}}' | grep -q "^$MAIL_CONTAINER_NAME$"; then
-    echo "Removing old mail container: $MAIL_CONTAINER_NAME"
-    sudo docker rm -f "$MAIL_CONTAINER_NAME"
 fi
 
 # ====== PULL LATEST IMAGE ======
