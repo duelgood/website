@@ -6,7 +6,8 @@ CERT_SECRET_OCID="ocid1.vaultsecret.oc1.iad.amaaaaaaah7zwoqaggtx3yt3g3zkogvafeqm
 KEY_SECRET_OCID="ocid1.vaultsecret.oc1.iad.amaaaaaaah7zwoqahl3rucnxgfxjd5b5ldjb7zpov3ir42wxpfkcjvtmlo2a"
 SECRETS_DIR="/etc/ssl/cloudflare"
 IMAGE_NAME="zkeulr/duelgood"
-CONTAINER_NAME="duelgood-web"
+WEB_CONTAINER_NAME="duelgood-web"
+MAIL_CONTAINER_NAME="duelgood-mail"
 DOMAIN_NAME="duelgood.org"
 
 # ====== INSTALL OCI CLI ======
@@ -60,22 +61,33 @@ sudo firewall-cmd --permanent --add-service=https
 sudo firewall-cmd --permanent --add-service=smtp
 sudo firewall-cmd --reload || true
 
-# ====== REMOVE OLD CONTAINER ======
-if sudo docker ps -a --format '{{.Names}}' | grep -q "^$CONTAINER_NAME$"; then
-    echo "Removing old container: $CONTAINER_NAME"
-    sudo docker rm -f "$CONTAINER_NAME"
+# ====== REMOVE OLD CONTAINERS ======
+if sudo docker ps -a --format '{{.Names}}' | grep -q "^$WEB_CONTAINER_NAME$"; then
+    echo "Removing old web container: $WEB_CONTAINER_NAME"
+    sudo docker rm -f "$WEB_CONTAINER_NAME"
+fi
+if sudo docker ps -a --format '{{.Names}}' | grep -q "^$MAIL_CONTAINER_NAME$"; then
+    echo "Removing old mail container: $MAIL_CONTAINER_NAME"
+    sudo docker rm -f "$MAIL_CONTAINER_NAME"
 fi
 
 # ====== PULL LATEST IMAGE ======
 echo "Pulling latest image: $IMAGE_NAME"
 sudo docker pull "$IMAGE_NAME"
 
-# ====== RUN CONTAINER ======
-echo "Starting container: $CONTAINER_NAME"
+# ====== RUN CONTAINERS ======
+echo "Starting web container: $WEB_CONTAINER_NAME"
 sudo docker run -d \
-    --name "$CONTAINER_NAME" \
+    --name "$WEB_CONTAINER_NAME" \
     --restart unless-stopped \
     -p 80:80 \
     -p 443:443 \
     -v "$SECRETS_DIR":"$SECRETS_DIR":ro \
+    "$IMAGE_NAME"
+
+echo "Starting mail container: $MAIL_CONTAINER_NAME"
+sudo docker run -d \
+    --name "$MAIL_CONTAINER_NAME" \
+    --restart unless-stopped \
+    -p 25:25 \
     "$IMAGE_NAME"
