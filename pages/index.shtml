@@ -9,26 +9,6 @@
   <p>
     NOTICE: the statistics on this page are NOT correct. This is a test page.
   </p>
-  <p>
-    Last updated: {{ date }}
-    Standings today: 
-
-    Recent donations: 
-    All-time highest donors: 
-    Map of where people donate the most from in the US: 
-    <!-- Hover over each state to see totals -->
-    
-    Total to charity: 
-    This month: 
-
-    Total estimated lives saved:
-    This month: 
-
-    Total to cause A:
-    Total to cause B: 
-
-    
-  </p>
 
   <h1 style="text-align:center; margin-bottom: 30px;">Impact Dashboard</h1>
 
@@ -52,11 +32,11 @@
     </div>
     <div class="stat-card">
       <h2>Total donated to Cause A</h2>
-      <p class="counter" data-target="123">0</p>
+      <p class="counter" data-target="123">$0</p>
     </div>
     <div class="stat-card">
       <h2>Total donated to Cause B</h2>
-      <p class="counter" data-target="123">0</p>
+      <p class="counter" data-target="123">$0</p>
     </div>
   </section>
 
