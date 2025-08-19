@@ -81,19 +81,6 @@ EOF
   fi
 }
 
-clone_repo() {
-  echo ">>> Cloning repository..."
-  if [ -d "$REPO_DIR" ]; then
-    echo "Repository already exists, pulling latest changes..."
-    cd "$REPO_DIR"
-    sudo git pull
-  else
-    echo "Cloning repository from GitHub..."
-    sudo git clone git@github.com:zkeulr/duelgood.git "$REPO_DIR"
-  fi
-  cd "$REPO_DIR"
-}
-
 fetch_certs() {
   echo ">>> Fetching TLS certs from OCI Vault..."
   sudo mkdir -p "$SECRETS_DIR" && sudo chmod 700 "$SECRETS_DIR"
@@ -130,7 +117,6 @@ deploy_stack() {
 # MAIN 
 install_prereqs
 configure_ssh_agent
-clone_repo
 fetch_certs
 configure_firewall
 deploy_stack
