@@ -1,22 +1,32 @@
 #!/bin/bash
 set -uo pipefail
 
-# ====== CONFIG ======
+# CONFIG 
 CERT_SECRET_OCID="ocid1.vaultsecret.oc1.iad.amaaaaaaah7zwoqaggtx3yt3g3zkogvafeqmfneoufymbkymkaicp65lhqsa"
 KEY_SECRET_OCID="ocid1.vaultsecret.oc1.iad.amaaaaaaah7zwoqahl3rucnxgfxjd5b5ldjb7zpov3ir42wxpfkcjvtmlo2a"
 SECRETS_DIR="/etc/ssl/cloudflare"
 
+# FUNCTIONS 
+
 install_prereqs() {
+  echo ">>> Installing prerequisites..."
   sudo dnf -y update
   sudo dnf -y install oraclelinux-developer-release-el9 || true
-  command -v oci >/dev/null || sudo dnf -y install python39-oci-cli
-  command -v docker >/dev/null || {
+
+  if ! command -v oci >/dev/null; then
+    sudo dnf -y install python39-oci-cli
+  fi
+
+  if ! command -v docker >/dev/null; then
     sudo dnf -y install docker-ce docker-ce-cli containerd.io docker-compose-plugin
     sudo systemctl enable --now docker
-  }
+  else
+    echo "Docker already installed, skipping."
+  fi
 }
 
 fetch_certs() {
+  echo ">>> Fetching TLS certs from OCI Vault..."
   sudo mkdir -p "$SECRETS_DIR" && sudo chmod 700 "$SECRETS_DIR"
 
   oci --auth instance_principal secrets secret-bundle get \
@@ -33,14 +43,25 @@ fetch_certs() {
   sudo chmod 600 "$SECRETS_DIR/key.pem"
 }
 
-deploy_stack() {
-  sudo docker-compose pull
-  sudo docker-compose up -d
-  sudo docker-compose run --rm backend flask --app app:create_app db-init
+configure_firewall() {
+  echo ">>> Configuring firewall..."
+  sudo firewall-cmd --permanent --add-service=http
+  sudo firewall-cmd --permanent --add-service=https
+  sudo firewall-cmd --reload || true
 }
 
+deploy_stack() {
+  echo ">>> Deploying full stack via docker-compose..."
+  sudo docker compose pull
+  sudo docker compose up -d
+  echo ">>> Initializing database..."
+  sudo docker compose run --rm backend flask --app app:create_app db-init
+}
+
+# MAIN 
 install_prereqs
 fetch_certs
+configure_firewall
 deploy_stack
 
-echo ">>> All services deployed via docker-compose."
+echo ">>> Startup complete. All services are running in docker-compose."
