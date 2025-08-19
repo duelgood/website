@@ -10,7 +10,8 @@ services:
       - /etc/ssl/cloudflare:/etc/ssl/cloudflare:ro
       - nginx-logs:/var/log/nginx
     depends_on:
-      - backend
+      backend:
+        condition: service_healthy
     networks:
       - duelgood-network
 
@@ -26,6 +27,11 @@ services:
       - "5000"
     depends_on:
       - db
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
     networks:
       - duelgood-network
 
