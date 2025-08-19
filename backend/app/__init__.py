@@ -48,11 +48,11 @@ def create_app():
             "donation_count": count
         }
 
-    return app
-
     @app.cli.command("db-init")
     @with_appcontext
     def db_init():
         """Initialize the database (create tables)."""
         db.create_all()
         click.echo("Database initialized.")
+
+    return app
