@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify
 from sqlalchemy import func, extract
-from datetime import datetime
+from datetime import datetime, timezone
 from . import db
 from .models import Donation
 
@@ -8,7 +8,7 @@ bp = Blueprint("api", __name__, url_prefix="/api")
 
 @bp.route("/stats")
 def stats():
-    now = datetime.now(datetime.timezone.utc)
+    now = datetime.now(timezone.utc)
     # Total donated
     total_amount = db.session.query(func.sum(Donation.amount)).scalar() or 0
 

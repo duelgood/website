@@ -17,6 +17,10 @@ def create_app():
 
     # Import models
     from .models import Donation
+    
+    # Import and register routes blueprint
+    from .routes import bp as api_bp
+    app.register_blueprint(api_bp)
 
     @app.route("/health")
     def health():
