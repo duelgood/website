@@ -13,7 +13,7 @@ docker:
 		
 git: 
 	git add .
-	git commit -m "Update $(TIMESTAMP)" || echo "No changes to commit"
+	git commit -m "Update $(TIMESTAMP)"
 	git push
 
 clean: 

@@ -8,7 +8,7 @@ bp = Blueprint("api", __name__, url_prefix="/api")
 
 @bp.route("/stats")
 def stats():
-    now = datetime.utcnow()
+    now = datetime.now(datetime.timezone.utc)
     # Total donated
     total_amount = db.session.query(func.sum(Donation.amount)).scalar() or 0
 
