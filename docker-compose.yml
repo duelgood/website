@@ -11,6 +11,36 @@ services:
       - nginx-logs:/var/log/nginx
     networks:
       - duelgood-network
+    depends_on:
+      - backend
+
+  backend:
+    build: ./backend
+    container_name: duelgood-backend
+    restart: unless-stopped
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/duelgood
+    volumes:
+      - ./backend:/app
+    networks:
+      - duelgood-network
+    expose:
+      - "5000"
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15
+    container_name: duelgood-db
+    restart: unless-stopped
+    environment:
+      [POSTGRES_USER=postgres, POSTGRES_PASSWORD=postgres, POSTGRES_DB=duelgood]
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - duelgood-network
+    ports:
+      - "5432:5432"
 
 networks:
   duelgood-network:
@@ -18,4 +48,6 @@ networks:
 
 volumes:
   nginx-logs:
+    driver: local
+  postgres_data:
     driver: local

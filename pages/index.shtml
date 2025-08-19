@@ -71,6 +71,15 @@
 <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-geo@4.3.0/build/index.umd.min.js"></script>
 
 <script>
+fetch("/api/stats")
+  .then(res => res.json())
+  .then(data => {
+    document.querySelectorAll('.counter')[0].setAttribute('data-target', data.total_amount);
+    // rerun your counter animation here if needed
+  });
+</script>
+
+<script>
 // Counter animation
 document.querySelectorAll('.counter').forEach(counter => {
   const target = +counter.getAttribute('data-target');

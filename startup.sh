@@ -77,3 +77,9 @@ sudo docker run -d \
     -v "$SECRETS_DIR":"$SECRETS_DIR":ro \
     "$IMAGE_NAME"
 
+sudo docker-compose up -d db
+sudo docker-compose run backend flask --app app:create_app shell
+from app import db, create_app
+app = create_app()
+with app.app_context():
+    db.create_all()
