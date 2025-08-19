@@ -55,3 +55,8 @@ function keepSessionAlive() {
 keepSessionAlive();
 setInterval(keepSessionAlive, 30000);
 ```
+
+## Setting up
+
+- git clone the repo
+- run startup.sh
