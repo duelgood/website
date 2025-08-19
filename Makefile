@@ -20,4 +20,4 @@ clean:
 	docker system prune -f
 	docker volume prune -f
 
-.PHONY: up down logs build-push git clean health
+.PHONY: docker git clean
