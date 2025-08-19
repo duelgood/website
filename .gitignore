@@ -11,7 +11,7 @@ logs/
 .DS_Store
 Thumbs.db
 
-# SSL certificates (if storing locally)
+# SSL certificates
 ssl/
 *.pem
 *.key
@@ -22,6 +22,7 @@ ssl/
 .env
 .env.local
 .env.production
+.vscode
 
 # Build artifacts
 dist/
@@ -29,6 +30,7 @@ build/
 
 # Cache directories
 .cache/
+__pycache__/
 
 # Local development overrides
 docker-compose.override.yml
