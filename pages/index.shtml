@@ -6,12 +6,6 @@
     </div>
   </noscript>
 
-  <!-- Hero -->
-  <section class="hero">
-    <h1>Making Every Duel Count</h1>
-    <p>Your donations change lives. See the impact below.</p>
-  </section>
-
   <!-- Stats Grid -->
   <section class="stats-grid">
     <div class="stat-card">
@@ -53,7 +47,6 @@
   <section>
     <h2 style="margin-top:40px;">Donations Across the US</h2>
     <div id="us-map"></div>
-    <p style="text-align:center; font-size:0.9em;">Hover over a state to see totals</p>
   </section>
 </main>
 <!--#include virtual="/includes/footer" -->

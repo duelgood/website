@@ -18,9 +18,9 @@ def stats():
         .filter(extract('month', Donation.time) == now.month)\
         .scalar() or 0
 
-    # Lives saved (example: assume $100 per life)
-    lives_saved = int(total_amount / 100)
-    lives_saved_month = int(month_amount / 100)
+    # Lives saved: https://www.givewell.org/how-much-does-it-cost-to-save-a-life
+    lives_saved = int(total_amount / 3000)
+    lives_saved_month = int(month_amount / 3000)
 
     # Donations by cause
     cause_a = db.session.query(func.sum(Donation.amount))\
