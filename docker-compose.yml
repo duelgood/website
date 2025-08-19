@@ -9,10 +9,10 @@ services:
     volumes:
       - /etc/ssl/cloudflare:/etc/ssl/cloudflare:ro
       - nginx-logs:/var/log/nginx
-    networks:
-      - duelgood-network
     depends_on:
       - backend
+    networks:
+      - duelgood-network
 
   backend:
     build: ./backend
@@ -22,12 +22,12 @@ services:
       - DATABASE_URL=postgresql://postgres:postgres@db:5432/duelgood
     volumes:
       - ./backend:/app
-    networks:
-      - duelgood-network
     expose:
       - "5000"
     depends_on:
       - db
+    networks:
+      - duelgood-network
 
   db:
     image: postgres:15
@@ -37,10 +37,10 @@ services:
       [POSTGRES_USER=postgres, POSTGRES_PASSWORD=postgres, POSTGRES_DB=duelgood]
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    networks:
-      - duelgood-network
     ports:
       - "5432:5432"
+    networks:
+      - duelgood-network
 
 networks:
   duelgood-network:

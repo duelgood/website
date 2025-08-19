@@ -5,11 +5,11 @@
   <div class="contact-intro">
     <p>
       For media inquiries, please contact 
-      <a href="mailto:media@duelgood.org" class="email-link">media@duelgood.org</a>.
+      <a target="_blank" rel="noopener noreferrer" href="mailto:media@duelgood.org" class="email-link">media@duelgood.org</a>.
       For legal inquiries, please contact 
-      <a href="mailto:legal@duelgood.org" class="email-link">legal@duelgood.org</a>.
+      <a target="_blank" rel="noopener noreferrer" href="mailto:legal@duelgood.org" class="email-link">legal@duelgood.org</a>.
       For all other inquiries, reach out to
-      <a href="mailto:contact@duelgood.org" class="email-link">contact@duelgood.org</a>.
+      <a target="_blank" rel="noopener noreferrer" href="mailto:contact@duelgood.org" class="email-link">contact@duelgood.org</a>.
     </p>
     <p>
       If you prefer to leave feedback anonymously, please use this <a target="_blank" rel="noopener noreferrer" href="https://forms.gle/7FN215dJE2Ws3pT78">form</a>.

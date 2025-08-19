@@ -2,6 +2,8 @@ from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 import os
 from datetime import datetime
+import click
+from flask.cli import with_appcontext
 
 db = SQLAlchemy()
 
@@ -47,3 +49,10 @@ def create_app():
         }
 
     return app
+
+@app.cli.command("db-init")
+@with_appcontext
+def db_init():
+    """Initialize the database (create tables)."""
+    db.create_all()
+    click.echo("Database initialized.")
