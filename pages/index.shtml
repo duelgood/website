@@ -7,30 +7,35 @@
   </noscript>
 
   <!-- Stats Grid -->
-  <section class="stats-grid">
-    <div class="stat-card">
-      <h2>Total to Charity</h2>
-      <p class="counter" id="total-amount">$0</p>
+  <section class="stats-overview">
+    <div class="stats-row">
+      <div class="stat-item primary">
+        <div class="stat-label">Total to Charity</div>
+        <div class="stat-value" id="total-amount">$0</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label">This Month</div>
+        <div class="stat-value" id="month-amount">$0</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label">Lives Saved</div>
+        <div class="stat-value" id="lives-saved">0</div>
+      </div>
     </div>
-    <div class="stat-card">
-      <h2>This Month</h2>
-      <p class="counter" id="month-amount">$0</p>
-    </div>
-    <div class="stat-card">
-      <h2>Lives Saved</h2>
-      <p class="counter" id="lives-saved">0</p>
-    </div>
-    <div class="stat-card">
-      <h2>Lives Saved This Month</h2>
-      <p class="counter" id="lives-saved-month">0</p>
-    </div>
-    <div class="stat-card">
-      <h2>Total to Cause A</h2>
-      <p class="counter" id="cause-a">$0</p>
-    </div>
-    <div class="stat-card">
-      <h2>Total to Cause B</h2>
-      <p class="counter" id="cause-b">$0</p>
+    
+    <div class="stats-row secondary">
+      <div class="stat-item">
+        <div class="stat-label">Lives Saved This Month</div>
+        <div class="stat-value" id="lives-saved-month">0</div>
+      </div>
+      <div class="stat-item cause-a">
+        <div class="stat-label">Total to Cause A</div>
+        <div class="stat-value" id="cause-a">$0</div>
+      </div>
+      <div class="stat-item cause-b">
+        <div class="stat-label">Total to Cause B</div>
+        <div class="stat-value" id="cause-b">$0</div>
+      </div>
     </div>
   </section>
 
@@ -39,11 +44,15 @@
     <div class="donor-lists">
       <div class="donor-list-container">
         <h2>Top Donors (All Time)</h2>
-        <div class="donor-list" id="top-donors-all"></div>
+        <div class="donor-list" id="top-donors-all">
+          <div class="donor-item placeholder">Loading...</div>
+        </div>
       </div>
       <div class="donor-list-container">
         <h2>Top Donors (This Month)</h2>
-        <div class="donor-list" id="top-donors-month"></div>
+        <div class="donor-list" id="top-donors-month">
+          <div class="donor-item placeholder">Coming soon...</div>
+        </div>
       </div>
     </div>
   </section>
@@ -67,90 +76,103 @@ async function loadStats() {
   try {
     const res = await fetch("/api/stats");
     const data = await res.json();
+    
+    console.log('Stats data:', data); // Debug log
 
     // Update counters
-    document.getElementById("total-amount").textContent = "$" + data.total_amount.toLocaleString();
-    document.getElementById("month-amount").textContent = "$" + data.month_amount.toLocaleString();
-    document.getElementById("lives-saved").textContent = data.lives_saved.toLocaleString();
-    document.getElementById("lives-saved-month").textContent = data.lives_saved_month.toLocaleString();
-    document.getElementById("cause-a").textContent = "$" + data.cause_a.toLocaleString();
-    document.getElementById("cause-b").textContent = "$" + data.cause_b.toLocaleString();
+    document.getElementById("total-amount").textContent = "$" + (data.total_amount || 0).toLocaleString();
+    document.getElementById("month-amount").textContent = "$" + (data.month_amount || 0).toLocaleString();
+    document.getElementById("lives-saved").textContent = (data.lives_saved || 0).toLocaleString();
+    document.getElementById("lives-saved-month").textContent = (data.lives_saved_month || 0).toLocaleString();
+    document.getElementById("cause-a").textContent = "$" + (data.cause_a || 0).toLocaleString();
+    document.getElementById("cause-b").textContent = "$" + (data.cause_b || 0).toLocaleString();
 
     // Top donors (all time)
     const topAllList = document.getElementById("top-donors-all");
     topAllList.innerHTML = "";
-    data.top_donors.forEach(d => {
-      const div = document.createElement("div");
-      div.className = "donor-item";
-      div.innerHTML = `<span class="donor-name">${d.donor}</span><span class="donor-amount">$${d.amount.toLocaleString()}</span>`;
-      topAllList.appendChild(div);
-    });
+    
+    if (data.top_donors && data.top_donors.length > 0) {
+      data.top_donors.forEach(d => {
+        const div = document.createElement("div");
+        div.className = "donor-item";
+        div.innerHTML = `<span class="donor-name">${d.donor}</span><span class="donor-amount">$${d.amount.toLocaleString()}</span>`;
+        topAllList.appendChild(div);
+      });
+    } else {
+      topAllList.innerHTML = '<div class="donor-item placeholder">No donors yet</div>';
+    }
 
     // Top donors this month - TODO: Backend needs to support this
-    // Add parameter like /api/stats?period=month to get monthly top donors
     const topMonthList = document.getElementById("top-donors-month");
     topMonthList.innerHTML = '<div class="donor-item placeholder">Coming soon...</div>';
 
-    // US map with existing Chart.js implementation
-    fetch("https://cdn.jsdelivr.net/npm/us-atlas/states-10m.json")
-      .then(res => res.json())
-      .then(us => {
-        const canvas = document.getElementById("us-map");
-        const states = ChartGeo.topojson.feature(us, us.objects.states).features;
-
-        // TODO: Backend needs to parse mailing addresses and group by state
-        // For now, using empty data. Later, add donations_by_state to /api/stats response
-        // Backend should parse the mailing_address field to extract state codes
-        const donationsByState = data.donations_by_state || {};
-
-        new Chart(canvas, {
-          type: 'choropleth',
-          data: {
-            labels: states.map(d => d.properties.name),
-            datasets: [{
-              label: "Donations by State",
-              data: states.map((d) => ({
-                feature: d,
-                value: donationsByState[d.properties.name] || 0
-              }))
-            }]
-          },
-          options: {
-            showOutline: true,
-            showGraticule: false,
-            scales: {
-              projection: {
-                axis: 'x',
-                projection: 'albersUsa'
-              },
-              color: {
-                axis: 'x',
-                quantize: 5,
-                legend: {
-                  position: 'bottom-right',
-                  align: 'right'
-                }
-              }
-            },
-            plugins: {
-              legend: { display: false },
-              tooltip: {
-                callbacks: {
-                  label: ctx => `${ctx.label}: $${ctx.raw.value.toLocaleString()}`
-                }
-              }
-            }
-          }
-        });
-      })
-      .catch(error => {
-        console.error('Error loading map data:', error);
-        document.getElementById("us-map").innerHTML = '<p style="text-align: center; color: #666;">Map temporarily unavailable</p>';
-      });
+    // Load map after stats are loaded
+    loadMap(data);
 
   } catch (error) {
     console.error('Error loading stats:', error);
+    // Show error state
+    document.getElementById("top-donors-all").innerHTML = '<div class="donor-item placeholder">Error loading data</div>';
   }
+}
+
+function loadMap(data) {
+  // US map with existing Chart.js implementation
+  fetch("https://cdn.jsdelivr.net/npm/us-atlas/states-10m.json")
+    .then(res => res.json())
+    .then(us => {
+      const canvas = document.getElementById("us-map");
+      const states = ChartGeo.topojson.feature(us, us.objects.states).features;
+
+      // TODO: Backend needs to parse mailing addresses and group by state
+      const donationsByState = data.donations_by_state || {};
+
+      new Chart(canvas, {
+        type: 'choropleth',
+        data: {
+          labels: states.map(d => d.properties.name),
+          datasets: [{
+            label: "Donations by State",
+            data: states.map((d) => ({
+              feature: d,
+              value: donationsByState[d.properties.name] || 0
+            }))
+          }]
+        },
+        options: {
+          showOutline: true,
+          showGraticule: false,
+          scales: {
+            projection: {
+              axis: 'x',
+              projection: 'albersUsa'
+            },
+            color: {
+              axis: 'x',
+              quantize: 5,
+              legend: {
+                position: 'bottom-right',
+                align: 'right'
+              }
+            }
+          },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: ctx => `${ctx.label}: $${ctx.raw.value.toLocaleString()}`
+              }
+            }
+          }
+        }
+      });
+    })
+    .catch(error => {
+      console.error('Error loading map data:', error);
+      const canvas = document.getElementById("us-map");
+      canvas.style.display = 'none';
+      canvas.parentElement.innerHTML = '<p style="text-align: center; color: #666; padding: 40px;">Map temporarily unavailable</p>';
+    });
 }
 
 // Initialize page
