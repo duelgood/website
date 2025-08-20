@@ -72,6 +72,14 @@ nav a:hover {
   background-color: #e69500;
 }
 
+.donate-btn.disabled,
+.donate-btn:disabled {
+  background: #ccc !important;
+  color: #666 !important;
+  cursor: not-allowed;
+  box-shadow: none !important;
+}
+
 /* -------------------- Header & Navigation Links Hover Effects -------------------- */
 .nav-links a {
   color: black;

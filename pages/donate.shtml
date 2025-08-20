@@ -104,7 +104,7 @@
       </label>
     </fieldset>
 
-    <button type="submit" id="submit-btn">Submit Donation (Test Mode)</button>
+    <button type="submit" id="submit-btn" class="donate-btn" disabled>Submit Donation (Test Mode)</button>
   </form>
 
   <div id="success-message" style="display: none;">
@@ -125,7 +125,8 @@ function showError(id, msg) {
 
 function validateEmail() {
   const email = document.getElementById('email');
-  if (!email.value.match(/^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$/)) {
+  // fixed regex: single backslashes, no double escaping
+  if (!email.value.match(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)) {
     showError('email-error', 'Please enter a valid email address.');
     return false;
   }
@@ -135,7 +136,8 @@ function validateEmail() {
 
 function validateAmount() {
   const amount = document.getElementById('amount');
-  if (parseFloat(amount.value) < 1) {
+  const val = parseFloat(amount.value);
+  if (isNaN(val) || val < 1) {
     showError('amount-error', 'Minimum donation is $1.');
     return false;
   }
@@ -145,7 +147,8 @@ function validateAmount() {
 
 function validateZip() {
   const zip = document.getElementById('zip');
-  if (!/^\\d{5}(-\\d{4})?$/.test(zip.value)) {
+  // fixed regex: single backslashes
+  if (!/^\d{5}(-\d{4})?$/.test(zip.value)) {
     showError('zip-error', 'Enter a valid ZIP code.');
     return false;
   }
@@ -163,11 +166,35 @@ function validateState() {
   return true;
 }
 
+// enable/disable submit based on all validators
+function allValid() {
+  return validateEmail() && validateAmount() && validateZip() && validateState()
+    && document.querySelector('input[name="cause"]:checked')
+    && document.querySelector('input[name="type"]:checked')
+    && document.getElementsByName('legal_name')[0].value.trim() !== ''
+    && document.getElementsByName('street')[0].value.trim() !== ''
+    && document.getElementsByName('city')[0].value.trim() !== ''
+    && document.getElementsByName('employer')[0].value.trim() !== ''
+    && document.getElementsByName('occupation')[0].value.trim() !== '';
+}
+
+function updateSubmitState() {
+  const btn = document.getElementById('submit-btn');
+  if (allValid()) {
+    btn.disabled = false;
+    btn.classList.remove('disabled');
+  } else {
+    btn.disabled = true;
+    btn.classList.add('disabled');
+  }
+}
+
 form.addEventListener('submit', async function(e) {
   e.preventDefault();
 
-  const valid = validateEmail() & validateAmount() & validateZip() & validateState();
-  if (!valid) return;
+  // use logical AND (&&) not bitwise &
+  const valid = validateEmail() && validateAmount() && validateZip() && validateState();
+  if (!valid) { updateSubmitState(); return; }
 
   const submitBtn = document.getElementById('submit-btn');
   const originalText = submitBtn.textContent;
@@ -183,7 +210,7 @@ form.addEventListener('submit', async function(e) {
     const city = (data.get('city') || '').trim();
     const state = (data.get('state') || '').trim();
     const zip = (data.get('zip') || '').trim();
-    data.set('mailing_address', street + '\\n' + city + ', ' + state + ' ' + zip);
+    data.set('mailing_address', street + '\n' + city + ', ' + state + ' ' + zip);
 
     const resp = await fetch('/api/donate', { method: 'POST', body: data });
     if (resp.ok) {
@@ -198,12 +225,19 @@ form.addEventListener('submit', async function(e) {
   } finally {
     submitBtn.textContent = originalText;
     submitBtn.disabled = false;
+    updateSubmitState();
   }
 });
 
-document.getElementById('email').addEventListener('input', validateEmail);
-document.getElementById('amount').addEventListener('input', validateAmount);
-document.getElementById('zip').addEventListener('input', validateZip);
-document.getElementById('state').addEventListener('change', validateState);
+// wire inputs to live validation and submit button state
+document.getElementById('email').addEventListener('input', () => { validateEmail(); updateSubmitState(); });
+document.getElementById('amount').addEventListener('input', () => { validateAmount(); updateSubmitState(); });
+document.getElementById('zip').addEventListener('input', () => { validateZip(); updateSubmitState(); });
+document.getElementById('state').addEventListener('change', () => { validateState(); updateSubmitState(); });
+Array.from(document.querySelectorAll('input[name="cause"], input[name="type"], input[name="legal_name"], input[name="street"], input[name="city"], input[name="employer"], input[name="occupation"]'))
+  .forEach(el => el.addEventListener('input', updateSubmitState));
+
+// run once on load
+updateSubmitState();
 </script>
 <!--#include virtual="/includes/footer" -->
