@@ -20,4 +20,10 @@ clean:
 	docker system prune -f
 	docker volume prune -f
 
+debug: 
+	sudo docker logs duelgood-web
+	sudo docker logs duelgood-backend
+	sudo docker logs duelgood-db
+	curl -v -H "Host: duelgood.org" http://127.0.0.1/health
+
 .PHONY: docker git clean
