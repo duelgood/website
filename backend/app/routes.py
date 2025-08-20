@@ -79,7 +79,7 @@ def api_donate():
             v = validate_email(raw_email)
             # normalized (lowercased, etc.)
             email = v.email 
-        except EmaipartylNotValidError as e:
+        except EmailNotValidError as e:
             return jsonify({'error': 'Invalid email address'}), 400
         street = form.get('street', '').strip()
         city = form.get('city', '').strip()
