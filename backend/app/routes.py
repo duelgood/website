@@ -1,15 +1,46 @@
 from flask import Blueprint, request, jsonify
 from . import db
 from .models import Donation
-from datetime import datetime
+from datetime import datetime, timezone
+from email_validator import validate_email, EmailNotValidError
 
 bp = Blueprint("api", __name__, url_prefix="/api")
 
-@bp.route("/donate", methods=["POST"])
+@bp.route("/stats", methods=["GET"])
+def get_stats():
+    total = db.session.query(db.func.sum(Donation.amount)).scalar() or 0
+    count = db.session.query(db.func.count(Donation.id)).scalar() or 0
+    return jsonify({
+        "total_amount": float(total),
+        "donation_count": count,
+        "lives-saved": int(float(total) / 3000), # https://www.givewell.org/how-much-does-it-cost-to-save-a-life
+        "lives-saved-month": ,
+        "a": ,
+        "b": 
+    })
+
+bp = Blueprint("api", __name__, url_prefix="/api/v1")
+
+# List recent donations
+@bp.route("/donations", methods=["GET"])
+def list_donations():
+    donations = Donation.query.order_by(Donation.time.desc()).limit(20).all()
+    return jsonify([
+        {
+            "id": d.id,
+            "amount": float(d.amount),
+            "display_name": d.display_name,
+            "time": d.time.isoformat()
+        }
+        for d in donations
+    ])
+
+
+@bp.route("/donations", methods=["POST"])
 def api_donate():
     """
     Accept form POSTs from /pages/donate.shtml. Expects form fields:
-    amount, type, party, display_name, email, legal_name, street, city, state, zip,
+    amount, type, cause, display_name, email, legal_name, street, city, state, zip,
     employer, occupation, optional timestamp.
     """
     try:
@@ -23,9 +54,15 @@ def api_donate():
         if amount < 1:
             return jsonify({'error': 'Minimum donation is $1'}), 400
 
-        party = form.get('party')
+        cause = form.get('cause')
         donor_name = form.get('legal_name')
-        email = form.get('email')
+        raw_email = (form.get('email') or '').strip()
+        try:
+            v = validate_email(raw_email)
+            # normalized (lowercased, etc.)
+            email = v.email 
+        except EmaipartylNotValidError as e:
+            return jsonify({'error': 'Invalid email address'}), 400
         street = form.get('street', '').strip()
         city = form.get('city', '').strip()
         state = (form.get('state') or '').strip().upper()
@@ -40,9 +77,9 @@ def api_donate():
             try:
                 time_val = datetime.fromisoformat(timestamp.replace('Z','+00:00'))
             except Exception:
-                time_val = datetime.utcnow()
+                time_val = datetime.now(timezone.utc)
         else:
-            time_val = datetime.utcnow()
+            time_val = datetime.now(timezone.utc)
 
         required = [party, donor_name, email, mailing_address, employer, occupation]
         if not all(required):
@@ -52,7 +89,7 @@ def api_donate():
             time=time_val,
             amount=amount,
             display_name=display_name,
-            party=party,
+            cause=cause,
             donation_type=donation_type,
             donor_name=donor_name,
             email=email,

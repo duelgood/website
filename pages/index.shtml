@@ -30,11 +30,11 @@
       </div>
       <div class="stat-item cause-a">
         <div class="stat-label">Total to Cause A</div>
-        <div class="stat-value" id="cause-a">$0</div>
+        <div class="stat-value" id="a">$0</div>
       </div>
       <div class="stat-item cause-b">
         <div class="stat-label">Total to Cause B</div>
-        <div class="stat-value" id="cause-b">$0</div>
+        <div class="stat-value" id="b">$0</div>
       </div>
     </div>
   </section>
@@ -84,8 +84,8 @@ async function loadStats() {
     document.getElementById("month-amount").textContent = "$" + (data.month_amount || 0).toLocaleString();
     document.getElementById("lives-saved").textContent = (data.lives_saved || 0).toLocaleString();
     document.getElementById("lives-saved-month").textContent = (data.lives_saved_month || 0).toLocaleString();
-    document.getElementById("cause-a").textContent = "$" + (data.cause_a || 0).toLocaleString();
-    document.getElementById("cause-b").textContent = "$" + (data.cause_b || 0).toLocaleString();
+    document.getElementById("a").textContent = "$" + (data.cause_a || 0).toLocaleString();
+    document.getElementById("b").textContent = "$" + (data.cause_b || 0).toLocaleString();
 
     // Top donors (all time)
     const topAllList = document.getElementById("top-donors-all");

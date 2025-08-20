@@ -1,28 +1,30 @@
-<!--# include virtual="/includes/header" -->
+<!--#include virtual="/includes/header" -->
 <main>
   <h1>Make a Donation</h1>
   <p><strong>Test Mode:</strong> No payment required. Minimum donation is $1.</p>
   
-  <form action="/api/donate" method="POST" id="donation-form">
+  <form action="/api/donate" method="POST" id="donation-form" novalidate>
     <fieldset>
       <legend>Donation Amount</legend>
       <label>
         Amount (USD):
-        <input type="number" name="amount" min="1" step="0.01" required placeholder="25.00">
+        <input type="number" name="amount" id="amount" min="1" step="0.01" required placeholder="25.00">
+        <span class="error-message" id="amount-error"></span>
       </label>
     </fieldset>
 
     <fieldset>
       <legend>Donation Type</legend>
-      <label><input type="radio" name="type" value="one-time" checked>One-time</label>
-      <label><input type="radio" name="type" value="monthly">Monthly</label>
-      <label><input type="radio" name="type" value="yearly">Yearly</label>
+      <label><input type="radio" name="type" value="one-time" checked> One-time</label>
+      <label><input type="radio" name="type" value="monthly"> Monthly</label>
+      <label><input type="radio" name="type" value="yearly"> Yearly</label>
     </fieldset>
 
     <fieldset>
-      <legend>Cause Preference</legend>
-      <label><input type="radio" name="party" value="democrat" required>Cause A (Democratic)</label>
-      <label><input type="radio" name="party" value="republican" required>Cause B (Republican)</label>
+      <legend>Cause</legend>
+      <label><input type="radio" name="cause" value="a" required> Cause A</label>
+      <label><input type="radio" name="cause" value="b" required> Cause B</label>
+      <span class="error-message" id="cause-error"></span>
     </fieldset>
 
     <fieldset>
@@ -36,9 +38,11 @@
 
     <fieldset>
       <legend>Contact Information</legend>
+
       <label>
         Email Address:
-        <input type="email" name="email" required placeholder="you@example.com">
+        <input type="email" name="email" id="email" required placeholder="you@example.com" maxlength="255">
+        <span class="error-message" id="email-error"></span>
       </label>
       
       <label>
@@ -50,6 +54,7 @@
         Street Address:
         <input type="text" name="street" required placeholder="123 Main St" maxlength="200">
       </label>
+      
       <div style="display:flex;gap:8px;">
         <label style="flex:1;">
           City:
@@ -57,11 +62,32 @@
         </label>
         <label style="width:120px;">
           State:
-          <input type="text" name="state" required placeholder="CA" maxlength="2" style="text-transform:uppercase;">
+          <select name="state" id="state" required>
+            <option value="">Select</option>
+            <option value="AL">AL</option><option value="AK">AK</option><option value="AZ">AZ</option>
+            <option value="AR">AR</option><option value="CA">CA</option><option value="CO">CO</option>
+            <option value="CT">CT</option><option value="DE">DE</option><option value="FL">FL</option>
+            <option value="GA">GA</option><option value="HI">HI</option><option value="ID">ID</option>
+            <option value="IL">IL</option><option value="IN">IN</option><option value="IA">IA</option>
+            <option value="KS">KS</option><option value="KY">KY</option><option value="LA">LA</option>
+            <option value="ME">ME</option><option value="MD">MD</option><option value="MA">MA</option>
+            <option value="MI">MI</option><option value="MN">MN</option><option value="MS">MS</option>
+            <option value="MO">MO</option><option value="MT">MT</option><option value="NE">NE</option>
+            <option value="NV">NV</option><option value="NH">NH</option><option value="NJ">NJ</option>
+            <option value="NM">NM</option><option value="NY">NY</option><option value="NC">NC</option>
+            <option value="ND">ND</option><option value="OH">OH</option><option value="OK">OK</option>
+            <option value="OR">OR</option><option value="PA">PA</option><option value="RI">RI</option>
+            <option value="SC">SC</option><option value="SD">SD</option><option value="TN">TN</option>
+            <option value="TX">TX</option><option value="UT">UT</option><option value="VT">VT</option>
+            <option value="VA">VA</option><option value="WA">WA</option><option value="WV">WV</option>
+            <option value="WI">WI</option><option value="WY">WY</option><option value="DC">DC</option>
+          </select>
+          <span class="error-message" id="state-error"></span>
         </label>
-        <label style="width:120px;">
+        <label style="width:140px;">
           ZIP:
-          <input type="text" name="zip" required placeholder="12345" pattern="\d{5}(-\d{4})?">
+          <input type="text" name="zip" id="zip" required placeholder="12345" pattern="^\d{5}(-\d{4})?$">
+          <span class="error-message" id="zip-error"></span>
         </label>
       </div>
     </fieldset>
@@ -72,7 +98,6 @@
         Employer Name:
         <input type="text" name="employer" required placeholder="Company Name" maxlength="100">
       </label>
-      
       <label>
         Occupation:
         <input type="text" name="occupation" required placeholder="Software Engineer" maxlength="100">
@@ -91,50 +116,94 @@
 </main>
 
 <script>
-document.getElementById('donation-form').addEventListener('submit', async function(e) {
+const form = document.getElementById('donation-form');
+
+function showError(id, msg) {
+  const el = document.getElementById(id);
+  if (el) { el.textContent = msg || ''; el.style.display = msg ? 'block' : 'none'; }
+}
+
+function validateEmail() {
+  const email = document.getElementById('email');
+  if (!email.value.match(/^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$/)) {
+    showError('email-error', 'Please enter a valid email address.');
+    return false;
+  }
+  showError('email-error', '');
+  return true;
+}
+
+function validateAmount() {
+  const amount = document.getElementById('amount');
+  if (parseFloat(amount.value) < 1) {
+    showError('amount-error', 'Minimum donation is $1.');
+    return false;
+  }
+  showError('amount-error', '');
+  return true;
+}
+
+function validateZip() {
+  const zip = document.getElementById('zip');
+  if (!/^\\d{5}(-\\d{4})?$/.test(zip.value)) {
+    showError('zip-error', 'Enter a valid ZIP code.');
+    return false;
+  }
+  showError('zip-error', '');
+  return true;
+}
+
+function validateState() {
+  const state = document.getElementById('state');
+  if (!state.value) {
+    showError('state-error', 'Please select a state.');
+    return false;
+  }
+  showError('state-error', '');
+  return true;
+}
+
+form.addEventListener('submit', async function(e) {
   e.preventDefault();
-  
+
+  const valid = validateEmail() & validateAmount() & validateZip() & validateState();
+  if (!valid) return;
+
   const submitBtn = document.getElementById('submit-btn');
   const originalText = submitBtn.textContent;
   submitBtn.textContent = 'Processing...';
   submitBtn.disabled = true;
-  
+
   try {
-    const form = new FormData(this);
+    const data = new FormData(form);
+    data.append('timestamp', new Date().toISOString());
+    if (!data.get('display_name')) data.set('display_name', 'Anonymous');
 
-    // Add timestamp server-side if you prefer; keep client timestamp too
-    form.append('timestamp', new Date().toISOString());
+    const street = (data.get('street') || '').trim();
+    const city = (data.get('city') || '').trim();
+    const state = (data.get('state') || '').trim();
+    const zip = (data.get('zip') || '').trim();
+    data.set('mailing_address', street + '\\n' + city + ', ' + state + ' ' + zip);
 
-    if (!form.get('display_name')) form.set('display_name', 'Anonymous');
-
-    // build mailing_address from parts for storage/searching
-    const street = (form.get('street') || '').trim();
-    const city = (form.get('city') || '').trim();
-    const state = (form.get('state') || '').trim().toUpperCase();
-    const zip = (form.get('zip') || '').trim();
-    form.set('mailing_address', `${street}\n${city}, ${state} ${zip}`);
-
-    const resp = await fetch('/api/donate', {
-      method: 'POST',
-      body: form
-    });
-
+    const resp = await fetch('/api/donate', { method: 'POST', body: data });
     if (resp.ok) {
-      document.getElementById('donation-form').style.display = 'none';
+      form.style.display = 'none';
       document.getElementById('success-message').style.display = 'block';
     } else {
       const json = await resp.json().catch(()=>null);
-      const txt = json && json.error ? json.error : await resp.text();
-      alert('Error: ' + txt);
+      alert('Error: ' + (json?.error || await resp.text()));
     }
   } catch (err) {
-    console.error(err);
     alert('Network error. Please try again.');
   } finally {
     submitBtn.textContent = originalText;
     submitBtn.disabled = false;
   }
 });
-</script>
 
+document.getElementById('email').addEventListener('input', validateEmail);
+document.getElementById('amount').addEventListener('input', validateAmount);
+document.getElementById('zip').addEventListener('input', validateZip);
+document.getElementById('state').addEventListener('change', validateState);
+</script>
 <!--#include virtual="/includes/footer" -->
