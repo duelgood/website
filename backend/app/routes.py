@@ -1,86 +1,70 @@
-from flask import Blueprint, jsonify
-from sqlalchemy import func, extract
-from datetime import datetime, timezone
+from flask import Blueprint, request, jsonify
 from . import db
 from .models import Donation
+from datetime import datetime
 
 bp = Blueprint("api", __name__, url_prefix="/api")
 
-@bp.route("/stats")
-def stats():
-    now = datetime.now(timezone.utc)
-    
-    # Total donated
-    total_amount = db.session.query(func.sum(Donation.amount)).scalar() or 0
+@bp.route("/donate", methods=["POST"])
+def api_donate():
+    """
+    Accept form POSTs from /pages/donate.shtml. Expects form fields:
+    amount, type, party, display_name, email, legal_name, street, city, state, zip,
+    employer, occupation, optional timestamp.
+    """
+    try:
+        form = request.form
+        # parse and validate
+        try:
+            amount = float(form.get('amount') or 0)
+        except ValueError:
+            return jsonify({'error': 'Invalid amount'}), 400
 
-    # Donated this month
-    month_amount = db.session.query(func.sum(Donation.amount))\
-        .filter(extract('year', Donation.time) == now.year)\
-        .filter(extract('month', Donation.time) == now.month)\
-        .scalar() or 0
+        if amount < 1:
+            return jsonify({'error': 'Minimum donation is $1'}), 400
 
-    # Lives saved: https://www.givewell.org/how-much-does-it-cost-to-save-a-life
-    lives_saved = int(total_amount / 3000)
-    lives_saved_month = int(month_amount / 3000)
+        party = form.get('party')
+        donor_name = form.get('legal_name')
+        email = form.get('email')
+        street = form.get('street', '').strip()
+        city = form.get('city', '').strip()
+        state = (form.get('state') or '').strip().upper()
+        zip_code = form.get('zip', '').strip()
+        mailing_address = form.get('mailing_address') or f"{street}\n{city}, {state} {zip_code}"
+        employer = form.get('employer')
+        occupation = form.get('occupation')
+        display_name = form.get('display_name') or 'Anonymous'
+        donation_type = form.get('type') or 'one-time'
+        timestamp = form.get('timestamp')
+        if timestamp:
+            try:
+                time_val = datetime.fromisoformat(timestamp.replace('Z','+00:00'))
+            except Exception:
+                time_val = datetime.utcnow()
+        else:
+            time_val = datetime.utcnow()
 
-    # Donations by cause (using correct party values)
-    cause_a = db.session.query(func.sum(Donation.amount))\
-        .filter(Donation.party == "democrat").scalar() or 0
-    cause_b = db.session.query(func.sum(Donation.amount))\
-        .filter(Donation.party == "republican").scalar() or 0
+        required = [party, donor_name, email, mailing_address, employer, occupation]
+        if not all(required):
+            return jsonify({'error': 'Missing required fields'}), 400
 
-    # Top donors (sum per display_name, top 10)
-    top_query = db.session.query(
-        Donation.display_name,
-        func.sum(Donation.amount).label("total")
-    ).group_by(Donation.display_name)\
-     .order_by(func.sum(Donation.amount).desc())\
-     .limit(10).all()
-    top_donors = [{"donor": r[0], "amount": float(r[1])} for r in top_query]
-
-    # Donations by state - extract state from mailing address
-    from collections import defaultdict
-    donations_by_state = defaultdict(float)
-    all_donations = db.session.query(Donation.mailing_address, Donation.amount).all()
-    
-    for addr, amt in all_donations:
-        state = extract_state_from_address(addr)
-        if state:
-            donations_by_state[state] += float(amt)
-
-    return jsonify({
-        "total_amount": float(total_amount),
-        "month_amount": float(month_amount),
-        "lives_saved": lives_saved,
-        "lives_saved_month": lives_saved_month,
-        "cause_a": float(cause_a),
-        "cause_b": float(cause_b),
-        "top_donors": top_donors,
-        "donations_by_state": dict(donations_by_state)
-    })
-
-def extract_state_from_address(address):
-    """Extract state from mailing address"""
-    if not address:
-        return None
-    
-    # Common state abbreviations
-    states = {
-        'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA',
-        'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD',
-        'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ',
-        'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC',
-        'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'
-    }
-    
-    lines = [line.strip() for line in address.splitlines() if line.strip()]
-    if not lines:
-        return None
-    
-    # Look for state in the last line (typically "City, State ZIP")
-    last_line = lines[-1].upper()
-    for state in states:
-        if state in last_line:
-            return state
-    
-    return None
+        donation = Donation(
+            time=time_val,
+            amount=amount,
+            display_name=display_name,
+            party=party,
+            donation_type=donation_type,
+            donor_name=donor_name,
+            email=email,
+            mailing_address=mailing_address,
+            employer=employer,
+            occupation=occupation
+        )
+        db.session.add(donation)
+        db.session.commit()
+        return jsonify({'success': True, 'id': donation.id}), 201
+    except Exception as e:
+        db.session.rollback()
+        # keep server logs for debugging
+        print('Error in /api/donate:', e)
+        return jsonify({'error': 'Server error'}), 500

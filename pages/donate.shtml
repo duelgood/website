@@ -3,7 +3,7 @@
   <h1>Make a Donation</h1>
   <p><strong>Test Mode:</strong> No payment required. Minimum donation is $1.</p>
   
-  <form action="/donate" method="POST" id="donation-form">
+  <form action="/api/donate" method="POST" id="donation-form">
     <fieldset>
       <legend>Donation Amount</legend>
       <label>
@@ -47,9 +47,23 @@
       </label>
       
       <label>
-        Mailing Address:
-        <textarea name="mailing_address" required placeholder="123 Main St&#10;City, State 12345" rows="3"></textarea>
+        Street Address:
+        <input type="text" name="street" required placeholder="123 Main St" maxlength="200">
       </label>
+      <div style="display:flex;gap:8px;">
+        <label style="flex:1;">
+          City:
+          <input type="text" name="city" required placeholder="City">
+        </label>
+        <label style="width:120px;">
+          State:
+          <input type="text" name="state" required placeholder="CA" maxlength="2" style="text-transform:uppercase;">
+        </label>
+        <label style="width:120px;">
+          ZIP:
+          <input type="text" name="zip" required placeholder="12345" pattern="\d{5}(-\d{4})?">
+        </label>
+      </div>
     </fieldset>
 
     <fieldset>
@@ -73,7 +87,7 @@
     <p>Thank you for your contribution. Your donation has been recorded.</p>
   </div>
 
-  <p><em>Note: This is test mode. No actual payment will be processed. All donations can be edited or cancelled until 7:00 PM EST the same day.</em></p>
+  <p><em>Note: This is test mode. No actual payment will be processed.</em></p>
 </main>
 
 <script>
@@ -86,30 +100,35 @@ document.getElementById('donation-form').addEventListener('submit', async functi
   submitBtn.disabled = true;
   
   try {
-    const formData = new FormData(this);
-    
-    // Add timestamp
-    formData.append('timestamp', new Date().toISOString());
-    
-    // Set default display name if empty
-    if (!formData.get('display_name')) {
-      formData.set('display_name', 'Anonymous');
-    }
-    
-    const response = await fetch('/donate', {
+    const form = new FormData(this);
+
+    // Add timestamp server-side if you prefer; keep client timestamp too
+    form.append('timestamp', new Date().toISOString());
+
+    if (!form.get('display_name')) form.set('display_name', 'Anonymous');
+
+    // build mailing_address from parts for storage/searching
+    const street = (form.get('street') || '').trim();
+    const city = (form.get('city') || '').trim();
+    const state = (form.get('state') || '').trim().toUpperCase();
+    const zip = (form.get('zip') || '').trim();
+    form.set('mailing_address', `${street}\n${city}, ${state} ${zip}`);
+
+    const resp = await fetch('/api/donate', {
       method: 'POST',
-      body: formData
+      body: form
     });
-    
-    if (response.ok) {
+
+    if (resp.ok) {
       document.getElementById('donation-form').style.display = 'none';
       document.getElementById('success-message').style.display = 'block';
     } else {
-      const error = await response.text();
-      alert('Error: ' + error);
+      const json = await resp.json().catch(()=>null);
+      const txt = json && json.error ? json.error : await resp.text();
+      alert('Error: ' + txt);
     }
-  } catch (error) {
-    console.error('Error:', error);
+  } catch (err) {
+    console.error(err);
     alert('Network error. Please try again.');
   } finally {
     submitBtn.textContent = originalText;
