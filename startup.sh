@@ -5,7 +5,6 @@ set -uo pipefail
 CERT_SECRET_OCID="ocid1.vaultsecret.oc1.iad.amaaaaaaah7zwoqaggtx3yt3g3zkogvafeqmfneoufymbkymkaicp65lhqsa"
 KEY_SECRET_OCID="ocid1.vaultsecret.oc1.iad.amaaaaaaah7zwoqahl3rucnxgfxjd5b5ldjb7zpov3ir42wxpfkcjvtmlo2a"
 SECRETS_DIR="/etc/ssl/cloudflare"
-REPO_DIR="~/duelgood"
 
 # FUNCTIONS 
 
