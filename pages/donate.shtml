@@ -1,14 +1,14 @@
 <!--# include virtual="/includes/header" -->
 <main>
-  <h1>Donate through DuelGood</h1>
-  <p>Cancel opposing political donations and direct the difference to charity automatically.</p>
-
-  <form action="/donate" method="POST">
+  <h1>Make a Donation</h1>
+  <p><strong>Test Mode:</strong> No payment required. Minimum donation is $1.</p>
+  
+  <form action="/donate" method="POST" id="donation-form">
     <fieldset>
       <legend>Donation Amount</legend>
       <label>
-        <input type="number" name="amount" min="1" required>
-        USD
+        Amount (USD):
+        <input type="number" name="amount" min="1" step="0.01" required placeholder="25.00">
       </label>
     </fieldset>
 
@@ -20,29 +20,102 @@
     </fieldset>
 
     <fieldset>
-      <legend>Political Party</legend>
-      <label><input type="radio" name="party" value="gop">Democratic</label>
-      <label><input type="radio" name="party" value="democrat">Republican</label>
+      <legend>Cause Preference</legend>
+      <label><input type="radio" name="party" value="democrat" required>Cause A (Democratic)</label>
+      <label><input type="radio" name="party" value="republican" required>Cause B (Republican)</label>
     </fieldset>
 
     <fieldset>
-      <legend>Email</legend>
-      <input type="email" name="email" placeholder="you@example.com" required>
+      <legend>Display Information</legend>
+      <label>
+        Display Name (shown on website):
+        <input type="text" name="display_name" placeholder="Anonymous" maxlength="50">
+      </label>
+      <small>Leave blank to show as "Anonymous"</small>
     </fieldset>
 
     <fieldset>
-      <legend>Payment Method</legend>
+      <legend>Contact Information</legend>
       <label>
-        <input type="radio" name="payment_method" value="stripe" checked>Credit/Debit Card (via Stripe)
+        Email Address:
+        <input type="email" name="email" required placeholder="you@example.com">
       </label>
+      
       <label>
-        <input type="radio" name="payment_method" value="ach">Bank Transfer (Plaid)
+        Full Legal Name:
+        <input type="text" name="legal_name" required placeholder="John Smith" maxlength="100">
+      </label>
+      
+      <label>
+        Mailing Address:
+        <textarea name="mailing_address" required placeholder="123 Main St&#10;City, State 12345" rows="3"></textarea>
       </label>
     </fieldset>
 
-    <button type="submit">Donate</button>
+    <fieldset>
+      <legend>Employment Information</legend>
+      <label>
+        Employer Name:
+        <input type="text" name="employer" required placeholder="Company Name" maxlength="100">
+      </label>
+      
+      <label>
+        Occupation:
+        <input type="text" name="occupation" required placeholder="Software Engineer" maxlength="100">
+      </label>
+    </fieldset>
+
+    <button type="submit" id="submit-btn">Submit Donation (Test Mode)</button>
   </form>
 
-  <p>All donations are processed securely. You can edit or cancel your donation until 7:00 PM EST the same day.</p>
+  <div id="success-message" style="display: none;">
+    <h2>Donation Submitted Successfully!</h2>
+    <p>Thank you for your contribution. Your donation has been recorded.</p>
+  </div>
+
+  <p><em>Note: This is test mode. No actual payment will be processed. All donations can be edited or cancelled until 7:00 PM EST the same day.</em></p>
 </main>
+
+<script>
+document.getElementById('donation-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  
+  const submitBtn = document.getElementById('submit-btn');
+  const originalText = submitBtn.textContent;
+  submitBtn.textContent = 'Processing...';
+  submitBtn.disabled = true;
+  
+  try {
+    const formData = new FormData(this);
+    
+    // Add timestamp
+    formData.append('timestamp', new Date().toISOString());
+    
+    // Set default display name if empty
+    if (!formData.get('display_name')) {
+      formData.set('display_name', 'Anonymous');
+    }
+    
+    const response = await fetch('/donate', {
+      method: 'POST',
+      body: formData
+    });
+    
+    if (response.ok) {
+      document.getElementById('donation-form').style.display = 'none';
+      document.getElementById('success-message').style.display = 'block';
+    } else {
+      const error = await response.text();
+      alert('Error: ' + error);
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    alert('Network error. Please try again.');
+  } finally {
+    submitBtn.textContent = originalText;
+    submitBtn.disabled = false;
+  }
+});
+</script>
+
 <!--#include virtual="/includes/footer" -->

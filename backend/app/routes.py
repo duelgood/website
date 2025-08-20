@@ -9,6 +9,7 @@ bp = Blueprint("api", __name__, url_prefix="/api")
 @bp.route("/stats")
 def stats():
     now = datetime.now(timezone.utc)
+    
     # Total donated
     total_amount = db.session.query(func.sum(Donation.amount)).scalar() or 0
 
@@ -22,38 +23,28 @@ def stats():
     lives_saved = int(total_amount / 3000)
     lives_saved_month = int(month_amount / 3000)
 
-    # Donations by cause
+    # Donations by cause (using correct party values)
     cause_a = db.session.query(func.sum(Donation.amount))\
-        .filter(Donation.party == "Cause A").scalar() or 0
+        .filter(Donation.party == "democrat").scalar() or 0
     cause_b = db.session.query(func.sum(Donation.amount))\
-        .filter(Donation.party == "Cause B").scalar() or 0
+        .filter(Donation.party == "republican").scalar() or 0
 
-    # Recent donations (latest 5)
-    recent = db.session.query(Donation.donor_name, Donation.amount)\
-        .order_by(Donation.time.desc())\
-        .limit(5).all()
-    recent_donations = [{"donor": r[0], "amount": float(r[1])} for r in recent]
-
-    # Top donors (sum per donor, top 5)
+    # Top donors (sum per display_name, top 10)
     top_query = db.session.query(
-        Donation.donor_name,
+        Donation.display_name,
         func.sum(Donation.amount).label("total")
-    ).group_by(Donation.donor_name)\
+    ).group_by(Donation.display_name)\
      .order_by(func.sum(Donation.amount).desc())\
-     .limit(5).all()
+     .limit(10).all()
     top_donors = [{"donor": r[0], "amount": float(r[1])} for r in top_query]
 
-    # Donations by state (assume 'mailing_address' contains state as last line or parse appropriately)
+    # Donations by state - extract state from mailing address
     from collections import defaultdict
     donations_by_state = defaultdict(float)
     all_donations = db.session.query(Donation.mailing_address, Donation.amount).all()
+    
     for addr, amt in all_donations:
-        state = None
-        if addr:
-            # crude assumption: last non-empty line is state
-            lines = [l.strip() for l in addr.splitlines() if l.strip()]
-            if lines:
-                state = lines[-1]
+        state = extract_state_from_address(addr)
         if state:
             donations_by_state[state] += float(amt)
 
@@ -64,7 +55,32 @@ def stats():
         "lives_saved_month": lives_saved_month,
         "cause_a": float(cause_a),
         "cause_b": float(cause_b),
-        "recent_donations": recent_donations,
         "top_donors": top_donors,
-        "donations_by_state": donations_by_state
+        "donations_by_state": dict(donations_by_state)
     })
+
+def extract_state_from_address(address):
+    """Extract state from mailing address"""
+    if not address:
+        return None
+    
+    # Common state abbreviations
+    states = {
+        'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA',
+        'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD',
+        'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ',
+        'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC',
+        'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'
+    }
+    
+    lines = [line.strip() for line in address.splitlines() if line.strip()]
+    if not lines:
+        return None
+    
+    # Look for state in the last line (typically "City, State ZIP")
+    last_line = lines[-1].upper()
+    for state in states:
+        if state in last_line:
+            return state
+    
+    return None

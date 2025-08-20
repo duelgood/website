@@ -30,7 +30,7 @@ build/
 
 # Cache directories
 .cache/
-__pycache__/
+**/__pycache__/
 
 # Local development overrides
 docker-compose.override.yml
