@@ -74,6 +74,7 @@ def api_donate():
 
         cause = form.get('cause')
         donor_name = form.get('legal_name')
+        
         raw_email = (form.get('email') or '').strip()
         try:
             v = validate_email(raw_email)
@@ -81,6 +82,7 @@ def api_donate():
             email = v.email 
         except EmailNotValidError as e:
             return jsonify({'error': 'Invalid email address'}), 400
+        
         street = form.get('street', '').strip()
         city = form.get('city', '').strip()
         state = (form.get('state') or '').strip().upper()

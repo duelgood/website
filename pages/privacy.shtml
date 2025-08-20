@@ -1,7 +1,63 @@
 <!--# include virtual="/includes/header" -->
 <main>
-  <p>
-    The privacy page hasn't been set up yet. Check back later!
-  </p>
+  <h1>Privacy Policy</h1>
+  <p class="meta" id="last-updated">Last Updated: <time datetime="2025-08-14">August 14, 2025</time></p>
+  <p class="lead">When you donate through <strong>DuelGood</strong>, you're trusting us 
+    with our personal information. We understand this is a 
+    big responsibility and work hard to protect your information.</p>
+  <div class="toc" aria-labelledby="toc-heading">
+    <h2 id="toc-heading">Contents</h2>
+    <ol>
+        <li><a href="#collection">Data We Collect</a></li>
+        <li><a href="#why">Why We Collect Data</a></li>
+        <li><a href="#usage">How We Use Your Data</a></li>
+        <li><a href="#history">Privacy Policy History</a></li>
+    </ol>
+    </div>
+
+    <section id="collection" class="section">
+      <h2>Data We Collect</h2>
+      When you make a donation, we collect the following information:
+      <ul class="list-tight">
+        <li>Donated amount.</li>
+        <li>Your preferred display name.</li>
+        <li>Your preference, 'A' or 'B'.</li>
+        <li>Your preference, 'A' or 'B'.</li>
+        <li>Your full legal name.</li>
+        <li>Your email.</li>
+        <li>Your address of residence.</li>
+        <li>The state you live in.</li>
+        <li>The zip code where you live.</li>
+        <li>Your employer.</li>
+        <li>Your occupation.</li>
+      </ul>
+    </section>
+
+    <section id="why" class="section">
+      <h2>Why We Collect Data</h2>
+      <ul class="list-tight">
+        <li>You are at least 18 years old (or the age of majority in your jurisdiction).</li>
+        <li>You are legally permitted to donate to political parties and charities in your jurisdiction.</li>
+        <li>You use your own funds or funds you are authorized to contribute.</li>
+      </ul>
+    </section>
+
+    <section id="usage" class="section">
+      <h2>How We Use Your Data</h2>
+      <ul class="list-tight">
+        <li>You are at least 18 years old (or the age of majority in your jurisdiction).</li>
+        <li>You are legally permitted to donate to political parties and charities in your jurisdiction.</li>
+        <li>You use your own funds or funds you are authorized to contribute.</li>
+      </ul>
+    </section>
+
+    <section id="history" class="section">
+      <h2>Privacy Policy History</h2>
+      <ul class="list-tight">
+        <li>You are at least 18 years old (or the age of majority in your jurisdiction).</li>
+        <li>You are legally permitted to donate to political parties and charities in your jurisdiction.</li>
+        <li>You use your own funds or funds you are authorized to contribute.</li>
+      </ul>
+    </section>
 </main>
 <!--#include virtual="/includes/footer" -->

@@ -51,8 +51,8 @@
       </label>
       
       <label>
-        Full Legal Name:
-        <input type="text" name="legal_name" required placeholder="John Smith" maxlength="100">
+        Legal Name:
+        <input type="text" name="legal_name" required placeholder="First Middle Last" maxlength="100">
       </label>
       
       <label>
