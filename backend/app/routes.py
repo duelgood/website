@@ -3,25 +3,43 @@ from . import db
 from .models import Donation
 from datetime import datetime, timezone
 from email_validator import validate_email, EmailNotValidError
-
-bp = Blueprint("api", __name__, url_prefix="/api")
-
-@bp.route("/stats", methods=["GET"])
-def get_stats():
-    total = db.session.query(db.func.sum(Donation.amount)).scalar() or 0
-    count = db.session.query(db.func.count(Donation.id)).scalar() or 0
-    return jsonify({
-        "total_amount": float(total),
-        "donation_count": count,
-        "lives-saved": int(float(total) / 3000), # https://www.givewell.org/how-much-does-it-cost-to-save-a-life
-        "lives-saved-month": ,
-        "a": ,
-        "b": 
-    })
+from sqlalchemy import extract
 
 bp = Blueprint("api", __name__, url_prefix="/api/v1")
 
-# List recent donations
+@bp.route("/stats", methods=["GET"])
+def get_stats():
+    now = datetime.now(timezone.utc)
+
+    total = db.session.query(db.func.sum(Donation.amount)).scalar() or 0
+    count = db.session.query(db.func.count(Donation.id)).scalar() or 0
+
+    month_amount = db.session.query(db.func.sum(Donation.amount))\
+        .filter(extract('year', Donation.time) == now.year)\
+        .filter(extract('month', Donation.time) == now.month)\
+        .scalar() or 0
+
+    # https://www.givewell.org/how-much-does-it-cost-to-save-a-life
+    lives_saved = int(float(total) / 3000)
+    lives_saved_month = int(float(month_amount) / 3000)
+
+    a_total = db.session.query(db.func.sum(Donation.amount))\
+        .filter(Donation.cause == 'a')\
+        .scalar() or 0
+    b_total = db.session.query(db.func.sum(Donation.amount))\
+        .filter(Donation.cause == 'b')\
+        .scalar() or 0
+
+    return jsonify({
+        "total_amount": float(total),
+        "donation_count": count,
+        "lives-saved": lives_saved,
+        "lives-saved-month": lives_saved_month,
+        "a": float(a_total),
+        "b": float(b_total)
+    })
+
+# list recent donations
 @bp.route("/donations", methods=["GET"])
 def list_donations():
     donations = Donation.query.order_by(Donation.time.desc()).limit(20).all()
