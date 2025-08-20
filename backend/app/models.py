@@ -19,7 +19,7 @@ class Donation(db.Model):
     )
     # full legal name
     donor_name = db.Column(db.String(25), nullable=False)
-    # 
+    # email needs to be validated on the backend as well
     email = db.Column(db.String(255), nullable=False)
     mailing_address = db.Column(db.Text, nullable=False)
     employer = db.Column(db.String(255), nullable=False)

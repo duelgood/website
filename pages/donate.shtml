@@ -2,6 +2,11 @@
 <main>
   <h1>Make a Donation</h1>
   <p><strong>Test Mode:</strong> No payment required. Minimum donation is $1.</p>
+
+  <!--Explain how political campaign contribution laws require 
+  information about residence and employment to be collected. 
+  Note that this information is never used for commercial purposes 
+  and is not stored outside of our servers. -->
   
   <form action="/api/donate" method="POST" id="donation-form" novalidate>
     <fieldset>
@@ -123,9 +128,9 @@ function showError(id, msg) {
   if (el) { el.textContent = msg || ''; el.style.display = msg ? 'block' : 'none'; }
 }
 
+// email is validated on the backend as well
 function validateEmail() {
   const email = document.getElementById('email');
-  // fixed regex: single backslashes, no double escaping
   if (!email.value.match(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)) {
     showError('email-error', 'Please enter a valid email address.');
     return false;
@@ -134,6 +139,9 @@ function validateEmail() {
   return true;
 }
 
+// amount donated must also be validated on the backend
+// this will eventually need to be replaced with a 
+// payment processor like Stripe or Plaid
 function validateAmount() {
   const amount = document.getElementById('amount');
   const val = parseFloat(amount.value);
@@ -145,6 +153,7 @@ function validateAmount() {
   return true;
 }
 
+// validated on the backend as well
 function validateZip() {
   const zip = document.getElementById('zip');
   // fixed regex: single backslashes
@@ -156,6 +165,7 @@ function validateZip() {
   return true;
 }
 
+// validated on the backend
 function validateState() {
   const state = document.getElementById('state');
   if (!state.value) {
@@ -192,7 +202,6 @@ function updateSubmitState() {
 form.addEventListener('submit', async function(e) {
   e.preventDefault();
 
-  // use logical AND (&&) not bitwise &
   const valid = validateEmail() && validateAmount() && validateZip() && validateState();
   if (!valid) { updateSubmitState(); return; }
 
@@ -221,7 +230,7 @@ form.addEventListener('submit', async function(e) {
       alert('Error: ' + (json?.error || await resp.text()));
     }
   } catch (err) {
-    alert('Network error. Please try again.');
+    alert(err);
   } finally {
     submitBtn.textContent = originalText;
     submitBtn.disabled = false;
