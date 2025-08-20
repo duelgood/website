@@ -1,6 +1,6 @@
 from . import db
 from datetime import datetime, timezone
-from flask_sqlalchemy import Enum
+from sqlalchemy import Enum
 
 class Donation(db.Model):
     __tablename__ = "donations"
