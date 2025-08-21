@@ -110,7 +110,7 @@ deploy_stack() {
   sudo docker compose pull
   sudo docker compose up -d
   echo ">>> Initializing database..."
-  sudo docker compose run --rm backend flask --app app:create_app db-init
+  sudo docker compose exec backend flask db-init
 }
 
 # MAIN 
