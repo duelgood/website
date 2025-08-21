@@ -20,44 +20,46 @@
       When you make a donation, we collect the following information:
       <ul class="list-tight">
         <li>Donated amount.</li>
-        <li>Your preferred display name.</li>
-        <li>Your preference, 'A' or 'B'.</li>
-        <li>Your preference, 'A' or 'B'.</li>
-        <li>Your full legal name.</li>
-        <li>Your email.</li>
-        <li>Your address of residence.</li>
-        <li>The state you live in.</li>
-        <li>The zip code where you live.</li>
-        <li>Your employer.</li>
-        <li>Your occupation.</li>
+        <li>Display name.</li>
+        <li>Preference, 'A' or 'B'.</li>
+        <li>Full legal name.</li>
+        <li>Email.</li>
+        <li>Address.</li>
+        <li>State.</li>
+        <li>ZIP.</li>
+        <li>Employer.</li>
+        <li>Occupation.</li>
       </ul>
     </section>
 
     <section id="why" class="section">
       <h2>Why We Collect Data</h2>
       <ul class="list-tight">
-        <li>You are at least 18 years old (or the age of majority in your jurisdiction).</li>
-        <li>You are legally permitted to donate to political parties and charities in your jurisdiction.</li>
-        <li>You use your own funds or funds you are authorized to contribute.</li>
+        <li>Your preferred display name is used for leaderboard statistic on our website.</li>
+        <li>Your email is needed to deliver receipts for tax deductions.</li>
+        <li>Federal law requires us to use our best efforts to collect and 
+          report the name, mailing address, occupation and the name of the 
+          employer of individuals whose contributions exceed $200 in a calendar year.</li>
+        <li>We use your state on our homepage, to display what each state has donated.</li>
       </ul>
     </section>
 
     <section id="usage" class="section">
       <h2>How We Use Your Data</h2>
       <ul class="list-tight">
-        <li>You are at least 18 years old (or the age of majority in your jurisdiction).</li>
-        <li>You are legally permitted to donate to political parties and charities in your jurisdiction.</li>
-        <li>You use your own funds or funds you are authorized to contribute.</li>
+        <li>We store all the information listed above in our secure servers.</li>
+        <li>We will use your email to contact you with information regarding your 
+          donations, e.g. donation failed to process, notification of a recurring 
+          donation, donation cancellations, tax information, etc. 
+        </li>
+        <li>We <strong>never</strong> sell or share your personal information with 
+          anyone except the government in event we are audited.</li>
       </ul>
     </section>
 
     <section id="history" class="section">
       <h2>Privacy Policy History</h2>
-      <ul class="list-tight">
-        <li>You are at least 18 years old (or the age of majority in your jurisdiction).</li>
-        <li>You are legally permitted to donate to political parties and charities in your jurisdiction.</li>
-        <li>You use your own funds or funds you are authorized to contribute.</li>
-      </ul>
+      First draft: August 20, 2025
     </section>
 </main>
 <!--#include virtual="/includes/footer" -->
