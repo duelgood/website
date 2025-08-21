@@ -2,7 +2,6 @@ from . import db
 from datetime import datetime, timezone
 from sqlalchemy import Enum
 
-
 """
 Donation model field summary
 - id: Integer primary key (autoincrement).
