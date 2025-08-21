@@ -22,10 +22,6 @@ def create_app():
     from .routes import bp as api_bp
     app.register_blueprint(api_bp)
 
-    @app.route("/health")
-    def health():
-        return {"status": "ok"}
-
     @app.cli.command("db-init")
     @with_appcontext
     def db_init():
