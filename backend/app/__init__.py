@@ -4,8 +4,10 @@ import os
 from datetime import datetime
 import click
 from flask.cli import with_appcontext
+from flask_migrate import Migrate
 
 db = SQLAlchemy()
+migrate = Migrate()
 
 def create_app():
     app = Flask(__name__)
@@ -29,4 +31,5 @@ def create_app():
         db.create_all()
         click.echo("Database initialized.")
 
+    migrate.init_app(app, db)
     return app
