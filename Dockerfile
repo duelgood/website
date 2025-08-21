@@ -1,7 +1,7 @@
 FROM nginx:alpine
 
 # Install required packages
-RUN apk add --no-cache \
+RUN apk add \
     openssl \
     curl \
     ca-certificates \
