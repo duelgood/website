@@ -2,7 +2,7 @@ IMAGE_NAME := zkeulr/duelgood
 TIMESTAMP := $(shell date +%Y%m%d-%H%M%S)
 CONTAINER_NAME := duelgood-web
 
-docker: clean
+docker:
 	docker buildx create --use --name multiarch-builder 2>/dev/null || true
 	docker buildx build \
 		--platform linux/amd64,linux/arm64 \
