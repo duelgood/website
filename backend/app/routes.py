@@ -32,7 +32,7 @@ def get_stats():
 
     return jsonify({
         "total_amount": float(total),
-        "donation_count": count,
+        "month_amount": float(month_amount),
         "lives-saved": lives_saved,
         "lives-saved-month": lives_saved_month,
         "a": float(a_total),
@@ -74,7 +74,7 @@ def api_donate():
 
         cause = form.get('cause')
         donor_name = form.get('legal_name')
-        
+
         raw_email = (form.get('email') or '').strip()
         try:
             v = validate_email(raw_email)
@@ -101,7 +101,7 @@ def api_donate():
         else:
             time_val = datetime.now(timezone.utc)
 
-        required = [party, donor_name, email, mailing_address, employer, occupation]
+        required = [cause, donor_name, email, mailing_address, employer, occupation]
         if not all(required):
             return jsonify({'error': 'Missing required fields'}), 400
 
