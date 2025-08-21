@@ -125,3 +125,7 @@ def api_donate():
         # keep server logs for debugging
         print('Error in /api/donate:', e)
         return jsonify({'error': 'Server error'}), 500
+
+@bp.route("/health", methods=["GET"])
+def health():
+    return jsonify({"status": "ok"}), 200
