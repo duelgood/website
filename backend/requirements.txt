@@ -1,6 +1,6 @@
 flask
 flask_sqlalchemy
-flask-migrate
+Flask-Migrate
 psycopg2-binary
 sqlalchemy
 email-validator
