@@ -48,6 +48,7 @@ deploy_stack() {
 
     # use -T for non-interactive exec in scripts
     sudo docker compose -p duelgood -f /opt/duelgood/docker-compose.yml exec -T backend sh -c "flask db init 2>/dev/null || true; flask db migrate --no-input || true; flask db upgrade --no-input || true"
+    
 }
 
 # MAIN
