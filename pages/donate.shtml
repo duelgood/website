@@ -221,7 +221,7 @@ form.addEventListener('submit', async function(e) {
     const zip = (data.get('zip') || '').trim();
     data.set('mailing_address', street + '\n' + city + ', ' + state + ' ' + zip);
 
-    const resp = await fetch('/api/donate', { method: 'POST', body: data });
+    const resp = await fetch('/api/donations', { method: 'POST', body: data });
     if (resp.ok) {
       form.style.display = 'none';
       document.getElementById('success-message').style.display = 'block';
