@@ -113,7 +113,7 @@ def api_donate():
             donation_type=donation_type,
             donor_name=donor_name,
             email=email,
-            mailing_address=mailing_address,
+            street_address=street_address,
             employer=employer,
             occupation=occupation
         )

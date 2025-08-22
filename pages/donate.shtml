@@ -219,7 +219,7 @@ form.addEventListener('submit', async function(e) {
     const city = (data.get('city') || '').trim();
     const state = (data.get('state') || '').trim();
     const zip = (data.get('zip') || '').trim();
-    data.set('mailing_address', street + '\n' + city + ', ' + state + ' ' + zip);
+    data.set('street_address', street + '\n' + city + ', ' + state + ' ' + zip);
 
     const resp = await fetch('/api/donations', { method: 'POST', body: data });
     if (resp.ok) {
