@@ -172,6 +172,16 @@ function loadMap(data) {
       const canvas = document.getElementById("us-map");
       canvas.style.display = 'none';
       canvas.parentElement.innerHTML = '<p style="text-align: center; color: #666; padding: 40px;">Map temporarily unavailable</p>';
+      const container = document.querySelector('.map-container');
+      // keep the canvas (so page layout remains stable) and show a small message
+      const msg = document.createElement('div');
+      msg.className = 'map-error';
+      msg.textContent = 'Map temporarily unavailable';
+      msg.style.cssText = 'text-align:center;color:#666;padding:20px;font-size:14px;';
+      // remove any previous message then append
+      const prev = container.querySelector('.map-error');
+      if (prev) prev.remove();
+      container.appendChild(msg);
     });
 }
 
