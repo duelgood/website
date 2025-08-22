@@ -52,8 +52,8 @@ configure_firewall() {
 
 deploy_stack() {
   echo ">>> Deploying full stack via docker-compose..."
- docker compose build --no-cache
-  docker compose up -d
+  sudo docker compose build --no-cache
+  sudo docker compose up -d
 
   echo ">>> Initializing database..."
   sudo docker compose exec backend flask db-init
