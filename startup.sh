@@ -51,12 +51,14 @@ configure_firewall() {
 }
 
 deploy_stack() {
+  sudo usermod -aG docker $USER
+  newgrp docker
   echo ">>> Deploying full stack via docker-compose..."
-  sudo docker compose build --no-cache
-  sudo docker compose up -d
+  docker compose build --no-cache
+  docker compose up -d
 
   echo ">>> Initializing database..."
-  sudo docker compose exec backend flask db-init
+  docker compose exec backend flask db-init
 }
 
 # MAIN 
