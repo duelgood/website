@@ -1,16 +1,27 @@
-IMAGE_NAME := zkeulr/duelgood
+WEB_IMAGE := zkeulr/duelgood-web
+BACKEND_IMAGE := zkeulr/duelgood-backend
 TIMESTAMP := $(shell date +%Y%m%d-%H%M%S)
-CONTAINER_NAME := duelgood-web
 
-docker:
+docker-web:
 	docker buildx create --use --name multiarch-builder 2>/dev/null || true
 	docker buildx build \
 		--platform linux/amd64,linux/arm64 \
-		--tag $(IMAGE_NAME):latest \
-		--tag $(IMAGE_NAME):$(TIMESTAMP) \
+		--tag $(WEB_IMAGE):latest \
+		--tag $(WEB_IMAGE):$(TIMESTAMP) \
 		--push \
 		.
-		
+
+docker-backend:
+	docker buildx create --use --name multiarch-builder 2>/dev/null || true
+	docker buildx build \
+		--platform linux/amd64,linux/arm64 \
+		--tag $(BACKEND_IMAGE):latest \
+		--tag $(BACKEND_IMAGE):$(TIMESTAMP) \
+		--push \
+		-f backend/Dockerfile backend
+
+docker: docker-web docker-backend
+
 git: 
 	git add .
 	git commit -m "Update $(TIMESTAMP)"
@@ -21,9 +32,9 @@ clean:
 	docker volume prune -f
 
 debug: 
-	sudo docker logs duelgood-web
-	sudo docker logs duelgood-backend
-	sudo docker logs duelgood-db
-	curl -v -H "Host: duelgood.org" http://127.0.0.1/health
+	docker logs duelgood-web || true
+	docker logs duelgood-backend || true
+	docker logs duelgood-db || true
+	curl -v -H "Host: duelgood.org" http://127.0.0.1/health || true
 
-.PHONY: docker git clean
+.PHONY: docker docker-web docker-backend git clean debug

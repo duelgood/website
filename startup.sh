@@ -20,6 +20,8 @@ install_prereqs() {
   if ! command -v docker >/dev/null; then
     sudo dnf -y install docker-ce docker-ce-cli containerd.io docker-compose-plugin
     sudo systemctl enable --now docker
+    sudo usermod -aG docker $USER
+    echo ">>> Added $USER to docker group. You must log out and log back in for this to take effect."
   else
     echo "Docker already installed, skipping."
   fi
@@ -51,14 +53,12 @@ configure_firewall() {
 }
 
 deploy_stack() {
-  sudo usermod -aG docker $USER
-  newgrp docker
   echo ">>> Deploying full stack via docker-compose..."
-  docker compose build --no-cache
+  docker compose pull
   docker compose up -d
 
   echo ">>> Initializing database..."
-  docker compose exec backend flask db-init
+  docker compose exec backend flask db-init || true
 }
 
 # MAIN 
