@@ -8,7 +8,7 @@
   Note that this information is never used for commercial purposes 
   and is not stored outside of our servers. -->
   
-  <form action="/api/donate" method="POST" id="donation-form" novalidate>
+  <form action="/api/donations" method="POST" id="donation-form" novalidate>
     <fieldset>
       <legend>Donation Amount</legend>
       <label>
