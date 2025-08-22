@@ -22,8 +22,8 @@ configure_firewall() {
 deploy_stack() {
     cd "$DEPLOY_DIR" || exit 1
 
-    # Stop & clean old containers
-    sudo docker compose down --volumes --remove-orphans
+    # Stop & remove any existing containers (force)
+    sudo docker compose down --volumes --remove-orphans || true
     sudo docker rm -f duelgood-db duelgood-backend duelgood-web 2>/dev/null || true
 
     # Pull latest images
