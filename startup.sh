@@ -10,7 +10,6 @@ install_prereqs() {
     sudo dnf -y install docker-ce docker-ce-cli containerd.io docker-compose-plugin
     sudo systemctl enable --now docker
     sudo usermod -aG docker $USER
-    newgrp docker <<EOF
   fi
 }
 
@@ -21,9 +20,9 @@ configure_firewall() {
 }
 
 deploy_stack() {
-  docker compose pull
-  docker compose up -d
-  docker compose exec backend flask db-init || true
+  sudo docker compose pull
+  sudo docker compose up -d
+  sudo docker compose exec backend flask db-init || true
 }
 
 # MAIN 
