@@ -3,5 +3,6 @@ flask_sqlalchemy
 Flask-Migrate
 psycopg2-binary
 sqlalchemy
+sqlalchemy-utils
 email-validator
 gunicorn
