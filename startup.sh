@@ -1,8 +1,6 @@
 #!/bin/bash
 set -uo pipefail
 
-# FUNCTIONS 
-
 install_prereqs() {
   sudo dnf -y update
 
@@ -25,7 +23,12 @@ deploy_stack() {
   sudo docker volume prune -f
   sudo docker compose pull
   sudo docker compose up -d
-  sudo docker compose exec backend flask db-init || true
+
+  if ! sudo docker compose exec backend [ -d "/app/migrations" ]; then
+    sudo docker compose exec backend flask db init
+  fi
+  sudo docker compose exec backend flask db migrate -m "auto migration" || true
+  sudo docker compose exec backend flask db upgrade
 }
 
 # MAIN 
