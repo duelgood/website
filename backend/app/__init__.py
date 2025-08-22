@@ -5,6 +5,7 @@ from datetime import datetime
 import click
 from flask.cli import with_appcontext
 from flask_migrate import Migrate, upgrade
+from sqlalchemy_utils import database_exists, create_database
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -28,7 +29,6 @@ def create_app():
     @with_appcontext
     def db_init():
         """Initialize DB if not exists, then apply migrations."""
-        from sqlalchemy_utils import database_exists, create_database
         uri = app.config["SQLALCHEMY_DATABASE_URI"]
 
         if not database_exists(uri):
