@@ -33,14 +33,7 @@ deploy_stack() {
     sudo docker compose up -d
 
     # Run migrations inside backend container
-    sudo docker compose -p duelgood -f /opt/duelgood/docker-compose.yml exec backend sh -c "
-        set -e
-        if [ ! -d /app/migrations ]; then
-            flask db init
-        fi
-        flask db migrate -m 'auto migration' || true
-        flask db upgrade
-    "
+    sudo docker compose -p duelgood -f /opt/duelgood/docker-compose.yml exec backend sh -c "flask db init; flask db migrate; flask db upgrade"
 }
 
 # MAIN
