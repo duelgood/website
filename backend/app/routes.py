@@ -124,7 +124,7 @@ def api_donate():
         db.session.rollback()
         # keep server logs for debugging
         print('Error in /api/donate:', e)
-        return jsonify({'error': 'Server error'}), 500
+        return jsonify({'error': e}), 500
 
 @bp.route("/health", methods=["GET"])
 def health():
