@@ -20,7 +20,9 @@ configure_firewall() {
 }
 
 deploy_stack() {
-  sudo docker compose down --volumes --remove-orphans
+  sudo docker stop $(sudo docker ps -a -q) 2>/dev/null || true
+  sudo docker rm -f $(sudo docker ps -a -q) 2>/dev/null || true
+  sudo docker volume prune -f
   sudo docker compose pull
   sudo docker compose up -d
   sudo docker compose exec backend flask db-init || true
