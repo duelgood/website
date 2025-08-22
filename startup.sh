@@ -10,7 +10,7 @@ install_prereqs() {
     sudo dnf -y install docker-ce docker-ce-cli containerd.io docker-compose-plugin
     sudo systemctl enable --now docker
     sudo usermod -aG docker $USER
-    newgrp docker
+    newgrp docker <<EOF
   fi
 }
 
