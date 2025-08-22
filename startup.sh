@@ -20,7 +20,7 @@ configure_firewall() {
 }
 
 deploy_stack() {
-  sudo docker rm $(docker ps -a -q)
+  sudo docker rm $(sudo docker ps -a -q)
   sudo docker compose pull
   sudo docker compose up -d
   sudo docker compose exec backend flask db-init || true
