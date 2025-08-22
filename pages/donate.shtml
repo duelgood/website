@@ -228,6 +228,10 @@ form.addEventListener('submit', async function(e) {
     } else {
       const json = await resp.json().catch(()=>null);
       alert('Error: ' + (json?.error || await resp.text()));
+      const text = await resp.text();
+      let json = null;
+      try { json = JSON.parse(text); } catch (_) { /* not JSON */ }
+      alert('Error: ' + (json?.error || text || resp.statusText));
     }
   } catch (err) {
     alert(err);
