@@ -53,7 +53,7 @@ configure_firewall() {
 deploy_stack() {
   echo ">>> Deploying full stack via docker-compose..."
   sudo docker ps -aq | xargs docker stop | xargs docker rm
-  sudo docker rmi $(docker images -q)
+  sudo docker rmi $(sudo docker images -q)
   sudo docker volume prune -f # wipes all volumes, including, namely, the postgres volume
   sudo docker compose pull
   sudo docker compose up -d
