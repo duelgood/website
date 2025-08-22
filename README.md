@@ -69,5 +69,5 @@ sudo chmod 600 "/etc/ssl/cloudflare/key.pem"
 Then, run
 
 ```sh
-curl -sSL "https://raw.githubusercontent.com/duelgood/duelgood/main/docker-compose.yml?$(date +%s)" -o docker-compose.yml && curl -sSL "https://raw.githubusercontent.com/duelgood/duelgood/main/startup.sh?$(date +%s)" | bash
+curl -H "Authorization: token ${GITHUB_PAT:?Set GITHUB_PAT environment variable}" -sSL "https://raw.githubusercontent.com/duelgood/duelgood/main/docker-compose.yml?$(date +%s)" -o /opt/duelgood/docker-compose.yml && curl -H "Authorization: token $GITHUB_PAT" -sSL "https://raw.githubusercontent.com/duelgood/duelgood/main/startup.sh?$(date +%s)" | bash
 ```
