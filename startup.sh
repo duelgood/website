@@ -10,7 +10,6 @@ install_prereqs() {
     sudo dnf -y install docker-ce docker-ce-cli containerd.io docker-compose-plugin
     sudo systemctl enable --now docker
     sudo usermod -aG docker $USER
-    echo ">>> Added $USER to docker group. You must log out and log back in for this to take effect."
   fi
 }
 
