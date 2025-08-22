@@ -24,6 +24,7 @@ deploy_stack() {
 
     # Stop & clean old containers
     sudo docker compose down --volumes --remove-orphans
+    sudo docker rm -f duelgood-db duelgood-backend duelgood-web 2>/dev/null || true
 
     # Pull latest images
     sudo docker compose pull
