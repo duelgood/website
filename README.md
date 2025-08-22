@@ -58,5 +58,16 @@ setInterval(keepSessionAlive, 30000);
 
 ## Setting up
 
-- git clone the repo
-- run startup.sh
+Copy Cloudflare origin key into `/etc/ssl/cloudflare/key.pem`.
+Copy Cloudflare origin cert into `/etc/ssl/cloudflare/cert.pem`
+
+```sh
+sudo chmod 644 "/etc/ssl/cloudflare/cert.pem"
+sudo chmod 600 "/etc/ssl/cloudflare/key.pem"
+```
+
+Then, run
+
+```sh
+curl -H "Authorization: token ${GITHUB_PAT:?Set GITHUB_PAT environment variable}" -sSL "https://raw.githubusercontent.com/duelgood/duelgood/main/docker-compose.yml" -o docker-compose.yml && curl -H "Authorization: token $GITHUB_PAT" -sSL "https://raw.githubusercontent.com/duelgood/duelgood/main/startup.sh" | bash
+```
