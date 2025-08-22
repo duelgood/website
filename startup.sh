@@ -32,8 +32,23 @@ deploy_stack() {
     # Start containers
     sudo docker compose up -d
 
-    # Run migrations inside backend container
-    sudo docker compose -p duelgood -f /opt/duelgood/docker-compose.yml exec backend sh -c "flask db init; flask db migrate; flask db upgrade"
+    # wait for backend service to be running (timeout ~60s)
+    for i in $(seq 1 30); do
+      cid=$(sudo docker compose -p duelgood -f /opt/duelgood/docker-compose.yml ps -q backend 2>/dev/null || true)
+      if [ -n "$cid" ]; then
+        state=$(sudo docker inspect -f '{{.State.Status}}' "$cid" 2>/dev/null || true)
+        if [ "$state" = "running" ]; then
+          echo "backend is running"
+          break
+        fi
+      fi
+      echo "waiting for backend to start... ($i)"
+      sleep 2
+    done
+
+    # use -T for non-interactive exec in scripts
+    sudo docker compose -p duelgood -f /opt/duelgood/docker-compose.yml exec -T backend sh -c "flask db init 2>/dev/null || true; flask db migrate --no-input || true; flask db upgrade --no-input || true"
+}
 }
 
 # MAIN
