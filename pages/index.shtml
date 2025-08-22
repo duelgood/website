@@ -159,9 +159,19 @@ function loadMap(data) {
           plugins: {
             legend: { display: false },
             tooltip: {
-              callbacks: {
-                label: ctx => `${ctx.label}: $${ctx.raw.value.toLocaleString()}`
-              }
+-              callbacks: {
+-                label: ctx => `${ctx.label}: $${ctx.raw.value.toLocaleString()}`
+-              }
++              callbacks: {
++                label: (ctx) => {
++                  // feature name (ChartGeo puts the GeoJSON feature on ctx.raw.feature)
++                  const name = (ctx && ctx.raw && ctx.raw.feature && ctx.raw.feature.properties && ctx.raw.feature.properties.name) || ctx.label || 'Unknown';
++                  const value = (ctx && ctx.raw && typeof ctx.raw.value !== 'undefined') ? ctx.raw.value : 0;
++                  // ensure numeric formatting
++                  const displayValue = typeof value === 'number' ? value.toLocaleString() : String(value);
++                  return `${name}: $${displayValue}`;
++                }
++              }
             }
           }
         }
