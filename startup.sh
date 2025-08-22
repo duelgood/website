@@ -1,7 +1,7 @@
 #!/bin/bash
 set -uo pipefail
 
-DEPLOY_DIR="/opt/duelgood" 
+DEPLOY_DIR="/opt/duelgood"   # Path where docker-compose.yml lives
 
 install_prereqs() {
     sudo dnf -y update
@@ -31,16 +31,15 @@ deploy_stack() {
     # Start containers
     sudo docker compose up -d
 
-    # Ensure migrations exist inside the backend container
-    if ! sudo docker compose exec backend test -d "/app/migrations"; then
-        sudo docker compose exec backend flask db init
-    fi
-
-    # Auto-generate migrations (ignore if no changes)
-    sudo docker compose exec backend bash -c "flask db migrate -m 'auto migration' || true"
-
-    # Apply all migrations
-    sudo docker compose exec backend flask db upgrade
+    # Run migrations inside backend container
+    sudo docker compose exec backend bash -c "
+        set -e
+        if [ ! -d /app/migrations ]; then
+            flask db init
+        fi
+        flask db migrate -m 'auto migration' || true
+        flask db upgrade
+    "
 }
 
 # MAIN
