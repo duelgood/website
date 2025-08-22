@@ -4,7 +4,7 @@ import os
 from datetime import datetime
 import click
 from flask.cli import with_appcontext
-from flask_migrate import Migrate
+from flask_migrate import Migrate, upgrade
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -27,9 +27,17 @@ def create_app():
     @app.cli.command("db-init")
     @with_appcontext
     def db_init():
-        """Initialize the database (create tables)."""
-        db.create_all()
-        click.echo("Database initialized.")
+        """Initialize DB if not exists, then apply migrations."""
+        from sqlalchemy_utils import database_exists, create_database
+        uri = app.config["SQLALCHEMY_DATABASE_URI"]
+
+        if not database_exists(uri):
+            create_database(uri)
+            click.echo("Database created.")
+
+        upgrade()
+        click.echo("Database schema is up to date.")
+
 
     migrate.init_app(app, db)
     return app
