@@ -1,6 +1,6 @@
 services:
   web:
-    image: zkeulr/duelgood:latest
+    image: zkeulr/duelgood-web:latest
     container_name: duelgood-web
     restart: unless-stopped
     ports:
@@ -16,13 +16,11 @@ services:
       - duelgood-network
 
   backend:
-    build: ./backend
+    image: zkeulr/duelgood-backend:latest
     container_name: duelgood-backend
     restart: unless-stopped
     environment:
       - DATABASE_URL=postgresql://postgres:postgres@db:5432/duelgood
-    volumes:
-      - ./backend:/app
     expose:
       - "5000"
     depends_on:
@@ -40,7 +38,9 @@ services:
     container_name: duelgood-db
     restart: unless-stopped
     environment:
-      [POSTGRES_USER=postgres, POSTGRES_PASSWORD=postgres, POSTGRES_DB=duelgood]
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: duelgood
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
