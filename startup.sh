@@ -33,7 +33,7 @@ deploy_stack() {
     sudo docker compose up -d
 
     # Run migrations inside backend container
-    sudo docker compose exec backend bash -c "
+    sudo docker compose -p duelgood -f /opt/duelgood/docker-compose.yml exec backend sh -c "
         set -e
         if [ ! -d /app/migrations ]; then
             flask db init
