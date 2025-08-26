@@ -1,8 +1,14 @@
 <!--# include virtual="/includes/header" -->
     <main>
       <p>
-        DuelGood cancels out donations to opposing political parties and directs
-        the difference to charity. 
+        When you donate to a net-zero cause through DuelGood, 
+        your donation is matched with an equal opposing donation 
+        and both go to life-saving charities.
+      </p>
+      <p>
+        For example, if Alice donates $10 to the pro-life 
+        Cause A and Bob donates $8 to the pro-choice Cause B, 
+        then $8 + $8 = $16 goes to charity and the remaining $2 goes to Cause A. 
       </p>
       <div class="container">
         <div class="bar bar-1">A</div>
