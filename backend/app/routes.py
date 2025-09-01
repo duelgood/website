@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify, redirect, render_template
+from flask import Blueprint, request, jsonify, redirect
 from . import db
 from .models import Donation
 from datetime import datetime, timezone
@@ -131,20 +131,9 @@ def api_donate():
         print('Error in /api/donate:', e)
         return jsonify({'error': e}), 500
 
+# we would like to do jinja templating to display a custom 
+# thank you message depending on the cause donated to
+
 @bp.route("/health", methods=["GET"])
 def health():
     return jsonify({"status": "ok"}), 200
-
-@bp.route("/thank-you")
-def thank_you():
-    cause = request.args.get('cause', 'unknown')
-    
-    cause_messages = {
-        'a': {'message': 'Your donation will help us advance cause A.'},
-        'b': {'message': 'Your donation will help us advance cause B.'}
-    }
-    
-    content = cause_messages.get(cause, {'message': 'Your contribution makes a difference.'})
-    
-    # Flask will now look for thank-you.shtml in pages/ directory
-    return render_template('thank-you.shtml', **content)

@@ -9,7 +9,5 @@
         typically occurs the first of each 
         month. 
     </p>
-
-    <p>{{ message }}</p>
 </main>
 <!--#include virtual="/includes/footer" -->
