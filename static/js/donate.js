@@ -5,4 +5,4 @@
 // filled out but the user has typed in it (even if it's empty),
 // it will show an error. The user will not be able to
 // submit until the frontend validation says it's okay.
-// Each field is also checked more rigourously on the backend
+// Each field is also checked more rigorously on the backend

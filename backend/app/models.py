@@ -30,11 +30,7 @@ class Donation(db.Model):
     amount = db.Column(db.Numeric(10, 2), nullable=False)
     display_name = db.Column(db.String(100), default='Anonymous')
     cause = db.Column(Enum('a', 'b', name='cause_enum', native_enum=True), nullable=False)
-    donation_type = db.Column(
-        Enum('one-time', 'monthly', 'yearly', name='donation_type_enum', native_enum=True),
-        nullable=False,
-        default='one-time'
-    )
+
     donor_name = db.Column(db.String(25), nullable=False)
     email = db.Column(db.String(255), nullable=False)
     street_address = db.Column(db.Text, nullable=False)
@@ -55,8 +51,3 @@ class Donation(db.Model):
     zip_code = db.Column(db.String(10))
 
     created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
-    status = db.Column(
-        Enum('active', 'cancelled', name='donation_status_enum', native_enum=True),
-        nullable=False,
-        default='active'
-    )

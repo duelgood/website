@@ -39,7 +39,7 @@ async function loadStats() {
         '<div class="donor-item placeholder">No donors yet</div>';
     }
 
-    // Top donors this month - now using real data
+    // Top donors this month
     const topMonthList = document.getElementById("top-donors-month");
     topMonthList.innerHTML = "";
 
@@ -56,9 +56,6 @@ async function loadStats() {
       topMonthList.innerHTML =
         '<div class="donor-item placeholder">No donations this month</div>';
     }
-
-    // Load map after stats are loaded
-    loadMap(data);
   } catch (error) {
     console.error("Error loading stats:", error);
     // Show error state

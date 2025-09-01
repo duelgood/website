@@ -18,12 +18,15 @@
       </label>
     </fieldset>
 
+    <!-- 
+    For simplicity, only allowing one-time donations at the moment. 
     <fieldset>
       <legend>Donation Type</legend>
       <label><input type="radio" name="type" value="one-time" checked> One-time</label>
       <label><input type="radio" name="type" value="monthly"> Monthly</label>
       <label><input type="radio" name="type" value="yearly"> Yearly</label>
     </fieldset>
+    -->
 
     <fieldset>
       <legend>Cause</legend>
@@ -46,6 +49,26 @@
       <!-- Why do we collect this? Page about -->
       <!-- If not making political donation, no 
        need to collect this info-->
+
+      <!-- Info needed: 
+       First name
+       Last name
+       Address
+       Email address
+       ZIP/postal code
+       City
+       State
+       Country
+      -->
+
+      <!--
+      At the bottom, tell the user how much they're donating and 
+      with what frequency
+      -->
+
+      <!-- 
+      
+      -->
 
       <label>
         Email Address:

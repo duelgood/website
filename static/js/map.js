@@ -94,3 +94,5 @@ function loadMap(data) {
       container.appendChild(msg);
     });
 }
+
+loadMap(data);

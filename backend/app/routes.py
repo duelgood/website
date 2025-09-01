@@ -29,12 +29,20 @@ def get_stats():
     b_total = db.session.query(db.func.sum(Donation.amount))\
         .filter(Donation.cause == 'b')\
         .scalar() or 0
+    
+
+    # need to add top donors and state data
+    # we need a way to associate all the donations 
+    # that a given donor has ever made with that donor
+    # we probably need to update our schema, or just 
+    # allow one-time donations? but recurring donations 
+    # are far more effective. 
 
     return jsonify({
         "total_amount": float(total),
         "month_amount": float(month_amount),
-        "lives-saved": lives_saved,
-        "lives-saved-month": lives_saved_month,
+        "lives_saved": lives_saved,
+        "lives_saved_month": lives_saved_month,
         "a": float(a_total),
         "b": float(b_total)
     })
@@ -88,7 +96,6 @@ def api_donate():
         state = (form.get('state') or '').strip().upper()
         zip_code = form.get('zip', '').strip()
         display_name = form.get('display_name') or 'Anonymous'
-        donation_type = form.get('type') or 'one-time'
         timestamp = form.get('timestamp')
         if timestamp:
             try:
@@ -107,7 +114,6 @@ def api_donate():
             amount=amount,
             display_name=display_name,
             cause=cause,
-            donation_type=donation_type,
             donor_name=donor_name,
             email=email,
             street_address=street_address,
