@@ -100,7 +100,7 @@
       </div>
     </fieldset>
 
-    <button type="submit" id="submit-btn" class="donate-btn" disabled>Submit Donation (Test Mode)</button>
+    <button type="submit" id="submit-btn" class="donate-btn">Submit Donation (Test Mode)</button>
   </form>
 
   <div id="success-message" style="display: none;">
