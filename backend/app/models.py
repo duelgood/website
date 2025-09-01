@@ -52,9 +52,7 @@ class Donation(db.Model):
         nullable=False,
         native_enum=True
     )
-    zip = db.Column(db.String(5))
-    employer = db.Column(db.String(255), nullable=False)
-    occupation = db.Column(db.String(255), nullable=False)
+    zip_code = db.Column(db.String(10))
 
     created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
     status = db.Column(

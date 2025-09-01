@@ -43,6 +43,9 @@
 
     <fieldset>
       <legend>Contact Information</legend>
+      <!-- Why do we collect this? Page about -->
+      <!-- If not making political donation, no 
+       need to collect this info-->
 
       <label>
         Email Address:
@@ -57,7 +60,7 @@
       
       <label>
         Street Address:
-        <input type="text" name="street" required placeholder="123 Main St" maxlength="200">
+        <input type="text" name="street_address" required placeholder="123 Main St" maxlength="200">
       </label>
       
       <div style="display:flex;gap:8px;">
@@ -95,18 +98,6 @@
           <span class="error-message" id="zip-error"></span>
         </label>
       </div>
-    </fieldset>
-
-    <fieldset>
-      <legend>Employment Information</legend>
-      <label>
-        Employer Name:
-        <input type="text" name="employer" required placeholder="Company Name" maxlength="100">
-      </label>
-      <label>
-        Occupation:
-        <input type="text" name="occupation" required placeholder="Software Engineer" maxlength="100">
-      </label>
     </fieldset>
 
     <button type="submit" id="submit-btn" class="donate-btn" disabled>Submit Donation (Test Mode)</button>

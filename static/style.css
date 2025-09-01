@@ -471,13 +471,6 @@ button[type="submit"]:hover {
   box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
 }
 
-button[type="submit"]:disabled {
-  background: #6c757d;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
-}
-
 small {
   color: #666;
   font-size: 0.9rem;

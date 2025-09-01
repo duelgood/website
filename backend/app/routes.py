@@ -81,15 +81,12 @@ def api_donate():
             # normalized (lowercased, etc.)
             email = v.email 
         except EmailNotValidError as e:
-            return jsonify({'error': 'Invalid email address'}), 400
+            return jsonify({'error': f'{raw_email} is an invalid email address'}), 400
         
-        street = form.get('street', '').strip()
+        street_address = form.get('street_address', '').strip()
         city = form.get('city', '').strip()
         state = (form.get('state') or '').strip().upper()
         zip_code = form.get('zip', '').strip()
-        mailing_address = form.get('mailing_address') or f"{street}\n{city}, {state} {zip_code}"
-        employer = form.get('employer')
-        occupation = form.get('occupation')
         display_name = form.get('display_name') or 'Anonymous'
         donation_type = form.get('type') or 'one-time'
         timestamp = form.get('timestamp')
@@ -101,7 +98,7 @@ def api_donate():
         else:
             time_val = datetime.now(timezone.utc)
 
-        required = [cause, donor_name, email, mailing_address, employer, occupation]
+        required = [cause, donor_name, email, street_address, city, state, zip_code]
         if not all(required):
             return jsonify({'error': 'Missing required fields'}), 400
 
@@ -114,8 +111,9 @@ def api_donate():
             donor_name=donor_name,
             email=email,
             street_address=street_address,
-            employer=employer,
-            occupation=occupation
+            city=city,
+            state=state,
+            zip_code=zip_code
         )
         db.session.add(donation)
         db.session.commit()
