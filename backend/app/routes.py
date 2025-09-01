@@ -139,18 +139,12 @@ def health():
 def thank_you():
     cause = request.args.get('cause', 'unknown')
     
-    # Define cause-specific content
     cause_messages = {
-        'a': {
-            'message': 'Your donation will help us advance cause A.'
-        },
-        'b': {
-            'message': 'Your donation will help us advance cause B'
-        }
+        'a': {'message': 'Your donation will help us advance cause A.'},
+        'b': {'message': 'Your donation will help us advance cause B.'}
     }
     
-    content = cause_messages.get(cause, {
-        'message': 'Your contribution makes a difference.'
-    })
+    content = cause_messages.get(cause, {'message': 'Your contribution makes a difference.'})
     
+    # Flask will now look for thank-you.shtml in pages/ directory
     return render_template('thank-you.shtml', **content)
