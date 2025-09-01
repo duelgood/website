@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, redirect
 from . import db
 from .models import Donation
 from datetime import datetime, timezone
@@ -122,8 +122,8 @@ def api_donate():
             zip_code=zip_code
         )
         db.session.add(donation)
-        db.session.commit()
-        return jsonify({'success': True, 'id': donation.id}), 201
+        db.session.commit() 
+        redirect(302, 'https://duelgood.org/thank-you')
     except Exception as e:
         db.session.rollback()
         # keep server logs for debugging
