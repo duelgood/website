@@ -4,10 +4,8 @@ set -uo pipefail
 DEPLOY_DIR="/opt/duelgood"   # Path where docker-compose.yml lives
 
 install_prereqs() {
-    sudo dnf -y update
-
     if ! command -v docker >/dev/null; then
-        sudo dnf -y install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+        sudo pacman -Sy docker docker-compose
         sudo systemctl enable --now docker
         sudo usermod -aG docker $USER
     fi
