@@ -123,7 +123,8 @@ def api_donate():
         )
         db.session.add(donation)
         db.session.commit() 
-        redirect(302, 'https://duelgood.org/thank-you')
+        
+        return redirect('https://duelgood.org/thank-you', code=302)
     except Exception as e:
         db.session.rollback()
         # keep server logs for debugging
