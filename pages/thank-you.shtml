@@ -8,7 +8,7 @@
         tax receipt.
     </p>
 
-    <p>As you indicated, we will use your donation as follows:</p>
+    <p>{{ message }}</p>
 
     <!-- Information about cause here-->
 </main>

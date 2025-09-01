@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify, redirect
+from flask import Blueprint, request, jsonify, redirect, render_template
 from . import db
 from .models import Donation
 from datetime import datetime, timezone
@@ -123,8 +123,8 @@ def api_donate():
         )
         db.session.add(donation)
         db.session.commit() 
-        
-        return redirect('https://duelgood.org/thank-you', code=302)
+
+        return redirect(f'https://duelgood.org/thank-you?cause={cause}', code=302)
     except Exception as e:
         db.session.rollback()
         # keep server logs for debugging
@@ -134,3 +134,23 @@ def api_donate():
 @bp.route("/health", methods=["GET"])
 def health():
     return jsonify({"status": "ok"}), 200
+
+@bp.route("/thank-you")
+def thank_you():
+    cause = request.args.get('cause', 'unknown')
+    
+    # Define cause-specific content
+    cause_messages = {
+        'a': {
+            'message': 'Your donation will help us advance cause A.'
+        },
+        'b': {
+            'message': 'Your donation will help us advance cause B'
+        }
+    }
+    
+    content = cause_messages.get(cause, {
+        'message': 'Your contribution makes a difference.'
+    })
+    
+    return render_template('thank-you.html', **content)
