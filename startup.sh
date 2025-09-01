@@ -6,7 +6,7 @@ DEPLOY_DIR="/opt/duelgood"   # Path where docker-compose.yml will live
 install_prereqs() {
     if ! command -v docker >/dev/null; then
         sudo pacman -Sy  --noconfirm docker docker-compose firewalld
-        sudo systemctl enable --now docker
+        sudo systemctl enable --now docker firewall
         sudo usermod -aG docker $USER
     fi
 }
