@@ -1,6 +1,0 @@
-{
-  "prettier.htmlWhitespaceSensitivity": "ignore",
-  "[html]": {
-    "editor.defaultFormatter": null
-  }
-}

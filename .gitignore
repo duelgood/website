@@ -1,6 +1,3 @@
-# Misc.
-v2/
-
 # Logs
 logs/
 *.log
@@ -11,8 +8,6 @@ logs/
 # Temporary files
 *.tmp
 *.temp
-.DS_Store
-Thumbs.db
 
 # SSL certificates
 ssl/
@@ -23,23 +18,11 @@ ssl/
 
 # Environment files
 .env
-.env.local
-.env.production
 .vscode
-
-# Build artifacts
-dist/
-build/
 
 # Cache directories
 .cache/
 **/__pycache__/
-
-# Local development overrides
-docker-compose.override.yml
-docker-compose.local.yml
-nginx.local.conf
-config.local.*
 
 # Development
 *.dev
