@@ -1,11 +1,11 @@
 #!/bin/bash
 set -uo pipefail
 
-DEPLOY_DIR="/opt/duelgood"   # Path where docker-compose.yml lives
+DEPLOY_DIR="/opt/duelgood"   # Path where docker-compose.yml will live
 
 install_prereqs() {
     if ! command -v docker >/dev/null; then
-        sudo pacman -Sy docker docker-compose
+        sudo pacman -Sy  --noconfirm docker docker-compose
         sudo systemctl enable --now docker
         sudo usermod -aG docker $USER
     fi
@@ -30,7 +30,8 @@ deploy_stack() {
     # Start containers
     sudo docker compose up -d
 
-    # wait for backend service to be running (timeout ~60s)
+    # Wait for backend service to be running (timeout ~60s).
+    # This is required to solve an issue with the backend
     for i in $(seq 1 30); do
       cid=$(sudo docker compose -p duelgood -f /opt/duelgood/docker-compose.yml ps -q backend 2>/dev/null || true)
       if [ -n "$cid" ]; then
