@@ -3,13 +3,13 @@
     <h1>Thank you for your donation!</h1>
 
     <p>Your donation is currently processing. 
-        Once the funds have been deposited in our account, 
-        you'll receive an email which will serve as your 
-        tax receipt.
+        Once the funds have been forwarded, 
+        you'll receive an email which
+        will serve as your tax receipt. This 
+        typically occurs the first of each 
+        month. 
     </p>
 
     <p>{{ message }}</p>
-
-    <!-- Information about cause here-->
 </main>
 <!--#include virtual="/includes/footer" -->

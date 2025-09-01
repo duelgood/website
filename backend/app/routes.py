@@ -153,4 +153,4 @@ def thank_you():
         'message': 'Your contribution makes a difference.'
     })
     
-    return render_template('thank-you.html', **content)
+    return render_template('thank-you.shtml', **content)
