@@ -22,6 +22,9 @@ docker-backend:
 
 docker: docker-web docker-backend
 
+scan:
+	gitleaks detect --report-format json --report-path gitleaks-report.json
+
 git: 
 	git add .
 	git commit -m "Update $(TIMESTAMP)"
