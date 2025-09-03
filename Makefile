@@ -27,14 +27,4 @@ git:
 	git commit -m "Update $(TIMESTAMP)"
 	git push
 
-clean: 
-	docker system prune -f
-	docker volume prune -f
-
-debug: 
-	docker logs duelgood-web || true
-	docker logs duelgood-backend || true
-	docker logs duelgood-db || true
-	curl -v -H "Host: duelgood.org" http://127.0.0.1/health || true
-
 .PHONY: docker docker-web docker-backend git clean debug
