@@ -2,7 +2,7 @@
 <main>
     <h1>Our People</h1>
 
-    <img src="/static/favicon.svg" max-width="90%" height="auto" alt="Headshot of a fair-skinned, moderately attractive brunet">
+    <img src="/static/headshots/zeke.jpg" max-width="90%" height="auto" alt="Headshot of a fair-skinned, moderately attractive brunet">
     <h2>Zeke Ulrich</h2>
     <p>
         Zeke is DuelGood's president. He also works on national security for the government, 
