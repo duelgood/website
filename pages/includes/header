@@ -19,7 +19,7 @@
         <label for="menu-toggle" class="menu-icon">&#9776;</label>
         <div class="nav-links">
           <a href="/about" class="hover-underline">About</a>
-          <a href="/research" class="hover-underline">Research</a>
+          <a href="/people" class="hover-underline">Our People</a>
           <a href="/faq" class="hover-underline">FAQ</a>
         </div>
         <a href="/donate" class="donate-btn">Donate</a>
