@@ -1,7 +1,8 @@
 #!/bin/bash
 set -uo pipefail
 
-DEPLOY_DIR="/opt/duelgood" # Path where docker-compose.yml will live
+# Path where docker-compose.yml will live
+DEPLOY_DIR="/opt/duelgood" 
 
 install_prereqs() {
     if ! command -v docker >/dev/null; then
