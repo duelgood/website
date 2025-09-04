@@ -2,60 +2,71 @@
 <main>
   <h1>Privacy Policy</h1>
   <p class="meta">Last Updated: <time datetime="2025-08-20">August 20, 2025</time></p>
-  <p class="lead">When you donate through <strong>DuelGood</strong>, you're trusting us 
+  <p class="lead">When you donate through DuelGood, you're trusting us 
     with our personal information. We understand this is a 
     big responsibility and work hard to protect your information.</p>
     
   <div class="toc" aria-labelledby="toc-heading">
     <h2 id="toc-heading">Contents</h2>
     <ol>
-        <li><a href="#collection">Data We Collect</a></li>
-        <li><a href="#why">Why We Collect Data</a></li>
-        <li><a href="#usage">How We Use Your Data</a></li>
-        <li><a href="#history">Privacy Policy History</a></li>
+        <li><a href="#what">What Information We Collect</a></li>
+        <li><a href="#why">Why We Collect Information</a></li>
+        <li><a href="#how">How We Use Your Information</a></li>
     </ol>
     </div>
 
-    <section id="collection">
-      <h2>Data We Collect</h2>
-      When you make a donation, we collect the following information:
+    <section id="what">
+      <h2>What Information We Collect</h2>
+      When you make a donation, we collect the following:
       <ul class="list-tight">
-        <li>Donated amount.</li>
+        <li>Donation amount.</li>
+        <li>Charity preference.</li>
         <li>Display name.</li>
-        <li>Preference, 'A' or 'B'.</li>
-        <li>Full legal name.</li>
-        <li>Email.</li>
-        <li>Address.</li>
+        <li>Email address.</li>
+        <li>Legal name.</li>
+        <li>Street address.</li>
         <li>State.</li>
         <li>ZIP.</li>
-        <li>Employer.</li>
-        <li>Occupation.</li>
       </ul>
     </section>
 
     <section id="why">
-      <h2>Why We Collect Data</h2>
+      <h2>Why We Collect Information</h2>
       <ul class="list-tight">
-        <li>Your preferred display name is used for leaderboard statistics on our website.</li>
-        <li>Your email is needed to deliver receipts for tax deductions.</li>
-        <li>Federal law requires us to use our best efforts to collect and 
-          report the name, mailing address, occupation and the name of the 
-          employer of individuals whose contributions exceed $200 in a calendar year.</li>
-        <li>We use your state on our homepage, to display what each state has donated.</li>
+        <li>We need your donation amount and charity preference to 
+          route your donation correctly. 
+        </li>
+        <li>We deliver tax deductions receipts to your email.</li>
+        <li>Federal law requires us to collect the name and address of donors.
+          <blockquote cite="https://www.irs.gov/instructions/i990sb">
+          <q>Section 501(c)(3) organizations (including section 4947(a)(1) nonexempt charitable trusts 
+          and nonexempt private foundations described in section 6033(d)) and section 527 political 
+          organizations must report the names and addresses of their contributors in Part I, column 
+          (b), on Schedule B.</q>
+          </blockquote>
+        </li>
       </ul>
     </section>
 
-    <section id="usage">
-      <h2>How We Use Your Data</h2>
+    <section id="how">
+      <h2>How We Use Your Information</h2>
       <ul class="list-tight">
         <li>We store all the information listed above in our secure servers.</li>
         <li>We will use your email to contact you with information regarding your 
-          donations, e.g. donation failed to process, notification of a recurring 
-          donation, donation cancellations, tax information, etc. 
+          donations, e.g. donation failed to process, donation cancellations, 
+          tax deduction information. 
         </li>
+        <li>We show your display name on our website.</li>
+        <li>We use your state when displaying the total amount donated by each state.</li>
         <li>We <strong>never</strong> sell or share your personal information with 
-          anyone except the government in event we are audited.</li>
+          anyone except the federal government when required.</li>
       </ul>
     </section>
+
+    <p>DuelGood aims to be as transparent as possible. 
+      If you have any inquires regarding your personal information, please 
+      visit our <a href="https://duelgood.org/contact">contact page</a> and 
+      reach out.
+    </p>
 </main>
 <!--#include virtual="/includes/footer" -->
