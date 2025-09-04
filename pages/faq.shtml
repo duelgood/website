@@ -1,23 +1,73 @@
 <!--# include virtual="/includes/header" -->
-
-<!--Questions I would want to ask:
-Is this legal? 
-How can I verify my donations actually go where you say? 
-How does this work behind the scenes?
-Is DuelGood biased?
-Why is GiveWell the only charity available? (NOTE: maybe it shouldn't be)
-Is my personal information secure?
-Are donations tax-deductible?
-Can I get a refund?
-How do I cancel a recurring donation?
-What is the optimal strategy I should take to maximize the impact 
-my donation has? 
--->
-
 <main>
   <h1>Frequently Asked Questions</h1>
+  <p class="meta">Last Updated: <time datetime="2025-09-03">September 3, 2025</time></p>
+    
+  <div class="toc" aria-labelledby="toc-heading">
+    <h2 id="toc-heading">Contents</h2>
+    <ol>
+        <li><a href="#legal">Legal</a></li>
+        <li><a href="#process">Process</a></li>
+        <li><a href="#transparency">Transparency</a></li>
+        <li><a href="#misc">Miscellaneous</a></li>
+    </ol>
+    </div>
 
-  <!-- Transparency -->
+    <section id="legal">
+      <h2>Legal</h2>
+      <p><strong>Are donations tax-deductible?</strong></p>
+      <p>Yes. You'll receive a receipt for tax deduction
+        at the email you provide when donating.
+      </p>
+      <p><strong>Is what DuelGood does legal?</strong></p>
+      <p>Yes.</p>
+    </section>
+
+    <section id="process">
+      <h2>Process</h2>
+      <p><strong>How does this work behind the scenes?</strong></p>
+      When you donate to us with credit, debit, or ACH transfer, your
+      donation goes into DuelGood's bank account. We then send a tax 
+      receipt for a deduction to your email. On the first of each month 
+      we calculate how much each cause received in the last month and 
+      send the appropriate amount to each charity. 
+    </section>
+
+    <section id="transparency">
+      <h2>Transparency</h2>
+      <p><strong>How can I verify my donations actually go where you say?</strong></p>
+      <p></p> 
+      <!-- We need to publish our donation receipts so people can check totals -->
+      <!-- We also need to make it possible to get a list of all donations made 
+        -->
+      <p><strong>Is DuelGood politically biased?</strong></p>
+      <p>No. We cannot direct funds preferentially. DuelGood 
+        is designed to be as neutral as possible. 
+      </p>
+      <p><strong>Is my personal information secure?</strong></p>
+      <p>Extremely.</p>
+      <p><strong>Can I get a refund?</strong></p>
+      <p>No.</p>
+    </section>
+
+    <section id="misc">
+      <h2>Miscellaneous</h2>
+      <p><strong>What is the optimal strategy I should take to maximize the impact my donation has?</strong></p>
+      This is an area of active research. if you have any thoughts regarding 
+      this, please reach out to us. 
+    </section>
+
+    <p>
+      DuelGood is dedicated to transparency and making what we do 
+      comprehensible. If your question isn't answered here, please 
+      visit our <a href="https://duelgood.org/contact">contact page</a> and 
+      reach out.
+    </p>
+</main>
+  <!--
+
+  <h1>Frequently Asked Questions</h1>
+
   <section class="faq-section">
     <h2>Transparency</h2>
 
@@ -59,7 +109,6 @@ my donation has?
     </details>
   </section>
 
-  <!-- Security -->
   <section class="faq-section">
     <h2>Security</h2>
 
@@ -86,7 +135,6 @@ my donation has?
     </details>
   </section>
 
-  <!-- Political Neutrality -->
   <section class="faq-section">
     <h2>Political Neutrality</h2>
 
@@ -128,7 +176,6 @@ my donation has?
     </details>
   </section>
 
-  <!-- Legal & Tax -->
   <section class="faq-section">
     <h2>Legal &amp; Tax</h2>
 
@@ -156,7 +203,6 @@ my donation has?
     </details>
   </section>
 
-  <!-- Tough Questions & Criticism -->
   <section class="faq-section">
     <h2>Tough Questions &amp; Criticism</h2>
 
@@ -203,7 +249,6 @@ my donation has?
     </details>
   </section>
 
-  <!-- Miscellaneous -->
   <section class="faq-section">
     <h2>Miscellaneous</h2>
 
@@ -229,4 +274,5 @@ my donation has?
     </details>
   </section>
 </main>
+-->
 <!--#include virtual="/includes/footer" -->
