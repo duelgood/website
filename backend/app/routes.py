@@ -38,15 +38,17 @@ def get_stats():
      .order_by(func.sum(Donation.amount).desc())\
      .limit(10).all()
     top_donors = [{"donor": name or "Anonymous", "amount": float(total or 0)} for name, total in top_all_rows]
-    
-    # Top donors (by display_name)
-    top_all_rows = db.session.query(
+
+    # Top donors this month (by display_name)
+    top_month_rows = db.session.query(
         Donation.display_name,
         func.sum(Donation.amount).label('total')
-    ).group_by(Donation.display_name)\
+    ).filter(extract('year', Donation.time) == now.year)\
+     .filter(extract('month', Donation.time) == now.month)\
+     .group_by(Donation.display_name)\
      .order_by(func.sum(Donation.amount).desc())\
      .limit(10).all()
-    top_donors = [{"donor": name or "Anonymous", "amount": float(total or 0)} for name, total in top_all_rows]
+    top_donors_month = [{"donor": name or "Anonymous", "amount": float(total or 0)} for name, total in top_month_rows]
 
     # we need a way to associate all the donations 
     # that a given donor has ever made with that donor
@@ -80,10 +82,8 @@ def get_stats():
         "month_amount": float(month_amount),
         "lives_saved": lives_saved,
         "lives_saved_month": lives_saved_month,
-        # keep original keys used by your page
         "a": float(a_total),
         "b": float(b_total),
-        # also provide explicit names (optional)
         "cause_a": float(a_total),
         "cause_b": float(b_total),
         "top_donors": top_donors,
