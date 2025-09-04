@@ -12,7 +12,7 @@ if (window.Chart && window.ChartGeo) {
 let _usTopo = null;
 let _usChart = null;
 
-function loadMap(data) {
+function loadMap(stats) {
   // libs/canvas present?
   if (!window.Chart || !window.ChartGeo) return;
   const canvas = document.getElementById("us-map");
@@ -27,7 +27,7 @@ function loadMap(data) {
   topoPromise
     .then((us) => {
       const states = ChartGeo.topojson.feature(us, us.objects.states).features;
-      const byState = (data && data.donations_by_state) || {};
+      const byState = (stats && stats.donations_by_state) || {};
 
       if (_usChart) {
         try {
