@@ -80,30 +80,6 @@ nav a:hover {
   box-shadow: none !important;
 }
 
-.causes-container {
-  /* Use Flexbox to create a flexible, two-column layout */
-  display: flex;
-  flex-wrap: wrap; /* Allows items to wrap to the next line */
-  justify-content: space-between; /* Pushes items to the edges and adds space between them */
-  align-items: flex-start; /* Aligns items to the top of the container */
-  gap: 20px; /* Adds space between items, both horizontally and vertically */
-}
-
-/* Style the individual cause containers to take up half the width */
-.causes-container > div {
-  /* Use flex-basis to set an initial size for the items.
-     calc() ensures they fit nicely with the gap. */
-  flex-basis: calc(50% - 10px);
-  box-sizing: border-box; /* Includes padding and border in the element's total width and height */
-}
-
-/* Isolate the "DuelGood" div to span the full width at the bottom */
-.causes-container > div:last-child {
-  width: 100%;
-  flex-basis: 100%; /* Make this item span the full width */
-  margin-top: 20px; /* Optional: Add some space above it to separate it from the causes */
-}
-
 /* -------------------- Header & Navigation Links Hover Effects -------------------- */
 .nav-links a {
   color: black;
