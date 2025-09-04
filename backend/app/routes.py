@@ -20,6 +20,9 @@ def get_stats():
         .scalar() or 0
 
     # https://www.givewell.org/how-much-does-it-cost-to-save-a-life
+
+    # instead of dividing the total amount donated by 3000, we need to 
+    # divide just the amount that's gone to GiveWell. 
     lives_saved = int(float(total) / 3000)
     lives_saved_month = int(float(month_amount) / 3000)
 

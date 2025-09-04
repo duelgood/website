@@ -29,7 +29,15 @@ class Donation(db.Model):
     time = db.Column(db.DateTime, nullable=False, default=datetime.now(timezone.utc))
     amount = db.Column(db.Numeric(10, 2), nullable=False)
     display_name = db.Column(db.String(100), default='Anonymous')
-    cause = db.Column(Enum('a', 'b', name='cause_enum', native_enum=True), nullable=False)
+    cause = db.Column(Enum('planned_parenthood', 
+                            'national_right_to_life_committee', 
+                            'everytown_for_gun_safety', 
+                            'nra_foundation',
+                            'trevor_project', 
+                            'alliance_defending_freedom', 
+                            name='cause_enum', 
+                            native_enum=True), 
+                            nullable=False)
 
     donor_name = db.Column(db.String(25), nullable=False)
     email = db.Column(db.String(255), nullable=False)
@@ -44,9 +52,7 @@ class Donation(db.Model):
             name='state_enum',
             native_enum=True
         ),
-        name='state_enum',
-        nullable=False,
-        native_enum=True
+        nullable=False    
     )
     zip_code = db.Column(db.String(10))
 
