@@ -17,7 +17,6 @@
     <fieldset>
   <legend>Causes</legend>
   <div class="causes-container">
-                            'center_for_life', 
                             'everytown_for_gun_safety', 
                             'nra_foundation',
                             'trevor_project', 
@@ -33,18 +32,22 @@
       <input type="number" id="cause-b-amount" name="cause-b-amount" min="1" step="1" placeholder="25.00">
     </div>
     <div>
+      <p>The <a href="https://nrlc.org/">National Right to Life Committee</a> is the oldest and largest national pro-life organization in the United States.</p>
       <label for="cause-c-amount">Cause C</label>
       <input type="number" id="cause-c-amount" name="cause-c-amount" min="1" step="1" placeholder="25.00">
     </div>
     <div>
+      <p>The <a href="https://nrlc.org/">National Right to Life Committee</a> is the oldest and largest national pro-life organization in the United States.</p>
       <label for="cause-d-amount">Cause D</label>
       <input type="number" id="cause-d-amount" name="cause-d-amount" min="1" step="1" placeholder="25.00">
     </div>
     <div>
+      <p>The <a href="https://nrlc.org/">National Right to Life Committee</a> is the oldest and largest national pro-life organization in the United States.</p>
       <label for="cause-e-amount">Cause E</label>
       <input type="number" id="cause-e-amount" name="cause-e-amount" min="1" step="1" placeholder="25.00">
     </div>
     <div>
+      <p>The <a href="https://nrlc.org/">National Right to Life Committee</a> is the oldest and largest national pro-life organization in the United States.</p>
       <label for="cause-f-amount">Cause F</label>
       <input type="number" id="cause-f-amount" name="cause-f-amount" min="1" step="1" placeholder="25.00">
     </div>
