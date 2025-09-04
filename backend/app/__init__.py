@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, render_template
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import os
 from datetime import datetime
@@ -6,20 +6,12 @@ import click
 from flask.cli import with_appcontext
 from flask_migrate import Migrate, upgrade
 from sqlalchemy_utils import database_exists, create_database
-# from jinja2 import FileSystemLoader
 
 db = SQLAlchemy()
 migrate = Migrate()
 
 def create_app():
     app = Flask(__name__)
-    '''
-    app.jinja_loader = FileSystemLoader([
-        os.path.join(os.path.dirname(__file__), '../../pages'),  
-        os.path.join(os.path.dirname(__file__), 'templates') 
-    ])
-    app.jinja_env.add_extension('jinja2.ext.do')
-    '''
 
     # Database config
     app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")

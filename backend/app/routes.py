@@ -3,7 +3,7 @@ from . import db
 from .models import Donation
 from datetime import datetime, timezone
 from email_validator import validate_email, EmailNotValidError
-from sqlalchemy import extract
+from sqlalchemy import extract, func
 
 bp = Blueprint("api", __name__, url_prefix="/api")
 
@@ -30,26 +30,70 @@ def get_stats():
         .filter(Donation.cause == 'b')\
         .scalar() or 0
     
+    # Top donors (by display_name)
+    top_all_rows = db.session.query(
+        Donation.display_name,
+        func.sum(Donation.amount).label('total')
+    ).group_by(Donation.display_name)\
+     .order_by(func.sum(Donation.amount).desc())\
+     .limit(10).all()
+    top_donors = [{"donor": name or "Anonymous", "amount": float(total or 0)} for name, total in top_all_rows]
+    
+    # Top donors (by display_name)
+    top_all_rows = db.session.query(
+        Donation.display_name,
+        func.sum(Donation.amount).label('total')
+    ).group_by(Donation.display_name)\
+     .order_by(func.sum(Donation.amount).desc())\
+     .limit(10).all()
+    top_donors = [{"donor": name or "Anonymous", "amount": float(total or 0)} for name, total in top_all_rows]
 
-    # need to add top donors and state data
     # we need a way to associate all the donations 
     # that a given donor has ever made with that donor
     # we probably need to update our schema, or just 
     # allow one-time donations? but recurring donations 
     # are far more effective. 
 
+    # Donations by state (map code -> full name)
+    STATE_NAMES = {
+        'AL':'Alabama','AK':'Alaska','AZ':'Arizona','AR':'Arkansas','CA':'California','CO':'Colorado','CT':'Connecticut',
+        'DE':'Delaware','FL':'Florida','GA':'Georgia','HI':'Hawaii','ID':'Idaho','IL':'Illinois','IN':'Indiana','IA':'Iowa',
+        'KS':'Kansas','KY':'Kentucky','LA':'Louisiana','ME':'Maine','MD':'Maryland','MA':'Massachusetts','MI':'Michigan',
+        'MN':'Minnesota','MS':'Mississippi','MO':'Missouri','MT':'Montana','NE':'Nebraska','NV':'Nevada','NH':'New Hampshire',
+        'NJ':'New Jersey','NM':'New Mexico','NY':'New York','NC':'North Carolina','ND':'North Dakota','OH':'Ohio',
+        'OK':'Oklahoma','OR':'Oregon','PA':'Pennsylvania','RI':'Rhode Island','SC':'South Carolina','SD':'South Dakota',
+        'TN':'Tennessee','TX':'Texas','UT':'Utah','VT':'Vermont','VA':'Virginia','WA':'Washington','WV':'West Virginia',
+        'WI':'Wisconsin','WY':'Wyoming','DC':'District of Columbia'
+    }
+    state_rows = db.session.query(Donation.state, func.sum(Donation.amount))\
+        .group_by(Donation.state).all()
+    donations_by_state = {}
+    for code, amt in state_rows:
+        if not code:
+            continue
+        name = STATE_NAMES.get(code, code)
+        donations_by_state[name] = float(amt or 0)
+
     return jsonify({
         "total_amount": float(total),
+        "donation_count": int(count),
         "month_amount": float(month_amount),
         "lives_saved": lives_saved,
         "lives_saved_month": lives_saved_month,
+        # keep original keys used by your page
         "a": float(a_total),
-        "b": float(b_total)
+        "b": float(b_total),
+        # also provide explicit names (optional)
+        "cause_a": float(a_total),
+        "cause_b": float(b_total),
+        "top_donors": top_donors,
+        "top_donors_month": top_donors_month,
+        "donations_by_state": donations_by_state
     })
 
 # list recent donations
 @bp.route("/donations", methods=["GET"])
-def list_donations():
+def get_donations():
     donations = Donation.query.order_by(Donation.time.desc()).limit(20).all()
     return jsonify([
         {
@@ -63,7 +107,7 @@ def list_donations():
 
 
 @bp.route("/donations", methods=["POST"])
-def api_donate():
+def post_donations():
     """
     Accept form POSTs from /pages/donate.shtml. Expects form fields:
     amount, type, cause, display_name, email, legal_name, street, city, state, zip,
@@ -135,5 +179,5 @@ def api_donate():
 # thank you message depending on the cause donated to
 
 @bp.route("/health", methods=["GET"])
-def health():
+def get_health():
     return jsonify({"status": "ok"}), 200
