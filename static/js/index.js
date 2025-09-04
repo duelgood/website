@@ -10,32 +10,26 @@ async function loadStats() {
     try {
       data = JSON.parse(text);
     } catch (e) {
-      console.error("Invalid JSON from /api/stats:", text);
+      console.error("Invalid JSON", text);
       return;
     }
 
-    // Counters
     const num = (v) => (Number.isFinite(v) ? v : 0);
     const fmt = (v) => num(v).toLocaleString();
     const money = (v) => `$${fmt(v)}`;
-
-    const total = num(data.total_amount);
-    const month = num(data.month_amount);
-    const lives = num(data.lives_saved);
-    const livesM = num(data.lives_saved_month);
-    const causeA = num(data.cause_a ?? data.a);
-    const causeB = num(data.cause_b ?? data.b);
-
     const q = (id) => document.getElementById(id);
-    if (q("total-amount")) q("total-amount").textContent = money(total);
-    if (q("month-amount")) q("month-amount").textContent = money(month);
-    if (q("lives-saved")) q("lives-saved").textContent = fmt(lives);
-    if (q("lives-saved-month"))
-      q("lives-saved-month").textContent = fmt(livesM);
-    if (q("a")) q("a").textContent = money(causeA);
-    if (q("b")) q("b").textContent = money(causeB);
 
-    // Top donors (all time)
+    if (q("total-amount"))
+      q("total-amount").textContent = money(data.total_amount || 0);
+    if (q("month-amount"))
+      q("month-amount").textContent = money(data.month_amount || 0);
+    if (q("lives-saved"))
+      q("lives-saved").textContent = fmt(data.lives_saved || 0);
+    if (q("lives-saved-month"))
+      q("lives-saved-month").textContent = fmt(data.lives_saved_month || 0);
+    if (q("a")) q("a").textContent = money((data.cause_a ?? data.a) || 0);
+    if (q("b")) q("b").textContent = money((data.cause_b ?? data.b) || 0);
+
     const renderList = (elId, items) => {
       const el = q(elId);
       if (!el) return;
@@ -48,26 +42,19 @@ async function loadStats() {
       items.forEach((d) => {
         const div = document.createElement("div");
         div.className = "donor-item";
-        const name = d.donor || "Anonymous";
-        const amt = money(d.amount || 0);
-        div.innerHTML = `<span class="donor-name">${name}</span><span class="donor-amount">${amt}</span>`;
+        div.innerHTML = `<span class="donor-name">${
+          d.donor || "Anonymous"
+        }</span><span class="donor-amount">$${fmt(d.amount || 0)}</span>`;
         el.appendChild(div);
       });
     };
     renderList("top-donors-all", data.top_donors || []);
     renderList("top-donors-month", data.top_donors_month || []);
 
-    // Map
-    if (typeof loadMap === "function") {
-      loadMap(data);
-    } else {
-      // if map.js loads later, try once on next tick
-      setTimeout(() => {
-        if (typeof loadMap === "function") loadMap(data);
-      }, 0);
-    }
-  } catch (err) {
-    console.error("Error loading stats:", err);
+    // call map after stats are ready
+    if (typeof window.loadMap === "function") window.loadMap(data);
+  } catch (e) {
+    console.error("Error loading stats:", e);
   }
 }
 

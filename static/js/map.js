@@ -1,7 +1,23 @@
+// register chart-geo pieces (must run after ChartGeo script tag)
+if (window.Chart && window.ChartGeo) {
+  Chart.register(
+    ChartGeo.ChoroplethController,
+    ChartGeo.GeoFeature,
+    ChartGeo.ProjectionScale,
+    ChartGeo.ColorScale,
+    ChartGeo.SizeScale
+  );
+}
+
 let _usTopo = null;
 let _usChart = null;
 
 function loadMap(data) {
+  // libs/canvas present?
+  if (!window.Chart || !window.ChartGeo) return;
+  const canvas = document.getElementById("us-map");
+  if (!canvas) return;
+
   const topoPromise = _usTopo
     ? Promise.resolve(_usTopo)
     : fetch("https://cdn.jsdelivr.net/npm/us-atlas/states-10m.json")
@@ -10,9 +26,6 @@ function loadMap(data) {
 
   topoPromise
     .then((us) => {
-      const canvas = document.getElementById("us-map");
-      if (!canvas || !window.Chart || !window.ChartGeo) return;
-
       const states = ChartGeo.topojson.feature(us, us.objects.states).features;
       const byState = (data && data.donations_by_state) || {};
 
@@ -80,3 +93,5 @@ function loadMap(data) {
       }
     });
 }
+
+window.loadMap = loadMap; // make available to index.js

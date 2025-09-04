@@ -14,8 +14,11 @@
     Lives saved 
       NUMBER
 
-    Total to charity
+    Total to each charity
+      Givewell
       $NUMBER
+
+      ...
 
     
    
@@ -82,7 +85,6 @@
 </main>
 <!--#include virtual="/includes/footer" -->
 
-<!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-geo@4.3.0/build/index.umd.min.js"></script>
 <script src="/static/js/map.js"></script>
