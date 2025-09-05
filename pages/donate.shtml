@@ -12,6 +12,11 @@
   We need to validate this information clientside so the user knows if they 
   put something in wrong, and then again serverside. 
   -->
+
+  <!--
+  Need to make sure at least one is filled in, but not all have to be. 
+  Need to update backend
+  -->
   
   <form action="/api/donations" method="POST" id="donation-form" novalidate>
     <fieldset>
