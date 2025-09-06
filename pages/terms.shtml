@@ -30,11 +30,11 @@
 
     <section id="purpose" class="section">
       <h2>1. Purpose of Service</h2>
-      <p>DuelGood enables users to offset donations to opposing political parties and direct the net difference to charitable causes. Each day at <strong>7:00 PM Eastern Time (ET)</strong), we compare donations submitted that day:</p>
+      <p>DuelGood enables users to offset donations to opposing charities and direct the net difference to life-saving causes. </p>
       <ul class="list-tight">
         <li>Equal amounts to opposing parties are <em>canceled out</em>.</li>
-        <li>The <strong>difference</strong> is donated to <a href="https://www.givewell.org/charities/top-charities" rel="noopener noreferrer">GiveWell’s Top Charities Fund</a> (or another high-impact charity designated by DuelGood).</li>
-        <li>The <strong>remainder</strong> (if any) is sent to the political party that received the higher total that day—ensuring your donation has the same political impact as donating directly.</li>
+        <li>The <strong>difference</strong> is donated to <a href="https://www.givewell.org/charities/top-charities" rel="noopener noreferrer">GiveWell's Top Charities Fund</a> (or another high-impact charity designated by DuelGood).</li>
+        <li>The <strong>remainder</strong> (if any) from each pair is sent to the charity in the pair that received more donations.</li>
       </ul>
       <p class="note" role="note"><strong>Transparency:</strong> DuelGood takes <strong>no cut</strong>. 100% of donations, minus standard bank or card processing fees, are passed through to the designated recipients.</p>
     </section>
@@ -54,14 +54,12 @@
         <div>
           <h3 id="processing">a. Processing</h3>
           <ul class="list-tight">
-            <li>Payments are processed by secure, reputable third-party payment processors. We do not store full card numbers.</li>
-            <li>Transactions submitted after 7:00 PM ET are included in the next day’s comparison.</li>
+            <li>Payments are processed by secure, reputable third-party payment processors. We do not store payment information.</li>
           </ul>
         </div>
         <div>
           <h3 id="cancellations">b. Timing, Cancellation & Refunds</h3>
           <ul class="list-tight">
-            <li>You may cancel or edit a pending donation until <strong>7:00 PM ET</strong> on the same day.</li>
             <li>After processing, donations are final and non-refundable, except as required by law or at our sole discretion in cases of error or fraud.</li>
           </ul>
         </div>
@@ -94,8 +92,7 @@
     <section id="reporting" class="section">
       <h2>6. Receipts & Reporting</h2>
       <ul class="list-tight">
-        <li>You will receive a receipt for each transaction. Tax deductibility depends on where funds ultimately go. Political contributions are generally <em>not</em> tax-deductible.</li>
-        <li>Charitable contributions may be tax-deductible depending on the charity and your jurisdiction; consult a tax advisor.</li>
+        <li>You will receive a receipt for each transaction. Charitable contributions may be tax-deductible depending on the charity and your jurisdiction; consult a tax advisor.</li>
       </ul>
     </section>
 
@@ -143,7 +140,7 @@
 
     <section id="indemnity" class="section">
       <h2>14. Indemnity</h2>
-      <p>You agree to defend, indemnify, and hold harmless DuelGood and its officers, directors, employees, and agents from any claims, liabilities, damages, losses, and expenses (including reasonable attorneys’ fees) arising out of or in any way connected with your use of the Service or violation of these Terms.</p>
+      <p>You agree to defend, indemnify, and hold harmless DuelGood and its officers, directors, employees, and agents from any claims, liabilities, damages, losses, and expenses (including reasonable attorneys' fees) arising out of or in any way connected with your use of the Service or violation of these Terms.</p>
     </section>
 
     <section id="law" class="section">
@@ -155,7 +152,8 @@
 
     <section id="changes" class="section">
       <h2>16. Changes to Terms</h2>
-      <p>We may update these Terms from time to time. If changes are material, we will provide notice (e.g., by email or by posting a notice on the Service) before the changes take effect. Continued use after changes become effective constitutes acceptance.</p>
+      <p>We may update these Terms from time to time. If changes are material, we will provide notice (e.g., by email or by 
+        posting a notice on the Service) before the changes take effect. Continued use after changes become effective constitutes acceptance.</p>
     </section>
 </main>
 <!--#include virtual="/includes/footer" -->
