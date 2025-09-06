@@ -7,7 +7,7 @@
     <img src="/static/headshots/zeke.png" width="30%" alt="A young man with short dark hair and trimmed beard
     stands against a plain background. He is wearing a light-colored, short-sleeved button-up shirt and has 
     his arms crossed. His expression is neutral and confident, with a direct gaze into the camera.">
-    <h2>Zeke Ulrich</h2>
+    <h3>Zeke Ulrich</h3>
     <p>
         Zeke is DuelGood's president. He also works on national security for the government, 
         serves in the Marine Corp Reserve, and learns computer engineering at 
@@ -18,13 +18,13 @@
     </p>
 
     <img src="/static/headshots/shubham.jpg" width="30%" alt="">
-    <h2>Shubham</h2>
+    <h3>Shubham</h3>
     <p>
         Shubham's bio here.
     </p>
 
     <img src="/static/favicon.svg" width="30%" alt="">
-    <h2>Eva</h2>
+    <h3>Eva</h3>
     <p>
         Eva's bio here. 
     </p>
