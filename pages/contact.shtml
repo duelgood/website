@@ -1,7 +1,7 @@
 <!--# include virtual="/includes/header" -->
 <main>
   <h1>Contact</h1>
-  
+  <hr>
   <div class="contact-intro">
     <p>
       For media inquiries, please contact 
@@ -10,6 +10,11 @@
       <a href="mailto:legal@duelgood.org" class="email-link">legal@duelgood.org</a>.
       For all other inquiries, reach out to
       <a href="mailto:contact@duelgood.org" class="email-link">contact@duelgood.org</a>.
+    </p>
+    <p>
+      DuelGood does not currently have a bug bounty program. However, if you discover a serious security vulnerability, 
+      please report it to <a href="mailto:bugs@duelgood.org">bugs@duelgood.org</a> and we'd be happy to provide whatever 
+      small token of appreciation our budget allows in addition to crediting you on our site.
     </p>
     <p>
       If you prefer to leave feedback anonymously, please use this <a target="_blank" rel="noopener noreferrer" href="https://forms.gle/7FN215dJE2Ws3pT78">form</a>.
