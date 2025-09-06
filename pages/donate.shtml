@@ -25,32 +25,38 @@
                 <div class="causes-container">
                     <div>
                         <label for="planned_parenthood_amount">Planned Parenthood</label>
-                        <p><a href="https://www.plannedparenthood.org/">Planned Parenthood</a> provides reproductive and sexual healthcare and sexual education in the United States and globally.</p>
+                        <p><a href="https://www.plannedparenthood.org/">Planned Parenthood</a> provides reproductive healthcare services including contraception, 
+                          abortion, and sexual health education.</p>
                         <input type="number" id="planned_parenthood_amount" name="planned_parenthood_amount" min="0" step="1" value="0">
                     </div>
                     <div>
                         <label for="national_right_to_life_committee_amount">The National Right to Life Committee</label>
-                        <p>The <a href="https://nrlc.org/">National Right to Life Committee</a> is the oldest and largest national pro-life organization in the United States.</p>
+                        <p>The <a href="https://nrlc.org/">National Right to Life Committee</a> advocates against abortion through legislative 
+                          lobbying, political action, public education, and grassroots organizing.</p>
                         <input type="number" id="national_right_to_life_committee_amount" name="national_right_to_life_committee_amount" min="0" step="1" value="0">
                     </div>
                     <div>
                         <label for="everytown_for_gun_safety_amount">Everytown for Gun Safety</label>
-                        <p><a href="https://www.everytown.org/">Everytown for Gun Safety</a> advocates for gun control and against gun violence.</p>
+                        <p><a href="https://www.everytown.org/">Everytown for Gun Safety</a> works to prevent gun violence through advocacy for gun safety legislation, 
+                          public education campaigns, and research on gun violence prevention.</p>
                         <input type="number" id="everytown_for_gun_safety_amount" name="everytown_for_gun_safety_amount" min="0" step="1" value="0">
                     </div>
                     <div>
                         <label for="nra_foundation_amount">The NRA Foundation</label>
-                        <p>The <a href="https://www.nrafoundation.org/">NRA Foundation</a> supports the National Rifle Association of America and other groups that advocate for the Second Amendment.</p>
+                        <p>The <a href="https://www.nrafoundation.org/">NRA Foundation</a> funds firearms education, training, safety programs, and shooting 
+                          sports development, supporting the National Rifle Association's educational mission.</p>
                         <input type="number" id="nra_foundation_amount" name="nra_foundation_amount" min="0" step="1" value="0">
                     </div>
                     <div>
                         <label for="trevor_project_amount">The Trevor Project</label>
-                        <p>The <a href="https://www.thetrevorproject.org/">Trevor Project</a> is focused on suicide prevention and crisis management for LGBTQ youth.</p>
+                        <p>The <a href="https://www.thetrevorproject.org/">Trevor Project</a> provides crisis intervention services, suicide prevention 
+                          resources, and mental health support specifically for queer youth through hotlines, text services, and educational programs.</p>
                         <input type="number" id="trevor_project_amount" name="trevor_project_amount" min="0" step="1" value="0">
                     </div>
                     <div>
                         <label for="alliance_defending_freedom_amount">Alliance Defending Freedom</label>
-                        <p>The <a href="https://nrlc.org/">Alliance Defending Freedom</a> is the most organized and influential Christian legal interest group in the United States, working to oppose same-sex marriage and eliminate LGBTQ rights.</p>
+                        <p>The <a href="https://adflegal.org/">Alliance Defending Freedom</a> provides legal advocacy and representation in cases involving religious liberty, 
+                          parental rights, and opposition to LGBTQ+ rights.</p>
                         <input type="number" id="alliance_defending_freedom_amount" name="alliance_defending_freedom_amount" min="0" step="1" value="0">
                     </div>
                     <div>
@@ -67,7 +73,7 @@
                 <legend>Display Information</legend>
                 <label>
                     Display Name (shown on website):
-                    <input type="text" name="display_name" placeholder="Anonymous" maxlength="50">
+                    <input type="text" name="display_name" placeholder="Anonymous" maxlength="100">
                 </label>
                 <small>Leave blank to show as "Anonymous"</small>
             </fieldset>
@@ -89,12 +95,12 @@
                     <input type="text" name="street_address" required placeholder="123 Main St" maxlength="200" title="Please enter your street address">
                 </label>
                 
-                <div style="display:flex;gap:8px;">
-                    <label style="flex:1;">
+                <div>
+                    <label>
                         City:
                         <input type="text" name="city" required placeholder="City" title="Please enter your city">
                     </label>
-                    <label style="width:120px;">
+                    <label>
                         State:
                         <select name="state" required title="Please select your state">
                             <option value="">Select</option>
@@ -117,7 +123,7 @@
                             <option value="WI">WI</option><option value="WY">WY</option><option value="DC">DC</option>
                         </select>
                     </label>
-                    <label style="width:140px;">
+                    <label>
                         ZIP:
                         <input type="text" name="zip" required placeholder="12345" pattern="^\d{5}(-\d{4})?$" title="Please enter a valid ZIP code (12345 or 12345-1234)">
                     </label>
