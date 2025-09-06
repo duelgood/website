@@ -385,6 +385,57 @@ footer {
 }
 
 /* -------------------- Forms -------------------- */
+fieldset {
+  margin: 20px 0;
+  padding: 15px;
+  border: 1px solid #ccc;
+}
+legend {
+  font-weight: bold;
+  padding: 0 10px;
+}
+label {
+  display: block;
+  margin: 10px 0;
+}
+input,
+select {
+  padding: 8px;
+  margin: 5px 0;
+}
+input[type="number"] {
+  width: 100px;
+}
+input[type="email"],
+input[type="text"] {
+  width: 100%;
+  max-width: 300px;
+}
+select {
+  width: 120px;
+}
+.causes-container > div {
+  margin: 15px 0;
+  padding: 10px;
+  border: 1px solid #eee;
+}
+.donate-btn {
+  background: orange;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+.donate-btn:hover {
+  background: #005a87;
+}
+input:invalid {
+  border: 2px solid red;
+}
+input:valid {
+  border: 1px solid #ccc;
+}
 
 /* Mobile responsive */
 @media (max-width: 600px) {
