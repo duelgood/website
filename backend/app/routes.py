@@ -56,7 +56,7 @@ def get_stats():
     # we need a way to associate all the donations 
     # that a given donor has ever made with that donor
     # we probably need to update our schema, or just 
-    # allow one-time donations? but recurring donations 
+    # allow one-time6 donations? but recurring donations 
     # are far more effective. 
 
     # Donations by state (map code -> full name)

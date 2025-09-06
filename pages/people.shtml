@@ -1,6 +1,8 @@
 <!--#include virtual="/includes/header" -->
 <main>
-    <h1>Our People</h1>
+    <h1>Our People<h1>
+    <hr>
+    <h2>Board</h2>
 
     <img src="/static/headshots/zeke.png" width="30%" alt="A young man with short dark hair and trimmed beard
     stands against a plain background. He is wearing a light-colored, short-sleeved button-up shirt and has 
@@ -26,5 +28,8 @@
     <p>
         Eva's bio here. 
     </p>
+
+    <hr>
+    <h2>Staff</h2>
 </main>
 <!--#include virtual="/includes/footer" -->
