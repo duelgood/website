@@ -141,11 +141,6 @@ nav a:hover {
     margin-left: auto;
     margin-right: 20px;
   }
-
-  .donate-btn {
-    position: relative;
-    z-index: 1000;
-  }
 }
 
 /* -------------------- Desktop Navigation -------------------- */
