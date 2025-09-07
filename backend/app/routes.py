@@ -108,33 +108,57 @@ def get_donations():
         for d in donations
     ])
 
-
 @bp.route("/donations", methods=["POST"])
 def post_donations():
     """
     Accept form POSTs from /pages/donate.shtml. Expects form fields:
-    amount, type, cause, display_name, email, legal_name, street, city, state, zip,
-    employer, occupation, optional timestamp.
+    Multiple cause-specific amount fields, display_name, email, legal_name, 
+    street_address, city, state, zip, optional timestamp.
     """
     try:
         form = request.form
-        # parse and validate
-        try:
-            amount = float(form.get('amount') or 0)
-        except ValueError:
-            return jsonify({'error': 'Invalid amount'}), 400
-
-        if amount < 1:
-            return jsonify({'error': 'Minimum donation is $1'}), 400
-
-        cause = form.get('cause')
-        donor_name = form.get('legal_name')
-
+        
+        # Define all possible causes and their form field names
+        cause_fields = {
+            'planned_parenthood_amount': 'Planned Parenthood',
+            'national_right_to_life_committee_amount': 'National Right to Life Committee',
+            'everytown_for_gun_safety_amount': 'Everytown for Gun Safety',
+            'nra_foundation_amount': 'NRA Foundation',
+            'trevor_project_amount': 'Trevor Project',
+            'alliance_defending_freedom_amount': 'Alliance Defending Freedom',
+            'duelgood_amount': 'DuelGood'
+        }
+        
+        # Parse and validate donation amounts
+        donations = []
+        total_amount = 0
+        
+        for field_name, cause_name in cause_fields.items():
+            try:
+                amount = float(form.get(field_name) or 0)
+                if amount < 0:
+                    return jsonify({'error': f'Donation amounts cannot be negative'}), 400
+                if amount > 0:
+                    donations.append({'cause': cause_name, 'amount': amount})
+                    total_amount += amount
+            except ValueError:
+                return jsonify({'error': f'Invalid amount for {cause_name}'}), 400
+        
+        # Validate that at least one donation exists and meets minimum
+        if not donations:
+            return jsonify({'error': 'Please select at least one cause to donate to'}), 400
+        
+        if total_amount < 1:
+            return jsonify({'error': 'Minimum total donation is $1'}), 400
+        
+        # Validate contact information
+        donor_name = form.get('legal_name', '').strip()
         raw_email = (form.get('email') or '').strip()
+        
         try:
             v = validate_email(raw_email)
             # normalized (lowercased, etc.)
-            email = v.email 
+            email = v.email
         except EmailNotValidError as e:
             return jsonify({'error': f'{raw_email} is an invalid email address'}), 400
         
@@ -142,41 +166,67 @@ def post_donations():
         city = form.get('city', '').strip()
         state = (form.get('state') or '').strip().upper()
         zip_code = form.get('zip', '').strip()
-        display_name = form.get('display_name') or 'Anonymous'
+        display_name = form.get('display_name', '').strip() or 'Anonymous'
+        
+        # Validate required fields
+        required_fields = [donor_name, email, street_address, city, state, zip_code]
+        if not all(required_fields):
+            return jsonify({'error': 'Missing required contact information'}), 400
+        
+        # Validate ZIP code format (basic US ZIP validation)
+        import re
+        if not re.match(r'^\d{5}(-\d{4})?$', zip_code):
+            return jsonify({'error': 'Invalid ZIP code format'}), 400
+        
+        # Validate state code
+        valid_states = {
+            'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA',
+            'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD',
+            'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ',
+            'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC',
+            'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY', 'DC'
+        }
+        if state not in valid_states:
+            return jsonify({'error': 'Invalid state code'}), 400
+        
+        # Handle timestamp
         timestamp = form.get('timestamp')
         if timestamp:
             try:
-                time_val = datetime.fromisoformat(timestamp.replace('Z','+00:00'))
+                time_val = datetime.fromisoformat(timestamp.replace('Z', '+00:00'))
             except Exception:
                 time_val = datetime.now(timezone.utc)
         else:
             time_val = datetime.now(timezone.utc)
-
-        required = [cause, donor_name, email, street_address, city, state, zip_code]
-        if not all(required):
-            return jsonify({'error': 'Missing required fields'}), 400
-
-        donation = Donation(
-            time=time_val,
-            amount=amount,
-            display_name=display_name,
-            cause=cause,
-            donor_name=donor_name,
-            email=email,
-            street_address=street_address,
-            city=city,
-            state=state,
-            zip_code=zip_code
-        )
-        db.session.add(donation)
-        db.session.commit() 
-
-        return redirect(f'https://duelgood.org/thank-you?cause={cause}', code=302)
+        
+        # Create donation records for each cause
+        donation_records = []
+        for donation_info in donations:
+            donation = Donation(
+                time=time_val,
+                amount=donation_info['amount'],
+                display_name=display_name,
+                cause=donation_info['cause'],
+                donor_name=donor_name,
+                email=email,
+                street_address=street_address,
+                city=city,
+                state=state,
+                zip_code=zip_code
+            )
+            donation_records.append(donation)
+            db.session.add(donation)
+        
+        db.session.commit()
+        
+        return redirect(f'https://duelgood.org/thank-you', code=302)
+        
     except Exception as e:
         db.session.rollback()
         # keep server logs for debugging
-        print('Error in /api/donate:', e)
-        return jsonify({'error': e}), 500
+        print('Error in /api/donations:', e)
+        return jsonify({'error': 'An error occurred processing your donation'}), 500
+
 
 # we would like to do jinja templating to display a custom 
 # thank you message depending on the cause donated to
