@@ -225,7 +225,7 @@ def post_donations():
         db.session.rollback()
         # keep server logs for debugging
         print('Error in /api/donations:', e)
-        return jsonify({'error': 'An error occurred processing your donation'}), 500
+        return jsonify({'error': e}), 500
 
 
 # we would like to do jinja templating to display a custom 
