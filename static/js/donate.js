@@ -1,8 +1,23 @@
-// This code will validate the user's input, showing
-// precisely which fields have not yet been filled out.
-// When a field has not yet been touched, it will not
-// show an error. When a field has not properly been
-// filled out but the user has typed in it (even if it's empty),
-// it will show an error. The user will not be able to
-// submit until the frontend validation says it's okay.
-// Each field is also checked more rigorously on the backend
+document
+  .getElementById("donation-form")
+  .addEventListener("submit", function (e) {
+    const amounts = [
+      "planned_parenthood_amount",
+      "national_right_to_life_committee_amount",
+      "everytown_for_gun_safety_amount",
+      "nra_foundation_amount",
+      "trevor_project_amount",
+      "alliance_defending_freedom_amount",
+      "duelgood_amount",
+    ];
+
+    const total = amounts.reduce(
+      (sum, id) => sum + (parseFloat(document.getElementById(id).value) || 0),
+      0
+    );
+
+    if (total < 1) {
+      e.preventDefault();
+      alert("Please enter at least one donation amount of $1 or more.");
+    }
+  });
