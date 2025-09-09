@@ -6,6 +6,7 @@ DEPLOY_DIR="/opt/duelgood"
 
 install_prereqs() {
     if ! command -v podman >/dev/null; then
+        sudo pacman -Syu 
         sudo pacman -Sy --noconfirm podman podman-compose
         # Enable podman socket for compose compatibility
         systemctl --user enable --now podman.socket
