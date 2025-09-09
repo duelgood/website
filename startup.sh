@@ -49,5 +49,7 @@ deploy_stack() {
 }
 
 # MAIN
+echo 'net.ipv4.ip_unprivileged_port_start=80' | sudo tee -a /etc/sysctl.conf
+sudo sysctl -p
 install_prereqs
 deploy_stack
