@@ -5,18 +5,21 @@ TIMESTAMP := $(shell date +%Y%m%d-%H%M%S)
 # Build and push web image
 podman-web:
 	podman build \
-		--tag $(WEB_IMAGE):latest \
-		--tag $(WEB_IMAGE):$(TIMESTAMP) \
-		.
+    --platform linux/amd64 \
+    --tag $(WEB_IMAGE):latest \
+    --tag $(WEB_IMAGE):$(TIMESTAMP) \
+    .
+
 	podman push $(WEB_IMAGE):latest
 	podman push $(WEB_IMAGE):$(TIMESTAMP)
 
 # Build and push backend image
 podman-backend:
 	podman build \
-		--tag $(BACKEND_IMAGE):latest \
-		--tag $(BACKEND_IMAGE):$(TIMESTAMP) \
-		-f backend/Dockerfile backend
+    --platform linux/amd64 \
+    --tag $(BACKEND_IMAGE):latest \
+    --tag $(BACKEND_IMAGE):$(TIMESTAMP) \
+    -f backend/Dockerfile backend
 	podman push $(BACKEND_IMAGE):latest
 	podman push $(BACKEND_IMAGE):$(TIMESTAMP)
 
