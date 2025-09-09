@@ -4,8 +4,8 @@ services:
     container_name: duelgood-web
     restart: unless-stopped
     ports:
-      - "80:80"
-      - "443:443"
+      - "8080:80"
+      - "8443:443"
     volumes:
       - /etc/ssl/cloudflare:/etc/ssl/cloudflare:ro
       - nginx-logs:/var/log/nginx
@@ -50,7 +50,6 @@ services:
 
 networks:
   duelgood-network:
-    driver: bridge
 
 volumes:
   nginx-logs:
