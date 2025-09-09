@@ -4,9 +4,6 @@ services:
     network_mode: host
     container_name: duelgood-web
     restart: unless-stopped
-    ports:
-      - "8080:80"
-      - "8443:443"
     volumes:
       - /etc/ssl/cloudflare:/etc/ssl/cloudflare:ro
       - nginx-logs:/var/log/nginx
@@ -21,8 +18,6 @@ services:
     restart: unless-stopped
     environment:
       - DATABASE_URL=postgresql://postgres:postgres@localhost:5432/duelgood
-    expose:
-      - "5000"
     depends_on:
       - db
     healthcheck:
@@ -30,6 +25,7 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
+      start_period: 40s # Give database time to initialize
 
   db:
     image: docker.io/library/postgres:15
@@ -42,8 +38,6 @@ services:
       POSTGRES_DB: duelgood
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
 
 volumes:
   nginx-logs:
