@@ -1,6 +1,7 @@
 services:
   web:
     image: docker.io/zkeulr/duelgood-web:latest
+    network_mode: host
     container_name: duelgood-web
     restart: unless-stopped
     ports:
@@ -17,6 +18,7 @@ services:
 
   backend:
     image: docker.io/zkeulr/duelgood-backend:latest
+    network_mode: host
     container_name: duelgood-backend
     restart: unless-stopped
     environment:
@@ -35,6 +37,7 @@ services:
 
   db:
     image: docker.io/library/postgres:15
+    network_mode: host
     container_name: duelgood-db
     restart: unless-stopped
     environment:
