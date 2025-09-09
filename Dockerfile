@@ -1,4 +1,4 @@
-FROM nginx:alpine
+FROM docker.io/library/nginx:alpine
 
 # Install required packages
 RUN apk add \
