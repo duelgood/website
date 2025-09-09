@@ -20,7 +20,7 @@ services:
     container_name: duelgood-backend
     restart: unless-stopped
     environment:
-      - DATABASE_URL=postgresql://postgres:postgres@db:5432/duelgood
+      - DATABASE_URL=postgresql://postgres:postgres@localhost:5432/duelgood
     expose:
       - "5000"
     depends_on:
