@@ -223,9 +223,9 @@ def post_donations():
         
     except Exception as e:
         db.session.rollback()
-        # keep server logs for debugging
+        # keep server logs for debugging, do this more robustly with a logging library on a mounter volume
         print('Error in /api/donations:', e)
-        return jsonify({'error': e}), 500
+        return jsonify({'error': 'We\'re sorry, but an exception occured. Please try again later.'}), 500
 
 
 # we would like to do jinja templating to display a custom 

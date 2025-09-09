@@ -6,3 +6,4 @@ sqlalchemy
 sqlalchemy-utils
 email-validator
 gunicorn
+stripe

@@ -1,35 +1,33 @@
 <!--#include virtual="/includes/header" -->
 <main>
     <h1>Our People<h1>
-    <hr>
-    <h2>Board</h2>
+            <hr>
+            <h2>Board</h2>
 
-    <img src="/static/headshots/zeke.png" width="30%" alt="A young man with short dark hair and trimmed beard
+            <img src="/static/headshots/zeke.png" width="30%" alt="A young man with short dark hair and trimmed beard
     stands against a plain background. He is wearing a light-colored, short-sleeved button-up shirt and has 
     his arms crossed. His expression is neutral and confident, with a direct gaze into the camera.">
-    <h3>Zeke Ulrich</h3>
-    <p>
-        Zeke is DuelGood's president. He also works for the government, 
-        serves in the Marine Corp Reserve, and learns computer engineering at 
-        Purdue University, where be belongs to Eta Kappa Nu, Tau Beta Pi, and Purdue's Effective Altruism 
-        community. In the future he hopes to study international relations as a Truman 
-        scholar, start a family, and volunteer as a firefighter. He enjoys athletics and spending 
-        time with his friends and little sisters.
-    </p>
+            <h3>Zeke Ulrich</h3>
+            <p>
+                Zeke is DuelGood's president. He also works for the government,
+                serves in the Marine Corp Reserve, and learns computer engineering at
+                Purdue University, where be belongs to Eta Kappa Nu, Tau Beta Pi, and Purdue's Effective Altruism
+                community. In the future he hopes to study international relations as a Truman
+                scholar, start a family, and volunteer as a firefighter. He enjoys athletics and spending
+                time with his friends and little sisters.
+            </p>
 
-    <img src="/static/headshots/shubham.jpg" width="30%" alt="">
-    <h3>Shubham</h3>
-    <p>
-        Shubham's bio here.
-    </p>
+            <img src="/static/headshots/shubham.jpg" width="30%" alt="">
+            <h3>Shubham</h3>
+            <p>
+                Shubham's bio here.
+            </p>
 
-    <img src="/static/favicon.svg" width="30%" alt="">
-    <h3>Eva</h3>
-    <p>
-        Eva's bio here. 
-    </p>
+            <img src="/static/favicon.svg" width="30%" alt="">
+            <h3>Eva</h3>
+            <p>
+                Eva's bio here.
+            </p>
 
-    <hr>
-    <h2>Staff</h2>
 </main>
 <!--#include virtual="/includes/footer" -->
