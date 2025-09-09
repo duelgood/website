@@ -13,8 +13,6 @@ services:
     depends_on:
       backend:
         condition: service_healthy
-    networks:
-      - duelgood-network
 
   backend:
     image: docker.io/zkeulr/duelgood-backend:latest
@@ -32,8 +30,6 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
-    networks:
-      - duelgood-network
 
   db:
     image: docker.io/library/postgres:15
@@ -48,11 +44,6 @@ services:
       - postgres_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
-    networks:
-      - duelgood-network
-
-networks:
-  duelgood-network:
 
 volumes:
   nginx-logs:
