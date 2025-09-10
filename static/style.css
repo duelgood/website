@@ -1,7 +1,7 @@
 /* ==================== Base Styles ==================== */
 :root {
-  --color-primary: darkgreen;
-  --color-accent: orange;
+  --color-primary: #b31942;
+  --color-accent: #b31942;
   --color-accent-hover: #e69500;
   --color-text: #000;
   --color-muted: #666;
