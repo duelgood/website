@@ -1,23 +1,55 @@
-document
-  .getElementById("donation-form")
-  .addEventListener("submit", function (e) {
-    const amounts = [
-      "planned_parenthood_amount",
-      "national_right_to_life_committee_amount",
-      "everytown_for_gun_safety_amount",
-      "nra_foundation_amount",
-      "trevor_project_amount",
-      "alliance_defending_freedom_amount",
-      "duelgood_amount",
-    ];
+const stripe = Stripe(
+  "pk_test_51S5FMtPaAbpNU2MW6IFPfy7uuVlvMcfDkJmI6xpUEd8AC8VvkwwO87PGhUlfUkPEmio4i3LnDgygBkpl5X68hCSj00SD13F37u"
+);
 
-    const total = amounts.reduce(
-      (sum, id) => sum + (parseFloat(document.getElementById(id).value) || 0),
-      0
-    );
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("donation-form");
 
-    if (total < 1) {
-      e.preventDefault();
-      alert("Please enter at least one donation amount of $1 or more.");
+  const elements = stripe.elements();
+  const card = elements.create("card");
+  card.mount("#card-element");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    // Gather form data
+    const formData = new FormData(form);
+    const payload = Object.fromEntries(formData.entries());
+
+    // Ask Flask backend to create a PaymentIntent
+    const res = await fetch("/api/donations", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    const data = await res.json();
+    if (data.error) {
+      alert(data.error);
+      return;
+    }
+
+    // Confirm card payment
+    const result = await stripe.confirmCardPayment(data.clientSecret, {
+      payment_method: {
+        card: card,
+        billing_details: {
+          name: payload.legal_name,
+          email: payload.email,
+          address: {
+            line1: payload.street_address,
+            city: payload.city,
+            state: payload.state,
+            postal_code: payload.zip,
+          },
+        },
+      },
+    });
+
+    if (result.error) {
+      alert(result.error.message);
+    } else if (result.paymentIntent.status === "succeeded") {
+      window.location = "/thank-you";
     }
   });
+});

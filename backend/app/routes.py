@@ -198,9 +198,6 @@ def post_donations():
             },
         )
 
-        # we want to redirect to the thank you page
-        # return redirect(f'https://duelgood.org/thank-you', code=302)
-
         return jsonify({
             "clientSecret": intent.client_secret
         })
