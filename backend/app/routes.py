@@ -8,8 +8,75 @@ import os
 import stripe
 
 stripe.api_key = os.environ.get("STRIPE_SECRET_KEY")
+endpoint_secret = os.environ.get("STRIPE_WEBHOOK_SECRET")
 
 bp = Blueprint("api", __name__, url_prefix="/api")
+
+@bp.route("/stripe/webhook", methods=["POST"])
+def stripe_webhook():
+    payload = request.data
+    sig_header = request.headers.get("Stripe-Signature")
+
+    try:
+        event = stripe.Webhook.construct_event(
+            payload, sig_header, endpoint_secret
+        )
+    except ValueError:
+        # Invalid payload
+        return "Bad request", 400
+    except stripe.error.SignatureVerificationError:
+        # Invalid signature
+        return "Unauthorized", 400
+
+    # --- Handle event types ---
+    if event["type"] == "payment_intent.succeeded":
+        intent = event["data"]["object"]
+        handle_successful_donation(intent)
+    elif event["type"] == "payment_intent.payment_failed":
+        intent = event["data"]["object"]
+        error_message = intent["last_payment_error"]["message"]
+        print(f"Payment failed: {error_message}")
+
+    return "OK", 200
+
+def handle_successful_donation(intent):
+    """
+    Called when Stripe reports a successful donation payment.
+    intent is a dict with payment details and metadata.
+    """
+    # Extract metadata you stored when creating PaymentIntent
+    donor_name = intent["metadata"].get("donor_name")
+    donations_str = intent["metadata"].get("donations")
+    email = intent.get("receipt_email")
+
+    # You may want to parse donations_str back into Python data
+    import ast
+    try:
+        donations = ast.literal_eval(donations_str)
+    except Exception:
+        donations = []
+
+    # Record each donation in your DB
+
+    time_val = datetime.now(timezone.utc)
+
+    for d in donations:
+        donation = Donation(
+            time=time_val,
+            amount=d["amount"],
+            display_name="Anonymous",   # or pull from metadata if you passed it
+            cause=d["cause"],
+            donor_name=donor_name,
+            email=email,
+            street_address="",  # optional if you stored these in metadata
+            city="",
+            state="",
+            zip_code=""
+        )
+        db.session.add(donation)
+
+    db.session.commit()
+    print(f"✅ Recorded successful donation from {donor_name} (${intent['amount']/100:.2f})")
 
 @bp.route("/stats", methods=["GET"])
 def get_stats():
