@@ -19,6 +19,8 @@
   Need to make sure at least one is filled in, but not all have to be. 
   Need to update backend
   -->
+
+  <!-- Version 1.0 -->
   
   <form action="/api/donations" method="POST" id="donation-form">
             <fieldset>
