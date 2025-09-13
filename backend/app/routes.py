@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify, redirect
+from flask import Blueprint, request, jsonify, redirect, current_app
 from . import db
 from .models import Donation
 from datetime import datetime, timezone
@@ -271,8 +271,7 @@ def post_donations():
 
     except Exception as e:
         # log error with logging utility when added
-        print(e)
-        app.logger.info("An info message!")
+        current_app.logger.error("Unhandled exception in /donations", exc_info=True)
         return jsonify({'error': 'Internal server error'}), 500
 
 
