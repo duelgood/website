@@ -1,6 +1,8 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import os
+import logging
+from logging.handlers import RotatingFileHandler
 from datetime import datetime
 import click
 from flask.cli import with_appcontext
@@ -12,6 +14,12 @@ migrate = Migrate()
 
 def create_app():
     app = Flask(__name__)
+    
+    app.logger.setLevel(logging.INFO)
+
+    stream_handler = logging.StreamHandler()
+    stream_handler.setLevel(logging.INFO)
+    app.logger.addHandler(stream_handler)
 
     # Database config
     app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")

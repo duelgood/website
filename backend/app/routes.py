@@ -272,6 +272,7 @@ def post_donations():
     except Exception as e:
         # log error with logging utility when added
         print(e)
+        app.logger.info("An info message!")
         return jsonify({'error': 'Internal server error'}), 500
 
 
