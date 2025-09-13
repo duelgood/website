@@ -4,6 +4,10 @@ from .models import Donation
 from datetime import datetime, timezone
 from email_validator import validate_email, EmailNotValidError
 from sqlalchemy import extract, func
+import os
+import stripe
+
+stripe.api_key = os.environ.get("STRIPE_SECRET_KEY")
 
 bp = Blueprint("api", __name__, url_prefix="/api")
 
@@ -110,15 +114,9 @@ def get_donations():
 
 @bp.route("/donations", methods=["POST"])
 def post_donations():
-    """
-    Accept form POSTs from /pages/donate.shtml. Expects form fields:
-    Multiple cause-specific amount fields, display_name, email, legal_name, 
-    street_address, city, state, zip, optional timestamp.
-    """
     try:
-        form = request.form
-        
-        # Define all possible causes and their form field names
+        form = request.json or request.form  # handle fetch JSON or form POST
+
         cause_fields = {
             'planned_parenthood_amount': 'Planned Parenthood',
             'national_right_to_life_committee_amount': 'National Right to Life Committee',
@@ -128,51 +126,41 @@ def post_donations():
             'alliance_defending_freedom_amount': 'Alliance Defending Freedom',
             'duelgood_amount': 'DuelGood'
         }
-        
-        # Parse and validate donation amounts
+
         donations = []
         total_amount = 0
-        
         for field_name, cause_name in cause_fields.items():
             try:
                 amount = float(form.get(field_name) or 0)
-                if amount < 0:
-                    return jsonify({'error': f'Donation amounts cannot be negative'}), 400
                 if amount > 0:
                     donations.append({'cause': cause_name, 'amount': amount})
                     total_amount += amount
             except ValueError:
                 return jsonify({'error': f'Invalid amount for {cause_name}'}), 400
-        
-        # Validate that at least one donation exists and meets minimum
-        if not donations:
-            return jsonify({'error': 'Please select at least one cause to donate to'}), 400
-        
+
         if total_amount < 1:
-            return jsonify({'error': 'Minimum total donation is $1'}), 400
-        
-        # Validate contact information
-        donor_name = form.get('legal_name', '').strip()
-        raw_email = (form.get('email') or '').strip()
-        
+            return jsonify({'error': 'Minimum donation is $1'}), 400
+
+        # Convert to cents
+        total_cents = int(total_amount * 100)
+
+        email = (form.get('email') or '').strip()
         try:
-            v = validate_email(raw_email)
+            v = validate_email(email)
             # normalized (lowercased, etc.)
             email = v.email
         except EmailNotValidError as e:
-            return jsonify({'error': f'{raw_email} is an invalid email address'}), 400
-        
+            return jsonify({'error': f'{email} is an invalid email address'}), 400
+
+        donor_name = (form.get('legal_name') or '').strip()
+
         street_address = form.get('street_address', '').strip()
         city = form.get('city', '').strip()
         state = (form.get('state') or '').strip().upper()
         zip_code = form.get('zip', '').strip()
         display_name = form.get('display_name', '').strip() or 'Anonymous'
-        
-        # Validate required fields
-        required_fields = [donor_name, email, street_address, city, state, zip_code]
-        if not all(required_fields):
-            return jsonify({'error': 'Missing required contact information'}), 400
-        
+
+        # we want to get rid of this and allow international addresses too
         # Validate ZIP code format (basic US ZIP validation)
         import re
         if not re.match(r'^\d{5}(-\d{4})?$', zip_code):
@@ -188,44 +176,38 @@ def post_donations():
         }
         if state not in valid_states:
             return jsonify({'error': 'Invalid state code'}), 400
+    
         
-        # Handle timestamp
-        timestamp = form.get('timestamp')
-        if timestamp:
-            try:
-                time_val = datetime.fromisoformat(timestamp.replace('Z', '+00:00'))
-            except Exception:
-                time_val = datetime.now(timezone.utc)
-        else:
-            time_val = datetime.now(timezone.utc)
-        
-        # Create donation records for each cause
-        donation_records = []
-        for donation_info in donations:
-            donation = Donation(
-                time=time_val,
-                amount=donation_info['amount'],
-                display_name=display_name,
-                cause=donation_info['cause'],
-                donor_name=donor_name,
-                email=email,
-                street_address=street_address,
-                city=city,
-                state=state,
-                zip_code=zip_code
-            )
-            donation_records.append(donation)
-            db.session.add(donation)
-        
-        db.session.commit()
-        
-        return redirect(f'https://duelgood.org/thank-you', code=302)
-        
+        required_fields = [donor_name, email, street_address, city, state, zip_code]
+        if not all(required_fields):
+            return jsonify({'error': 'Missing required contact information'}), 400
+
+        intent = stripe.PaymentIntent.create(
+            amount=total_cents,
+            currency="usd",
+            receipt_email=email,
+            metadata={ # for our records
+                "donor_name": donor_name,
+                "email": email,
+                "donations": str(donations),
+                "display_name": display_name,
+                "street_address": street_address,
+                "city": city, 
+                "state": state,
+                "zip_code": zip_code
+            },
+        )
+
+        # we want to redirect to the thank you page
+        # return redirect(f'https://duelgood.org/thank-you', code=302)
+
+        return jsonify({
+            "clientSecret": intent.client_secret
+        })
+
     except Exception as e:
-        db.session.rollback()
-        # keep server logs for debugging, do this more robustly with a logging library on a mounter volume
-        print('Error in /api/donations:', e)
-        return jsonify({'error': 'We\'re sorry, but an exception occured. Please try again later.'}), 500
+        # log error with logging utility when added
+        return jsonify({'error': 'Internal server error'}), 500
 
 
 # we would like to do jinja templating to display a custom 
