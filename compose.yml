@@ -1,6 +1,6 @@
 services:
   web:
-    image: docker.io/zkeulr/duelgood-web:latest
+    image: ghcr.io/duelgood/duelgood-web:latest
     network_mode: host
     container_name: duelgood-web
     restart: unless-stopped
@@ -12,7 +12,7 @@ services:
         condition: service_healthy
 
   backend:
-    image: docker.io/zkeulr/duelgood-backend:latest
+    image: ghcr.io/duelgood/duelgood-backend:latest
     network_mode: host
     container_name: duelgood-backend
     restart: unless-stopped

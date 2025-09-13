@@ -1,7 +1,7 @@
 #!/bin/bash
 set -uo pipefail
 
-# Path where docker-compose.yml will live
+# Path where compose.yml will live
 DEPLOY_DIR="/opt/duelgood"
 
 install_prereqs() {
@@ -33,7 +33,7 @@ deploy_stack() {
     # Wait for backend service to be running (timeout ~60s).
     # This is required to solve an issue with the backend
     for i in $(seq 1 30); do
-        cid=$(podman-compose -p duelgood -f /opt/duelgood/docker-compose.yml ps -q backend 2>/dev/null || true)
+        cid=$(podman-compose -p duelgood -f /opt/duelgood/compose.yml ps -q backend 2>/dev/null || true)
         if [ -n "$cid" ]; then
             state=$(podman inspect -f '{{.State.Status}}' "$cid" 2>/dev/null || true)
             if [ "$state" = "running" ]; then
@@ -45,7 +45,7 @@ deploy_stack() {
         sleep 2
     done
     
-    podman-compose -p duelgood -f /opt/duelgood/docker-compose.yml exec -T backend sh -c "flask db init 2>/dev/null || true; flask db migrate || true; flask db upgrade || true"
+    podman-compose -p duelgood -f /opt/duelgood/compose.yml exec -T backend sh -c "flask db init 2>/dev/null || true; flask db migrate || true; flask db upgrade || true"
 }
 
 # MAIN

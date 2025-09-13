@@ -1,5 +1,7 @@
-WEB_IMAGE := zkeulr/duelgood-web
-BACKEND_IMAGE := zkeulr/duelgood-backend
+REGISTRY := ghcr.io
+WEB_IMAGE := $(REGISTRY)/duelgood/duelgood-web
+BACKEND_IMAGE := $(REGISTRY)/duelgood/duelgood-backend
+
 TIMESTAMP := $(shell date +%Y%m%d-%H%M%S)
 
 # Build and push web image
@@ -37,3 +39,4 @@ git:
 	git push
 
 .PHONY: podman-web podman-backend container scan git
+
