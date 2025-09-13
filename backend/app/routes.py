@@ -182,7 +182,7 @@ def get_donations():
 @bp.route("/donations", methods=["POST"])
 def post_donations():
     try:
-        form = request.json or request.form  # handle fetch JSON or form POST
+        form = request.json(silent=True) or request.form  # handle fetch JSON or form POST
 
         cause_fields = {
             'planned_parenthood_amount': 'Planned Parenthood',
