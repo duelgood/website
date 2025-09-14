@@ -67,20 +67,20 @@ document.addEventListener("DOMContentLoaded", async function () {
         return;
       }
 
-      // 3. Mount Payment Element with PaymentIntent client_secret
-      await mountPaymentElement(clientSecret);
-
-      // 4. Confirm payment
+      // 3. Confirm payment with redirect
       const { error: stripeError } = await stripe.confirmPayment({
         elements,
         confirmParams: {
-          return_url: window.location.origin + "/thank-you",
+          return_url: "https://duelgood.org/thank-you",
         },
       });
 
       if (stripeError) {
+        // This shows *only if* an immediate client-side error (e.g. validation)
         paymentErrors.textContent = stripeError.message;
       }
+
+      // If payment succeeds or needs next steps, Stripe will redirect automatically.
     } catch (err) {
       console.error("Donation error:", err);
       paymentErrors.textContent =
