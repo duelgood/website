@@ -39,6 +39,27 @@ document.addEventListener("DOMContentLoaded", async function () {
   // --- setup ---
   enforceMinZero();
 
+  try {
+    const response = await fetch("/api/setup-intent", {
+      method: "POST",
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to initialize payment form");
+    }
+
+    const { clientSecret } = await response.json();
+    if (clientSecret) {
+      await mountPaymentElement(clientSecret);
+    } else {
+      paymentErrors.textContent = "Could not initialize payment form";
+    }
+  } catch (err) {
+    console.error("Payment form initialization error:", err);
+    paymentErrors.textContent =
+      "Payment form failed to load. Please try again.";
+  }
+
   // --- form submit ---
   form.addEventListener("submit", async function (e) {
     e.preventDefault();
