@@ -2,9 +2,7 @@
 
 DuelGood's website.
 
-## Setup
-
-### Secrets
+## Secrets
 
 Copy Cloudflare origin key into `/etc/ssl/cloudflare/key.pem`.
 Copy Cloudflare origin cert into `/etc/ssl/cloudflare/cert.pem`
@@ -14,13 +12,29 @@ sudo chmod 644 "/etc/ssl/cloudflare/cert.pem"
 sudo chmod 600 "/etc/ssl/cloudflare/key.pem"
 ```
 
-Create the following environment variables:
+Go to GitHub and create a personal access token with permission
+to read, write, and delete packages.
+
+Obtain Stripe secrets via the Stripe web interface.
 
 ```sh
-
+export STRIPE_SECRET_KEY=sk_XXXX
+export STRIPE_WEBHOOK_SECRET=whsec_XXXX
+export GITHUB_GHCR_PAT=ghp_XXXX
 ```
 
-### Deploying
+Then, run
+
+```sh
+echo -n "$STRIPE_SECRET_KEY" | podman secret create stripe_secret_key -
+echo -n "$STRIPE_WEBHOOK_SECRET" | podman secret create stripe_webhook_secret -
+```
+
+## Login
+
+`podman login ghcr.io -p=$GITHUB_GHCR_PAT`
+
+## Deploy
 
 To start the containers, run
 

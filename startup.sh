@@ -21,9 +21,8 @@ deploy_stack() {
     cd "$DEPLOY_DIR" || exit 1
 
     if ! podman login --get-login ghcr.io >/dev/null 2>&1; then
-        echo "Please login to GHCR first:"
-        echo "podman login ghcr.io"
-        exit 1
+        # login to podman with 
+        podman login -p=$GITHUB_GHCR_PAT
     fi
     
     # Stop & remove any existing containers (force)

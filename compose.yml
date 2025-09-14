@@ -10,6 +10,9 @@ services:
     depends_on:
       backend:
         condition: service_healthy
+    secrets:
+      - stripe_secret_key
+      - stripe_webhook_secret
 
   backend:
     image: ghcr.io/duelgood/duelgood-backend:latest
@@ -44,3 +47,9 @@ volumes:
     driver: local
   postgres_data:
     driver: local
+
+secrets:
+  stripe_secret_key:
+    external: true
+  stripe_webhook_secret:
+    external: true
