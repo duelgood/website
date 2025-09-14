@@ -4,6 +4,8 @@ BACKEND_IMAGE := $(REGISTRY)/duelgood/duelgood-backend
 
 TIMESTAMP := $(shell date +%Y%m%d-%H%M%S)
 
+all: git container
+
 # Build and push web image
 podman-web:
 	podman build \
