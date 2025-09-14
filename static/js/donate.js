@@ -15,8 +15,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     "duelgood_amount",
   ];
 
-  let elements;
-  let paymentElement;
+  let elements, paymentElement;
 
   // --- helpers ---
   function enforceMinZero() {
@@ -31,26 +30,14 @@ document.addEventListener("DOMContentLoaded", async function () {
     });
   }
 
-  async function initPaymentBox() {
-    try {
-      const res = await fetch("/api/setup-intent", { method: "POST" });
-      const { clientSecret, error } = await res.json();
-      if (error) {
-        paymentErrors.textContent = error;
-        return;
-      }
-      elements = stripe.elements({ clientSecret });
-      paymentElement = elements.create("payment");
-      paymentElement.mount("#payment-element");
-    } catch (err) {
-      console.error("Error initializing payment box:", err);
-      paymentErrors.textContent = "Could not load payment form.";
-    }
+  async function mountPaymentElement(clientSecret) {
+    elements = stripe.elements({ clientSecret });
+    paymentElement = elements.create("payment");
+    paymentElement.mount("#payment-element");
   }
 
   // --- setup ---
   enforceMinZero();
-  await initPaymentBox();
 
   // --- form submit ---
   form.addEventListener("submit", async function (e) {
@@ -80,10 +67,8 @@ document.addEventListener("DOMContentLoaded", async function () {
         return;
       }
 
-      // 3. Re-mount Payment Element with PaymentIntent
-      elements = stripe.elements({ clientSecret });
-      paymentElement = elements.create("payment");
-      paymentElement.mount("#card-element");
+      // 3. Mount Payment Element with PaymentIntent client_secret
+      await mountPaymentElement(clientSecret);
 
       // 4. Confirm payment
       const { error: stripeError } = await stripe.confirmPayment({

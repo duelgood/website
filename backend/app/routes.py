@@ -105,6 +105,8 @@ def get_stats():
     lives_saved = int(float(total) / 3000)
     lives_saved_month = int(float(month_amount) / 3000)
 
+    # these causes are completely outdated and need to be updated
+
     a_total = db.session.query(db.func.sum(Donation.amount))\
         .filter(Donation.cause == 'a')\
         .scalar() or 0
