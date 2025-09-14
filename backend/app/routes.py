@@ -84,7 +84,7 @@ def handle_successful_donation(intent):
         db.session.add(donation)
 
     db.session.commit()
-    print(f"✅ Recorded successful donation from {donor_name} (${intent['amount']/100:.2f})")
+    print(f"Recorded successful donation from {donor_name} (${intent['amount']/100:.2f})")
 
 @bp.route("/stats", methods=["GET"])
 def get_stats():
@@ -284,8 +284,20 @@ def post_donations():
         return jsonify({'error': 'Internal server error'}), 500
 
 
-# we would like to do jinja templating to display a custom 
-# thank you message depending on the cause donated to
+@bp.route("/setup-intent", methods=["POST"])
+def create_setup_intent():
+    """
+    Create a SetupIntent so the frontend can render the Payment Element
+    immediately on page load.
+    """
+    try:
+        intent = stripe.SetupIntent.create(
+            automatic_payment_methods={"enabled": True}
+        )
+        return jsonify({"clientSecret": intent.client_secret})
+    except Exception as e:
+        current_app.logger.error("Error creating SetupIntent", exc_info=True)
+        return jsonify({"error": "Failed to initialize payment form"}), 500
 
 @bp.route("/health", methods=["GET"])
 def get_health():

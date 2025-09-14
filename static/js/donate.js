@@ -1,10 +1,8 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
   const form = document.getElementById("donation-form");
   const paymentErrors = document.getElementById("card-errors");
 
-  const stripe = Stripe(
-    "pk_test_51S5FMtPaAbpNU2MW6IFPfy7uuVlvMcfDkJmI6xpUEd8AC8VvkwwO87PGhUlfUkPEmio4i3LnDgygBkpl5X68hCSj00SD13F37u"
-  );
+  const stripe = Stripe("pk_test_51S5FMtPaAbpNU2MW6IFPfy7uuVlvMcfDkJmI6xpUEd8AC8VvkwwO87PGhUlfUkPEmio4i3LnDgygBkpl5X68hCSj00SD13F37u");
 
   const amountIds = [
     "planned_parenthood_amount",
@@ -32,18 +30,33 @@ document.addEventListener("DOMContentLoaded", function () {
 
   async function mountPaymentElement(clientSecret) {
     if (elements) {
-      elements.getElement("payment").unmount();
+      const old = elements.getElement("payment");
+      if (old) old.unmount();
     }
     elements = stripe.elements({ clientSecret });
     paymentElement = elements.create("payment");
     paymentElement.mount("#card-element");
   }
 
+  // ---- 1. On page load: get SetupIntent for initial Payment Element ----
+  try {
+    const setupRes = await fetch("/api/setup-intent", { method: "POST" });
+    const { clientSecret, error } = await setupRes.json();
+    if (error) {
+      paymentErrors.textContent = error;
+    } else {
+      await mountPaymentElement(clientSecret);
+    }
+  } catch (err) {
+    console.error("SetupIntent error:", err);
+    paymentErrors.textContent = "Failed to initialize payment form.";
+  }
+
+  // ---- 2. Handle form submit ----
   form.addEventListener("submit", async function (e) {
     e.preventDefault();
     paymentErrors.textContent = "";
 
-    // ---- 1. Validate donation amounts ----
     const hasOneAboveOne = amountIds.some(
       (id) => parseFloat(document.getElementById(id).value) >= 1
     );
@@ -54,10 +67,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     try {
-      // ---- 2. Collect form data ----
+      // Collect donor + donation info
       const formData = new FormData(form);
 
-      // ---- 3. Create PaymentIntent on backend ----
+      // Create real PaymentIntent with amount + donor info
       const response = await fetch("/api/donations", {
         method: "POST",
         body: formData,
@@ -69,10 +82,10 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
       }
 
-      // ---- 4. Mount Payment Element (with fresh clientSecret) ----
+      // Re-mount Payment Element with real PaymentIntent
       await mountPaymentElement(clientSecret);
 
-      // ---- 5. Confirm payment ----
+      // Confirm payment
       const { error: stripeError } = await stripe.confirmPayment({
         elements,
         confirmParams: {
