@@ -23,13 +23,6 @@ export STRIPE_WEBHOOK_SECRET=whsec_XXXX
 export GITHUB_GHCR_PAT=ghp_XXXX
 ```
 
-Then, run
-
-```sh
-echo -n "$STRIPE_SECRET_KEY" | podman secret create stripe_secret_key -
-echo -n "$STRIPE_WEBHOOK_SECRET" | podman secret create stripe_webhook_secret -
-```
-
 ## Login
 
 `podman login ghcr.io -p=$GITHUB_GHCR_PAT`

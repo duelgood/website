@@ -24,6 +24,17 @@ deploy_stack() {
         # login to podman with 
         podman login -p=$GITHUB_GHCR_PAT
     fi
+
+    if podman secret exists "stripe_secret_key" >/dev/null 2>&1; then
+        podman secret rm "stripe_secret_key"
+    fi
+
+    if podman secret exists "stripe_webhook_secret" >/dev/null 2>&1; then
+        podman secret rm "stripe_webhook_secret"
+    fi
+
+    echo -n "$STRIPE_SECRET_KEY" | podman secret create stripe_secret_key -
+    echo -n "$STRIPE_WEBHOOK_SECRET" | podman secret create stripe_webhook_secret -
     
     # Stop & remove any existing containers (force)
     podman-compose down --volumes --remove-orphans || true

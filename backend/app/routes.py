@@ -7,8 +7,16 @@ from sqlalchemy import extract, func
 import os
 import stripe
 
-stripe.api_key = os.environ.get("STRIPE_SECRET_KEY")
-endpoint_secret = os.environ.get("STRIPE_WEBHOOK_SECRET")
+def read_secret(name):
+    path = f"/run/secrets/{name}"
+    try:
+        with open(path) as f:
+            return f.read().strip()
+    except FileNotFoundError:
+        return os.environ.get(name)
+
+stripe.api_key = read_secret("stripe_secret_key")
+endpoint_secret = read_secret("stripe_webhook_secret")
 
 bp = Blueprint("api", __name__, url_prefix="/api")
 
