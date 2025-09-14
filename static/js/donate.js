@@ -10,77 +10,94 @@ document.addEventListener("DOMContentLoaded", function () {
   const cardElement = elements.create("card");
   cardElement.mount("#card-element");
 
-  form.addEventListener("submit", async function (e) {
-    e.preventDefault(); // stop full-page reload
+  const amountIds = [
+    "planned_parenthood_amount",
+    "national_right_to_life_committee_amount",
+    "everytown_for_gun_safety_amount",
+    "nra_foundation_amount",
+    "trevor_project_amount",
+    "alliance_defending_freedom_amount",
+    "duelgood_amount",
+  ];
 
-    // ---- 1. Validate donation amounts ----
-    const amounts = [
-      "planned_parenthood_amount",
-      "national_right_to_life_committee_amount",
-      "everytown_for_gun_safety_amount",
-      "nra_foundation_amount",
-      "trevor_project_amount",
-      "alliance_defending_freedom_amount",
-      "duelgood_amount",
-    ];
+  // Helpers: enforce min=0 and reset empty -> 0
+  amountIds.forEach((id) => {
+    const input = document.getElementById(id);
 
-    const total = amounts.reduce(
-      (sum, id) => sum + (parseFloat(document.getElementById(id).value) || 0),
-      0
-    );
+    input.addEventListener("input", () => {
+      if (parseFloat(input.value) < 0) input.value = "0";
+    });
 
-    if (total < 1) {
-      alert("Please enter at least one donation amount of $1 or more.");
-      return;
-    }
+    input.addEventListener("blur", () => {
+      if (input.value === "") input.value = "0";
+    });
+  });
 
-    // ---- 2. Collect form data ----
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData.entries());
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
 
-    try {
-      // ---- 3. Send donation data to backend ----
-      const response = await fetch("/api/donations", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
+    // Wait a tick so Enter key values finalize
+    setTimeout(async () => {
+      // ---- 1. Validate donation amounts ----
+      const hasOneAboveOne = amountIds.some(
+        (id) => parseFloat(document.getElementById(id).value) >= 1
+      );
 
-      const { clientSecret, error } = await response.json();
-      if (error) {
-        cardErrors.textContent = error;
+      if (!hasOneAboveOne) {
+        alert("Please enter at least one donation amount of $1 or more.");
         return;
       }
 
-      // ---- 4. Confirm payment with Stripe ----
-      const { paymentIntent, error: stripeError } =
-        await stripe.confirmCardPayment(clientSecret, {
-          payment_method: {
-            card: cardElement,
-            billing_details: {
-              name: data.legal_name,
-              email: data.email,
-              address: {
-                line1: data.street_address,
-                city: data.city,
-                state: data.state,
-                postal_code: data.zip,
-              },
-            },
-          },
+      // ---- 2. Collect form data ----
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+
+      try {
+        // ---- 3. Send donation data to backend ----
+        const response = await fetch("/api/donations", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
         });
 
-      if (stripeError) {
-        cardErrors.textContent = stripeError.message;
-      } else if (paymentIntent && paymentIntent.status === "succeeded") {
-        alert("Donation successful! Thank you for your support.");
-        form.reset();
-        cardElement.clear();
+        const { clientSecret, error } = await response.json();
+        if (error) {
+          cardErrors.textContent = error;
+          return;
+        }
+
+        // ---- 4. Confirm payment with Stripe ----
+        const { paymentIntent, error: stripeError } =
+          await stripe.confirmCardPayment(clientSecret, {
+            payment_method: {
+              card: cardElement,
+              billing_details: {
+                name: data.legal_name,
+                email: data.email,
+                address: {
+                  line1: data.street_address,
+                  city: data.city,
+                  state: data.state,
+                  postal_code: data.zip,
+                },
+              },
+            },
+          });
+
+        if (stripeError) {
+          cardErrors.textContent = stripeError.message;
+        } else if (paymentIntent && paymentIntent.status === "succeeded") {
+          alert("Donation successful! Thank you for your support.");
+          form.reset();
+          cardElement.clear();
+          // reset donation inputs to "0"
+          amountIds.forEach((id) => (document.getElementById(id).value = "0"));
+        }
+      } catch (err) {
+        console.error("Donation error:", err);
+        cardErrors.textContent =
+          "An unexpected error occurred. Please try again.";
       }
-    } catch (err) {
-      console.error("Donation error:", err);
-      cardErrors.textContent =
-        "An unexpected error occurred. Please try again.";
-    }
+    }, 0);
   });
 });
