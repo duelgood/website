@@ -260,6 +260,7 @@ def post_donations():
         intent = stripe.PaymentIntent.create(
             amount=total_cents,
             currency="usd",
+            automatic_payment_methods={"enabled": True},
             receipt_email=email,
             metadata={ # for our records
                 "donor_name": donor_name,

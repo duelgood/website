@@ -1,14 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("donation-form");
-  const cardErrors = document.getElementById("card-errors");
+  const paymentErrors = document.getElementById("card-errors"); // reuse this div
 
-  // Initialize Stripe.js with your publishable key
   const stripe = Stripe(
     "pk_test_51S5FMtPaAbpNU2MW6IFPfy7uuVlvMcfDkJmI6xpUEd8AC8VvkwwO87PGhUlfUkPEmio4i3LnDgygBkpl5X68hCSj00SD13F37u"
   );
-  const elements = stripe.elements();
-  const cardElement = elements.create("card");
-  cardElement.mount("#card-element");
 
   const amountIds = [
     "planned_parenthood_amount",
@@ -20,14 +16,12 @@ document.addEventListener("DOMContentLoaded", function () {
     "duelgood_amount",
   ];
 
-  // Helpers: enforce min=0 and reset empty -> 0
+  // Enforce min=0 and reset empty -> 0
   amountIds.forEach((id) => {
     const input = document.getElementById(id);
-
     input.addEventListener("input", () => {
       if (parseFloat(input.value) < 0) input.value = "0";
     });
-
     input.addEventListener("blur", () => {
       if (input.value === "") input.value = "0";
     });
@@ -41,58 +35,47 @@ document.addEventListener("DOMContentLoaded", function () {
       const hasOneAboveOne = amountIds.some(
         (id) => parseFloat(document.getElementById(id).value) >= 1
       );
-
       if (!hasOneAboveOne) {
-        cardErrors.textContent =
+        paymentErrors.textContent =
           "Please enter at least one donation amount of $1 or more.";
         return;
       }
 
-      // ---- 2. Collect form data ----
-      const formData = new FormData(form); // keep as FormData, don’t stringify
-
       try {
-        // ---- 3. Send donation data to backend ----
+        // ---- 2. Collect form data ----
+        const formData = new FormData(form);
+
+        // ---- 3. Create PaymentIntent on backend ----
         const response = await fetch("/api/donations", {
           method: "POST",
-          body: formData, // <-- no headers, no JSON.stringify
+          body: formData,
         });
 
         const { clientSecret, error } = await response.json();
         if (error) {
-          cardErrors.textContent = error;
+          paymentErrors.textContent = error;
           return;
         }
 
-        // ---- 4. Confirm payment with Stripe ----
-        const { paymentIntent, error: stripeError } =
-          await stripe.confirmCardPayment(clientSecret, {
-            payment_method: {
-              card: cardElement,
-              billing_details: {
-                name: form.querySelector("[name=legal_name]").value,
-                email: form.querySelector("[name=email]").value,
-                address: {
-                  line1: form.querySelector("[name=street_address]").value,
-                  city: form.querySelector("[name=city]").value,
-                  state: form.querySelector("[name=state]").value,
-                  postal_code: form.querySelector("[name=zip]").value,
-                },
-              },
-            },
-          });
+        // ---- 4. Mount Payment Element ----
+        const elements = stripe.elements({ clientSecret });
+        const paymentElement = elements.create("payment");
+        paymentElement.mount("#card-element");
+
+        // ---- 5. Confirm payment ----
+        const { error: stripeError } = await stripe.confirmPayment({
+          elements,
+          confirmParams: {
+            return_url: window.location.origin + "/thank-you",
+          },
+        });
 
         if (stripeError) {
-          cardErrors.textContent = stripeError.message;
-        } else if (paymentIntent && paymentIntent.status === "succeeded") {
-          alert("Donation successful! Thank you for your support.");
-          form.reset();
-          cardElement.clear();
-          amountIds.forEach((id) => (document.getElementById(id).value = "0"));
+          paymentErrors.textContent = stripeError.message;
         }
       } catch (err) {
         console.error("Donation error:", err);
-        cardErrors.textContent =
+        paymentErrors.textContent =
           "An unexpected error occurred. Please try again.";
       }
     }, 0);
