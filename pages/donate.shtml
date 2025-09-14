@@ -29,42 +29,42 @@
                         <label for="planned_parenthood_amount">Planned Parenthood</label>
                         <p><a href="https://www.plannedparenthood.org/">Planned Parenthood</a> provides reproductive healthcare services including contraception, 
                           abortion, and sexual health education.</p>
-                        <input type="number" id="planned_parenthood_amount" name="planned_parenthood_amount" min="0" step="1" value="0">
+                        <input type="number" id="planned_parenthood_amount" name="planned_parenthood_amount" min="0" step="1" value="0" autocomplete="off">
                     </div>
                     <div>
                         <label for="national_right_to_life_committee_amount">The National Right to Life Committee</label>
                         <p>The <a href="https://nrlc.org/">National Right to Life Committee</a> advocates against abortion through legislative 
                           lobbying, political action, public education, and grassroots organizing.</p>
-                        <input type="number" id="national_right_to_life_committee_amount" name="national_right_to_life_committee_amount" min="0" step="1" value="0">
+                        <input type="number" id="national_right_to_life_committee_amount" name="national_right_to_life_committee_amount" min="0" step="1" value="0" autocomplete="off">
                     </div>
                     <div>
                         <label for="everytown_for_gun_safety_amount">Everytown for Gun Safety</label>
                         <p><a href="https://www.everytown.org/">Everytown for Gun Safety</a> works to prevent gun violence through advocacy for gun safety legislation, 
                           public education campaigns, and research on gun violence prevention.</p>
-                        <input type="number" id="everytown_for_gun_safety_amount" name="everytown_for_gun_safety_amount" min="0" step="1" value="0">
+                        <input type="number" id="everytown_for_gun_safety_amount" name="everytown_for_gun_safety_amount" min="0" step="1" value="0" autocomplete="off">
                     </div>
                     <div>
                         <label for="nra_foundation_amount">The NRA Foundation</label>
                         <p>The <a href="https://www.nrafoundation.org/">NRA Foundation</a> funds firearms education, training, safety programs, and shooting 
                           sports development, supporting the National Rifle Association's educational mission.</p>
-                        <input type="number" id="nra_foundation_amount" name="nra_foundation_amount" min="0" step="1" value="0">
+                        <input type="number" id="nra_foundation_amount" name="nra_foundation_amount" min="0" step="1" value="0" autocomplete="off">
                     </div>
                     <div>
                         <label for="trevor_project_amount">The Trevor Project</label>
                         <p>The <a href="https://www.thetrevorproject.org/">Trevor Project</a> provides crisis intervention services, suicide prevention 
                           resources, and mental health support specifically for queer youth through hotlines, text services, and educational programs.</p>
-                        <input type="number" id="trevor_project_amount" name="trevor_project_amount" min="0" step="1" value="0">
+                        <input type="number" id="trevor_project_amount" name="trevor_project_amount" min="0" step="1" value="0" autocomplete="off">
                     </div>
                     <div>
                         <label for="alliance_defending_freedom_amount">Alliance Defending Freedom</label>
                         <p>The <a href="https://adflegal.org/">Alliance Defending Freedom</a> provides legal advocacy and representation in cases involving religious liberty, 
                           parental rights, and opposition to LGBTQ+ rights.</p>
-                        <input type="number" id="alliance_defending_freedom_amount" name="alliance_defending_freedom_amount" min="0" step="1" value="0">
+                        <input type="number" id="alliance_defending_freedom_amount" name="alliance_defending_freedom_amount" min="0" step="1" value="0" autocomplete="off">
                     </div>
                     <div>
                         <label for="duelgood_amount">DuelGood</label>
                         <p>Selecting DuelGood as a beneficiary is likely to support our operational expenses. Any excess will go to GiveWell.</p>
-                        <input type="number" id="duelgood_amount" name="duelgood_amount" min="0" step="1" value="0">
+                        <input type="number" id="duelgood_amount" name="duelgood_amount" min="0" step="1" value="0" autocomplete="off">
                     </div>
                 </div>
                 <!-- How can we validate that at least one donation amount is greater than one? -->
