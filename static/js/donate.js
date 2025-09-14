@@ -36,7 +36,6 @@ document.addEventListener("DOMContentLoaded", function () {
   form.addEventListener("submit", function (e) {
     e.preventDefault();
 
-    // Wait a tick so Enter key values finalize
     setTimeout(async () => {
       // ---- 1. Validate donation amounts ----
       const hasOneAboveOne = amountIds.some(
@@ -44,20 +43,19 @@ document.addEventListener("DOMContentLoaded", function () {
       );
 
       if (!hasOneAboveOne) {
-        alert("Please enter at least one donation amount of $1 or more.");
+        cardErrors.textContent =
+          "Please enter at least one donation amount of $1 or more.";
         return;
       }
 
       // ---- 2. Collect form data ----
-      const formData = new FormData(form);
-      const data = Object.fromEntries(formData.entries());
+      const formData = new FormData(form); // keep as FormData, don’t stringify
 
       try {
         // ---- 3. Send donation data to backend ----
         const response = await fetch("/api/donations", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
+          body: formData, // <-- no headers, no JSON.stringify
         });
 
         const { clientSecret, error } = await response.json();
@@ -72,13 +70,13 @@ document.addEventListener("DOMContentLoaded", function () {
             payment_method: {
               card: cardElement,
               billing_details: {
-                name: data.legal_name,
-                email: data.email,
+                name: form.querySelector("[name=legal_name]").value,
+                email: form.querySelector("[name=email]").value,
                 address: {
-                  line1: data.street_address,
-                  city: data.city,
-                  state: data.state,
-                  postal_code: data.zip,
+                  line1: form.querySelector("[name=street_address]").value,
+                  city: form.querySelector("[name=city]").value,
+                  state: form.querySelector("[name=state]").value,
+                  postal_code: form.querySelector("[name=zip]").value,
                 },
               },
             },
@@ -90,7 +88,6 @@ document.addEventListener("DOMContentLoaded", function () {
           alert("Donation successful! Thank you for your support.");
           form.reset();
           cardElement.clear();
-          // reset donation inputs to "0"
           amountIds.forEach((id) => (document.getElementById(id).value = "0"));
         }
       } catch (err) {
