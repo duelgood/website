@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("donation-form");
-  const paymentErrors = document.getElementById("card-errors"); // reuse this div
+  const paymentErrors = document.getElementById("card-errors");
 
   const stripe = Stripe(
     "pk_test_51S5FMtPaAbpNU2MW6IFPfy7uuVlvMcfDkJmI6xpUEd8AC8VvkwwO87PGhUlfUkPEmio4i3LnDgygBkpl5X68hCSj00SD13F37u"
@@ -27,57 +27,66 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
+  let elements;
+  let paymentElement;
 
-    setTimeout(async () => {
-      // ---- 1. Validate donation amounts ----
-      const hasOneAboveOne = amountIds.some(
-        (id) => parseFloat(document.getElementById(id).value) >= 1
-      );
-      if (!hasOneAboveOne) {
-        paymentErrors.textContent =
-          "Please enter at least one donation amount of $1 or more.";
+  async function mountPaymentElement(clientSecret) {
+    if (elements) {
+      elements.getElement("payment").unmount();
+    }
+    elements = stripe.elements({ clientSecret });
+    paymentElement = elements.create("payment");
+    paymentElement.mount("#card-element");
+  }
+
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    paymentErrors.textContent = "";
+
+    // ---- 1. Validate donation amounts ----
+    const hasOneAboveOne = amountIds.some(
+      (id) => parseFloat(document.getElementById(id).value) >= 1
+    );
+    if (!hasOneAboveOne) {
+      paymentErrors.textContent =
+        "Please enter at least one donation amount of $1 or more.";
+      return;
+    }
+
+    try {
+      // ---- 2. Collect form data ----
+      const formData = new FormData(form);
+
+      // ---- 3. Create PaymentIntent on backend ----
+      const response = await fetch("/api/donations", {
+        method: "POST",
+        body: formData,
+      });
+
+      const { clientSecret, error } = await response.json();
+      if (error) {
+        paymentErrors.textContent = error;
         return;
       }
 
-      try {
-        // ---- 2. Collect form data ----
-        const formData = new FormData(form);
+      // ---- 4. Mount Payment Element (with fresh clientSecret) ----
+      await mountPaymentElement(clientSecret);
 
-        // ---- 3. Create PaymentIntent on backend ----
-        const response = await fetch("/api/donations", {
-          method: "POST",
-          body: formData,
-        });
+      // ---- 5. Confirm payment ----
+      const { error: stripeError } = await stripe.confirmPayment({
+        elements,
+        confirmParams: {
+          return_url: window.location.origin + "/thank-you",
+        },
+      });
 
-        const { clientSecret, error } = await response.json();
-        if (error) {
-          paymentErrors.textContent = error;
-          return;
-        }
-
-        // ---- 4. Mount Payment Element ----
-        const elements = stripe.elements({ clientSecret });
-        const paymentElement = elements.create("payment");
-        paymentElement.mount("#card-element");
-
-        // ---- 5. Confirm payment ----
-        const { error: stripeError } = await stripe.confirmPayment({
-          elements,
-          confirmParams: {
-            return_url: window.location.origin + "/thank-you",
-          },
-        });
-
-        if (stripeError) {
-          paymentErrors.textContent = stripeError.message;
-        }
-      } catch (err) {
-        console.error("Donation error:", err);
-        paymentErrors.textContent =
-          "An unexpected error occurred. Please try again.";
+      if (stripeError) {
+        paymentErrors.textContent = stripeError.message;
       }
-    }, 0);
+    } catch (err) {
+      console.error("Donation error:", err);
+      paymentErrors.textContent =
+        "An unexpected error occurred. Please try again.";
+    }
   });
 });
