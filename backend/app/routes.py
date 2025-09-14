@@ -301,21 +301,6 @@ def post_donations():
         return jsonify({'error': 'Internal server error'}), 500
 
 
-@bp.route("/setup-intent", methods=["POST"])
-def create_setup_intent():
-    """
-    Create a SetupIntent so the frontend can render the Payment Element
-    immediately on page load.
-    """
-    try:
-        intent = stripe.SetupIntent.create(
-            automatic_payment_methods={"enabled": True}
-        )
-        return jsonify({"clientSecret": intent.client_secret})
-    except Exception as e:
-        current_app.logger.error("Error creating SetupIntent", exc_info=True)
-        return jsonify({"error": "Failed to initialize payment form"}), 500
-
 @bp.route("/health", methods=["GET"])
 def get_health():
     return jsonify({"status": "ok"}), 200

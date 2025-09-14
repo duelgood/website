@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", async function () {
+document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("donation-form");
   const paymentErrors = document.getElementById("payment-errors");
   const stripe = Stripe(
@@ -17,7 +17,6 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   let elements, paymentElement;
 
-  // --- helpers ---
   function enforceMinZero() {
     amountIds.forEach((id) => {
       const input = document.getElementById(id);
@@ -29,38 +28,8 @@ document.addEventListener("DOMContentLoaded", async function () {
       });
     });
   }
-
-  async function mountPaymentElement(clientSecret) {
-    elements = stripe.elements({ clientSecret });
-    paymentElement = elements.create("payment");
-    paymentElement.mount("#payment-element");
-  }
-
-  // --- setup ---
   enforceMinZero();
 
-  try {
-    const response = await fetch("/api/setup-intent", {
-      method: "POST",
-    });
-
-    if (!response.ok) {
-      throw new Error("Failed to initialize payment form");
-    }
-
-    const { clientSecret } = await response.json();
-    if (clientSecret) {
-      await mountPaymentElement(clientSecret);
-    } else {
-      paymentErrors.textContent = "Could not initialize payment form";
-    }
-  } catch (err) {
-    console.error("Payment form initialization error:", err);
-    paymentErrors.textContent =
-      "Payment form failed to load. Please try again.";
-  }
-
-  // --- form submit ---
   form.addEventListener("submit", async function (e) {
     e.preventDefault();
     paymentErrors.textContent = "";
@@ -76,7 +45,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 
     try {
-      // 2. Send donation + donor info to backend -> PaymentIntent
+      // 2. Send donor info + donation amounts to backend -> PaymentIntent
       const formData = new FormData(form);
       const res = await fetch("/api/donations", {
         method: "POST",
@@ -88,8 +57,13 @@ document.addEventListener("DOMContentLoaded", async function () {
         return;
       }
 
-      // 3. Confirm payment with redirect
-      const { error: stripeError } = await stripe.confirmSetup({
+      // 3. Mount Payment Element with the client secret
+      elements = stripe.elements({ clientSecret });
+      paymentElement = elements.create("payment");
+      paymentElement.mount("#payment-element");
+
+      // 4. Confirm payment
+      const { error: stripeError } = await stripe.confirmPayment({
         elements,
         confirmParams: {
           return_url: "https://duelgood.org/thank-you",
@@ -97,11 +71,8 @@ document.addEventListener("DOMContentLoaded", async function () {
       });
 
       if (stripeError) {
-        // This shows *only if* an immediate client-side error (e.g. validation)
         paymentErrors.textContent = stripeError.message;
       }
-
-      // If payment succeeds or needs next steps, Stripe will redirect automatically.
     } catch (err) {
       console.error("Donation error:", err);
       paymentErrors.textContent =
