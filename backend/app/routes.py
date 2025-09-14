@@ -256,13 +256,27 @@ def post_donations():
         required_fields = [donor_name, email, street_address, city, state, zip_code]
         if not all(required_fields):
             return jsonify({'error': 'Missing required contact information'}), 400
+        
+        metadata = {}
+        for cause in [
+            "planned_parenthood",
+            "national_right_to_life_committee",
+            "everytown_for_gun_safety",
+            "nra_foundation",
+            "trevor_project",
+            "alliance_defending_freedom",
+            "duelgood"
+        ]:
+            field_name = f"{cause}_amount"
+            amount = form.get(field_name, "0")
+            metadata[field_name] = amount
 
         intent = stripe.PaymentIntent.create(
             amount=total_cents,
             currency="usd",
             automatic_payment_methods={"enabled": True},
             receipt_email=email,
-            metadata={ # for our records
+            metadata={
                 "donor_name": donor_name,
                 "email": email,
                 "donations": str(donations),
@@ -270,7 +284,8 @@ def post_donations():
                 "street_address": street_address,
                 "city": city, 
                 "state": state,
-                "zip_code": zip_code
+                "zip_code": zip_code,
+                **metadata
             },
         )
 
