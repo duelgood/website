@@ -1,5 +1,4 @@
 <!--#include virtual="/includes/header" -->
-<script src="https://js.stripe.com/v3/"></script>
 <main>
   <h1>Donate</h1>
   <hr>
@@ -145,4 +144,6 @@
   <p><em>Note: This is test mode. No actual payment will be processed.</em></p>
 </main>
 <!--#include virtual="/includes/footer" -->
+
+<script src="https://js.stripe.com/v3/"></script>
 <script src="/static/js/donate.js"></script>
