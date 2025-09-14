@@ -1,4 +1,5 @@
 console.log("donate.js loaded");
+
 const stripe = Stripe(
   "pk_test_51S5FMtPaAbpNU2MW6IFPfy7uuVlvMcfDkJmI6xpUEd8AC8VvkwwO87PGhUlfUkPEmio4i3LnDgygBkpl5X68hCSj00SD13F37u"
 );
