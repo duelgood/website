@@ -90,7 +90,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
       // 3. Confirm payment with redirect
       const { error: stripeError } = await stripe.confirmPayment({
-        elements,
+        clientSecret,
         confirmParams: {
           return_url: "https://duelgood.org/thank-you",
         },
