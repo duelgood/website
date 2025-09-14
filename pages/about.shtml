@@ -12,42 +12,12 @@
         Cause A and Bob donates $8 to the pro-choice Cause B, 
         then $8 + $8 = $16 goes to charity and the remaining $2 goes to Cause A. 
       </p>
-      <div class="container">
-        <div class="bar bar-1">A</div>
-        <div class="bar bar-2">B</div>
-        <div class="bar bar-3">C</div>
-        <div class="top-rectangle">A</div>
-        <div class="symbol minus"></div>
-        <div class="symbol equals-top"></div>
-        <div class="symbol equals-bottom"></div>
-      </div>
-      <div class="row">
-        <div class="column">
-          <h3>Less waste, more good.</h3>
-          <p>
-          <div class="background-symbol">🌐</div>
-          Save lives while donating to causes you care about. 
-          </p>
-        </div>
-        <div class="column">
-          <h3>Highest impact charity.</h3>
-          <p>
-            <div class="background-symbol">1</div>
-          We've reviewed hundreds of charities and selected the most effective,
-          research-backed, and transparent.
-        </p>
-          
-        </div>
-        <div class="column">
-          <h3>DuelGood takes no cut.</h3>
-          <p>
-            <div class="background-symbol">$</div>
-            Our operations are funded by donors who choose to support us. 100% of
-            all other donations (minus standard bank and credit card fees) go
-            to charity or the party of your choice.
-          </p>
-        </div>
-      </div>
+      <p>
+        Our operations are funded by donors who choose to support us. 100% of
+        all other donations (minus standard bank and credit card fees) go
+        to charity or the party of your choice.
+      </p>
+
       <p>
         Matched amounts go directly to <a href="https://www.givewell.org/charities/top-charities">
         GiveWell's Top Charities Fund</a>, high-impact and cost-effective programs 
@@ -56,9 +26,7 @@
         gold standard for impact. <a href="https://www.givewell.org/about">More about GiveWell</a>. 
       </p>
       <p>
-        The remainder will go to whichever cause received more donations. This 
-        ensures that donating through DuelGood has the same political impact 
-        as donating directly to a political party, in addition to saving lives. 
+        The remainder will go to whichever cause received more donations of its pair.
       </p>
     </main>
 <!--#include virtual="/includes/footer" -->
