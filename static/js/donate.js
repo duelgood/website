@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", async function () {
   const form = document.getElementById("donation-form");
-  const paymentErrors = document.getElementById("card-errors");
+  const paymentErrors = document.getElementById("payment-errors");
   const stripe = Stripe(
     "pk_test_51S5FMtPaAbpNU2MW6IFPfy7uuVlvMcfDkJmI6xpUEd8AC8VvkwwO87PGhUlfUkPEmio4i3LnDgygBkpl5X68hCSj00SD13F37u"
   );
@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       }
       elements = stripe.elements({ clientSecret });
       paymentElement = elements.create("payment");
-      paymentElement.mount("#card-element");
+      paymentElement.mount("#payment-element");
     } catch (err) {
       console.error("Error initializing payment box:", err);
       paymentErrors.textContent = "Could not load payment form.";
