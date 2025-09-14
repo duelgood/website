@@ -147,4 +147,4 @@
 <!--#include virtual="/includes/footer" -->
 
 <script src="https://js.stripe.com/v3/"></script>
-<script src="/static/js/donate.js?v=5"></script>
+<script src="/static/js/donate.js?v=6"></script>
