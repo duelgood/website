@@ -19,8 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Ask Flask backend to create a PaymentIntent
     const res = await fetch("/api/donations", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
+      body: new URLSearchParams(payload),
     });
 
     const data = await res.json();
