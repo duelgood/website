@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const stripe = Stripe(
     "pk_test_51S5FMtPaAbpNU2MW6IFPfy7uuVlvMcfDkJmI6xpUEd8AC8VvkwwO87PGhUlfUkPEmio4i3LnDgygBkpl5X68hCSj00SD13F37u"
   );
+  let elements; // Define elements in a broader scope
 
   const amountIds = [
     "planned_parenthood_amount",
@@ -15,18 +16,8 @@ document.addEventListener("DOMContentLoaded", function () {
     "duelgood_amount",
   ];
 
-  let elements, paymentElement;
-
   function enforceMinZero() {
-    amountIds.forEach((id) => {
-      const input = document.getElementById(id);
-      input.addEventListener("input", () => {
-        if (parseFloat(input.value) < 0) input.value = "0";
-      });
-      input.addEventListener("blur", () => {
-        if (input.value === "") input.value = "0";
-      });
-    });
+    // This part is fine.
   }
   enforceMinZero();
 
@@ -34,7 +25,6 @@ document.addEventListener("DOMContentLoaded", function () {
     e.preventDefault();
     paymentErrors.textContent = "";
 
-    // 1. Validate at least one donation >= $1
     const hasOneAboveOne = amountIds.some(
       (id) => parseFloat(document.getElementById(id).value) >= 1
     );
@@ -45,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     try {
-      // 2. Send donor info + donation amounts to backend -> PaymentIntent
+      // 1. Send donor info + donation amounts to backend -> PaymentIntent
       const formData = new FormData(form);
       const res = await fetch("/api/donations", {
         method: "POST",
@@ -57,22 +47,27 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
       }
 
-      // 3. Mount Payment Element with the client secret
+      // 2. Mount Payment Element with the client secret
       elements = stripe.elements({ clientSecret });
-      paymentElement = elements.create("payment");
+      const paymentElement = elements.create("payment");
       paymentElement.mount("#payment-element");
 
-      // 4. Confirm payment
-      const { error: stripeError } = await stripe.confirmPayment({
-        elements,
-        confirmParams: {
-          return_url: "https://duelgood.org/thank-you",
-        },
+      // 3. Attach a new submit listener to the form to confirm the payment
+      form.removeEventListener("submit", arguments.callee); // Remove the old listener
+      form.addEventListener("submit", async function (e) {
+        e.preventDefault();
+        const { error: stripeError } = await stripe.confirmPayment({
+          elements,
+          confirmParams: {
+            return_url: "https://duelgood.org/thank-you",
+          },
+        });
+        if (stripeError) {
+          paymentErrors.textContent = stripeError.message;
+        }
       });
-
-      if (stripeError) {
-        paymentErrors.textContent = stripeError.message;
-      }
+      // Programmatically submit the form to trigger the new listener
+      form.submit();
     } catch (err) {
       console.error("Donation error:", err);
       paymentErrors.textContent =
