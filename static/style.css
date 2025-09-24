@@ -374,6 +374,7 @@ input:invalid {
 /* ==================== Stats Overview ==================== */
 
 .impact-lead {
+  background-size: 75% auto;
 }
 
 /*
