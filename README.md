@@ -48,7 +48,6 @@ echo -n "$STRIPE_WEBHOOK_SECRET" | podman secret create stripe_webhook_secret -
 
 ```sh
 cd "/opt/duelgood" || exit 1
-sudo curl -sSL "https://raw.githubusercontent.com/duelgood/website/refs/heads/main/compose.yml?$(date +%s)" -o /opt/duelgood/compose.yml
 podman-compose down --volumes --remove-orphans || true
 podman rm -f duelgood-db duelgood-backend duelgood-web 2>/dev/null || true
 podman-compose -p duelgood pull

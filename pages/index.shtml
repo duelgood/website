@@ -24,7 +24,7 @@
    
   -->
 
-  <h1>On average, the US spends <span class='red-underline'><a href="#ref1">$xxx,xxx,xxx</a></span> a year on directly opposed causes.</h1>
+  <span class="background-graphic"><h1>The US spends <span class='red-underline'><a href="#ref1">$xxx,xxx,xxx</a></span> a year on directly opposed causes.</h1></span>
 
   <h1>That's enough to save about <span class='blue-underline'><a href="https://www.givewell.org/how-much-does-it-cost-to-save-a-life" target="_blank" rel="noopener noreferrer">xxxx</a></span> lives.</h1>
 
