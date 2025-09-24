@@ -31,8 +31,8 @@
         The remainder will go to whichever cause received more donations of its pair.
       </p>
 
-      <h2>Methodology</h2>
-      DuelGood identifies five issue domains characterized by high 
+      <div id="methodology">"<h2>Methodology</h2></div>
+      DuelGood identifies three issue domains characterized by high 
       charitable spending with mutually incompatible objectives.
 
       <table border="1" cellpadding="6" cellspacing="0">
@@ -58,16 +58,6 @@
           <td>Queer rights</td>
           <td>Legal equality &amp; recognition</td>
           <td>Traditional definitions &amp; restrictions</td>
-        </tr>
-        <tr>
-          <td>Environment</td>
-          <td>Decarbonization &amp; renewable transition</td>
-          <td>Fossil fuel protection &amp; climate skepticism</td>
-        </tr>
-        <tr>
-          <td>Public health</td>
-          <td>Mandates for collective safety</td>
-          <td>Individual liberty &amp; anti-mandate</td>
         </tr>
       </tbody>
     </table>
@@ -97,6 +87,10 @@
     Americans United for Life (501(c)(3)) spent about $3.2M in FY2024.
     https://projects.propublica.org/nonprofits/organizations/363906065#:~:text=Revenue
 
+
+    ----
+
+    Total: ~ $556M
     <h3>Guns</h3>
     Everytown for Gun Safety Support Fund (501(c)(3)) spent about $41.1M in FY2023.
     https://projects.propublica.org/nonprofits/organizations/261598353#:~:text=Revenue
@@ -115,7 +109,11 @@
     Second Amendment Foundation (501(c)(3)) spent about $7.8M in FY2023.
     https://projects.propublica.org/nonprofits/organizations/916184167#:~:text=Revenue
 
-    Note: other pro-gun nonprofits are much smaller. 
+    Note: other pro-gun nonprofits are much smaller.
+    
+    ---
+
+    Total: ~ $109.8M
 
     <h3>Queer rights</h3>
 
@@ -139,35 +137,36 @@
     Family Research Council (501(c)(3)) (same as above) $22.0M in FY2023.
     https://projects.propublica.org/nonprofits/organizations/521792772#:~:text=Revenue
 
-    <h3>Environment</h3>
+    ---
 
-    Natural Resources Defense Council (501(c)(3)) spent about $226.9M in FY2023.
-    https://projects.propublica.org/nonprofits/organizations/132654926#:~:text=Revenue
+    Total: ~384.15
 
-    Sierra Club Foundation (501(c)(3)) spent about $113.5M in FY2023.
-    https://projects.propublica.org/nonprofits/organizations/946069890#:~:text=Revenue
+    Grand total: ~1 billion
 
-    Note: Other large green nonprofits: e.g. Environmental Defense Fund, 
-    Union of Concerned Scientists, etc., each spent tens of millions.
+    A one-dollar contribution to one organization does 
+    not have the same impact as a one-dollar contribution 
+    to another organization. However, if everyone donated 
+    through DuelGood for these organizations, we could have 
+    diverted 
 
-    ---- Note: this may be a poor choice of issue, since there's nobody on 
-    the other side of it
+    122.3M from pro and anti-abortion access causes. 
 
-    There are very few climate change denial/minimization charities, but 
-    climate change denial often overlaps with the agenda of conservative 
-    nonprofits such as:
+    146M from pro and anti-queer rights causes. 
 
-    The Heritage Foundation (501(c)(3)) spent about $107.7M in FY2023.
-    https://projects.propublica.org/nonprofits/organizations/237327730#:~:text=Revenue
+    43.8M from pro and anti-gun access causes. 
 
-    Cato Institute (501(c)(3)) spent about $41.8M in FY2024
-    https://projects.propublica.org/nonprofits/organizations/237432162#:~:text=Revenue
+    This could have saved anywhere from 35,000 to 64,000
+    lives.  
 
-    Americans for Prosperity Foundation (501(c)(3), Koch network) spent about $9.0 M in FY2023
-    https://projects.propublica.org/nonprofits/organizations/521527294#:~:text=Revenue
 
-    <h3>Public health</h3>
-
+    This number is a gross underestimate. For instance, 
+    the total spent by Planned Parenthood is greater 
+    than $1B by itself. 
+    https://oversight.house.gov/wp-content/uploads/2015/09/Committee-Findings-Planned-Parenthood-Investigation.pdf
+    This tells us that the total 
+    going to zero-sum causes each year is in the billions, 
+    which lets us roughly quantify how many lives 
+    could be saved if just 
       <h2>Caveats</h2>
       Many issues are supported by 501(c)(3)s on one side but by private groups,
       think tanks, political lobbying groups, or industry on the other. For instance there are 
