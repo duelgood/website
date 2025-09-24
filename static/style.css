@@ -378,7 +378,7 @@ input:invalid {
   background: no-repeat center/cover;
   display: flex; /* keeps h1 centered if you want */
   justify-content: center;
-  padding: 2rem 0; /* some vertical breathing room */
+  padding: 2rem 2rem; /* some breathing room */
 }
 
 .headline h1 {
