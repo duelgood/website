@@ -22,6 +22,14 @@
       </p>
       <p><strong>Is what DuelGood does legal?</strong></p>
       <p>Yes.</p>
+      <p><strong>There's plenty of diametrically opposed groups that aren't charities.
+        Why doesn't DuelGood have the option to donate to 
+        political organizations, advocacy groups, or other non-501(c)(3) entities?
+      </strong></p>
+      <p>For DuelGood to maintain its 501(c)(3) status and allow donors to claim 
+        deductions, the funds must be used for charitable purposes as defined by section 501(c)(3). 
+        Passing funds through to 501(c)(4)s, political organizations, or other non-charitable entities 
+        would violate this requirement.</p>
     </section>
 
     <section id="process">
@@ -54,7 +62,7 @@
     <section id="misc">
       <h2>Miscellaneous</h2>
       <p><strong>What is the optimal strategy I should take to maximize the impact my donation has?</strong></p>
-      This is an area of active research. if you have any thoughts regarding 
+      This is an area of active research. If you have any thoughts regarding 
       this, please reach out to us. 
     </section>
 
@@ -65,215 +73,4 @@
       reach out.
     </p>
 </main>
-  <!--
-
-  <h1>Frequently Asked Questions</h1>
-
-  <section class="faq-section">
-    <h2>Transparency</h2>
-
-    <details class="faq-question">
-      <summary>How can I verify where my money goes?</summary>
-      <div class="faq-answer">
-        <p>
-          We publish detailed monthly reports showing total donations received,
-          amounts sent to each political party, and amounts sent to our chosen
-          charities. Receipts from payment processors and confirmations from
-          recipient organizations are available upon request.
-        </p>
-      </div>
-    </details>
-
-    <details class="faq-question">
-      <summary>How do you decide which charity to use?</summary>
-      <div class="faq-answer">
-        <p>
-          We currently send matched funds to
-          <a href="https://www.givewell.org/charities/top-charities"
-            >GiveWell's Top Charities Fund</a
-          >. This selection is based on independent, peer-reviewed research into
-          cost-effectiveness and transparency. We reassess annually.
-        </p>
-      </div>
-    </details>
-
-    <details class="faq-question">
-      <summary>Can you prove you aren't taking a hidden cut?</summary>
-      <div class="faq-answer">
-        <p>
-          Yes. Our operational funding comes from separate, voluntary donations.
-          100% of all other contributions (minus unavoidable bank/credit card
-          fees) go to charity or the designated political party. Our bank
-          statements and payment processor logs are independently audited.
-        </p>
-      </div>
-    </details>
-  </section>
-
-  <section class="faq-section">
-    <h2>Security</h2>
-
-    <details class="faq-question">
-      <summary>How do you protect my payment information?</summary>
-      <div class="faq-answer">
-        <p>
-          We never store card or bank details on our servers. All transactions
-          are processed through certified, PCI-DSS–compliant payment processors
-          using encrypted connections.
-        </p>
-      </div>
-    </details>
-
-    <details class="faq-question">
-      <summary>What if someone hacks your site?</summary>
-      <div class="faq-answer">
-        <p>
-          We maintain strict security measures, including regular penetration
-          testing, encrypted backups, and isolated systems for sensitive data.
-          Even in a worst-case breach, no payment credentials would be exposed.
-        </p>
-      </div>
-    </details>
-  </section>
-
-  <section class="faq-section">
-    <h2>Political Neutrality</h2>
-
-    <details class="faq-question">
-      <summary>Are you secretly favoring one political party?</summary>
-      <div class="faq-answer">
-        <p>
-          No. Our model is designed to cancel out donations to opposing parties
-          equally. Only the net difference between donations is sent to one
-          party, and the rest is directed to charity.
-        </p>
-      </div>
-    </details>
-
-    <details class="faq-question">
-      <summary>
-        Why not just give directly to the charity instead of involving politics?
-      </summary>
-      <div class="faq-answer">
-        <p>
-          If both sides are giving equally, political donations cancel each
-          other out. By processing through DuelGood, you achieve the same
-          political effect as a direct party donation, while also saving lives
-          with the surplus funds.
-        </p>
-      </div>
-    </details>
-
-    <details class="faq-question">
-      <summary>Is this even legal under campaign finance laws?</summary>
-      <div class="faq-answer">
-        <p>
-          Yes. All political contributions are processed in compliance with
-          relevant laws and regulations, including contribution limits,
-          disclosure requirements, and reporting rules. We verify donor
-          eligibility before processing political donations.
-        </p>
-      </div>
-    </details>
-  </section>
-
-  <section class="faq-section">
-    <h2>Legal &amp; Tax</h2>
-
-    <details class="faq-question">
-      <summary>Are donations tax-deductible?</summary>
-      <div class="faq-answer">
-        <p>
-          Only the portion of your donation that goes to charity may be
-          tax-deductible. The political portion is not. We provide year-end
-          statements showing the split, but we recommend consulting a tax
-          professional.
-        </p>
-      </div>
-    </details>
-
-    <details class="faq-question">
-      <summary>Can I get a refund if I change my mind?</summary>
-      <div class="faq-answer">
-        <p>
-          You can cancel or edit your donation until 7:00 PM Eastern Time on the
-          same day it is made. After that, funds are transmitted and cannot be
-          reversed.
-        </p>
-      </div>
-    </details>
-  </section>
-
-  <section class="faq-section">
-    <h2>Tough Questions &amp; Criticism</h2>
-
-    <details class="faq-question">
-      <summary>
-        What if your chosen charity wastes money or has a scandal?
-      </summary>
-      <div class="faq-answer">
-        <p>
-          If our chosen charity fails to meet our standards for transparency,
-          cost-effectiveness, and impact, we will immediately pause donations to
-          them and redirect to another vetted charity. All changes will be
-          announced publicly.
-        </p>
-      </div>
-    </details>
-
-    <details class="faq-question">
-      <summary>
-        Isn’t this just a gimmick to make people feel good while still fueling
-        politics?
-      </summary>
-      <div class="faq-answer">
-        <p>
-          Our mission is to reduce net-zero political spending waste and
-          redirect surplus funds to save lives. While politics remains involved,
-          the model channels otherwise-wasted dollars toward high-impact
-          outcomes.
-        </p>
-      </div>
-    </details>
-
-    <details class="faq-question">
-      <summary>
-        Could someone game your system to benefit one side more?
-      </summary>
-      <div class="faq-answer">
-        <p>
-          We monitor donation patterns for anomalies and can delay or reject
-          suspicious transactions. However, the core model mathematically limits
-          one-sided exploitation unless the other side stops donating entirely.
-        </p>
-      </div>
-    </details>
-  </section>
-
-  <section class="faq-section">
-    <h2>Miscellaneous</h2>
-
-    <details class="faq-question">
-      <summary>When are donations processed?</summary>
-      <div class="faq-answer">
-        <p>
-          Every day at 7:00 PM Eastern Time. Before that deadline, donations can
-          be edited or canceled.
-        </p>
-      </div>
-    </details>
-
-    <details class="faq-question">
-      <summary>Can I choose a different charity?</summary>
-      <div class="faq-answer">
-        <p>
-          Not at this time. Focusing on a single high-impact fund maximizes
-          transparency, efficiency, and leverage when negotiating fees with
-          processors.
-        </p>
-      </div>
-    </details>
-  </section>
-</main>
--->
 <!--#include virtual="/includes/footer" -->
