@@ -373,28 +373,23 @@ input:invalid {
 
 /* ==================== Stats Overview ==================== */
 
-.background-graphic {
-  background: url("/static/red_blue_money.jpg") no-repeat center/cover;
-  min-height: 100vh; /* makes it span full page height */
-  display: flex;
-  flex-direction: column;
+.headline {
+  width: 100%; /* span the whole page */
+  background: no-repeat center/cover;
+  display: flex; /* keeps h1 centered if you want */
   justify-content: center;
-  align-items: center;
-  gap: 2rem; /* spacing between h1s */
-  padding: 2rem;
+  padding: 2rem 0; /* some vertical breathing room */
 }
 
-.background-graphic h1 {
-  background: rgba(255, 255, 255, 0.6); /* translucent */
-  backdrop-filter: blur(8px); /* blur the background image behind */
-  -webkit-backdrop-filter: blur(8px); /* safari support */
-  padding: 1.5rem 2rem;
+.headline h1 {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 1rem 2rem;
   border-radius: 1rem;
-  max-width: 800px;
+  margin: 0; /* avoid default h1 top/bottom margins */
   text-align: center;
-  font-size: 2rem;
 }
-
 .orange-underline {
   background-image: url("/static/orange_brush_underline.svg");
   background-repeat: no-repeat;
