@@ -374,10 +374,6 @@ input:invalid {
 /* ==================== Stats Overview ==================== */
 
 .impact-lead {
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 75% auto;
-  display: inline-block;
 }
 
 /*
