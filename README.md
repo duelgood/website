@@ -1,8 +1,8 @@
 # DuelGood
 
-DuelGood's website.
+This README details how to intialize a new machine to run DuelGood's website.
 
-## Secrets
+## Setting Up
 
 Copy Cloudflare origin key into `/etc/ssl/cloudflare/key.pem`.
 Copy Cloudflare origin cert into `/etc/ssl/cloudflare/cert.pem`
@@ -23,14 +23,23 @@ export STRIPE_WEBHOOK_SECRET=whsec_XXXX
 export GITHUB_GHCR_PAT=ghp_XXXX
 ```
 
-## Login
-
-`podman login ghcr.io -p=$GITHUB_GHCR_PAT`
-
-## Deploy
-
-To start the containers, run
+Then, run
 
 ```sh
-sudo mkdir -p /opt/duelgood && sudo curl -sSL "https://raw.githubusercontent.com/duelgood/website/refs/heads/main/compose.yml?$(date +%s)" -o /opt/duelgood/compose.yml && sudo curl -sSL "https://raw.githubusercontent.com/duelgood/website/refs/heads/main/startup.sh?$(date +%s)" | sh
+sudo mkdir -p /opt/duelgood
+sudo curl -sSL "https://raw.githubusercontent.com/duelgood/website/refs/heads/main/compose.yml?$(date +%s)" -o /opt/duelgood/compose.yml
+cd "/opt/duelgood" || exit 1
+
+grep -qxF 'net.ipv4.ip_unprivileged_port_start=80' /etc/sysctl.conf || echo 'net.ipv4.ip_unprivileged_port_start=80' | sudo tee -a /etc/sysctl.conf
+sudo sysctl -p
+
+sudo pacman -Syu --noconfirm
+sudo pacman -Sy --noconfirm podman podman-compose
+systemctl --user enable --now podman.socket
+mkdir -p ~/.config/systemd/user
+sudo loginctl enable-linger $USER
+
+podman login -p=$GITHUB_GHCR_PAT
+echo -n "$STRIPE_SECRET_KEY" | podman secret create stripe_secret_key -
+echo -n "$STRIPE_WEBHOOK_SECRET" | podman secret create stripe_webhook_secret -
 ```

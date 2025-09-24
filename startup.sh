@@ -4,19 +4,6 @@ set -uo pipefail
 # Path where compose.yml will live
 DEPLOY_DIR="/opt/duelgood"
 
-install_prereqs() {
-    if ! command -v podman >/dev/null; then
-        sudo pacman -Syu 
-        sudo pacman -Sy --noconfirm podman podman-compose
-        # Enable podman socket for compose compatibility
-        systemctl --user enable --now podman.socket
-        # Create systemd user directory if it doesn't exist
-        mkdir -p ~/.config/systemd/user
-        # Enable lingering to allow user services to run without login
-        sudo loginctl enable-linger $USER
-    fi
-}
-
 deploy_stack() {
     cd "$DEPLOY_DIR" || exit 1
 
@@ -65,7 +52,4 @@ deploy_stack() {
 }
 
 # MAIN
-grep -qxF 'net.ipv4.ip_unprivileged_port_start=80' /etc/sysctl.conf || echo 'net.ipv4.ip_unprivileged_port_start=80' | sudo tee -a /etc/sysctl.conf
-sudo sysctl -p
-install_prereqs
 deploy_stack

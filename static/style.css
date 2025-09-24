@@ -373,10 +373,27 @@ input:invalid {
 
 /* ==================== Stats Overview ==================== */
 
+.impact-lead-container {
+  position: relative;
+  /* The height of your h1 element */
+  height: 200px;
+}
+
+.impact-lead-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("/static/stroke-red.png") no-repeat center/cover;
+  mix-blend-mode: overlay;
+}
+
 .impact-lead {
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
+  color: black;
+  mix-blend-mode: difference;
+  background-position: center;
 }
 
 .stats-overview {
