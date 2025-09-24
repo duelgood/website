@@ -383,6 +383,7 @@ input:invalid {
   background-image: url("/static/stroke-red.png");
   background-repeat: no-repeat;
   background-size: contain;
+  background-position: 0 26px;
 }
 
 .stats-overview {
