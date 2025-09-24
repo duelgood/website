@@ -372,6 +372,11 @@ input:invalid {
 }
 
 /* ==================== Stats Overview ==================== */
+
+.impact-font {
+  font-size: 200%;
+}
+
 .stats-overview {
   margin: 2.5rem 0;
   padding: 2rem;

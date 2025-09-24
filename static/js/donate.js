@@ -1,10 +1,10 @@
-document.addEventListener("DOMContentLoaded", function () {
-  const form = document.getElementById("donation-form");
-  const paymentErrors = document.getElementById("payment-errors");
+document.addEventListener("DOMContentLoaded", async () => {
   const stripe = Stripe(
     "pk_test_51S5FMtPaAbpNU2MW6IFPfy7uuVlvMcfDkJmI6xpUEd8AC8VvkwwO87PGhUlfUkPEmio4i3LnDgygBkpl5X68hCSj00SD13F37u"
   );
-  let elements; // Define elements in a broader scope
+
+  const form = document.getElementById("donation-form");
+  const paymentErrors = document.getElementById("payment-errors");
 
   const amountIds = [
     "planned_parenthood_amount",
@@ -16,62 +16,76 @@ document.addEventListener("DOMContentLoaded", function () {
     "duelgood_amount",
   ];
 
-  function enforceMinZero() {
-    // This part is fine.
-  }
-  enforceMinZero();
+  // Track elements globally
+  let elements, paymentElement;
 
-  form.addEventListener("submit", async function (e) {
+  // Helper to check at least one $1+ donation
+  function hasOneAboveOne() {
+    return amountIds.some(
+      (id) => parseFloat(document.getElementById(id).value) >= 1
+    );
+  }
+
+  // Function to create PaymentIntent and mount PaymentElement
+  async function setupPaymentElement() {
+    // send form data to backend to create intent
+    const formData = new FormData(form);
+    const res = await fetch("/api/donations", {
+      method: "POST",
+      body: formData,
+    });
+
+    const { clientSecret, error } = await res.json();
+    if (error) {
+      paymentErrors.textContent = error;
+      return false;
+    }
+
+    elements = stripe.elements({ clientSecret });
+    paymentElement = elements.create("payment");
+    paymentElement.mount("#payment-element");
+    return true;
+  }
+
+  // Initial setup when page loads
+  if (hasOneAboveOne()) {
+    await setupPaymentElement();
+  }
+
+  // Re-create PaymentIntent if donation amounts change
+  amountIds.forEach((id) => {
+    document.getElementById(id).addEventListener("input", async () => {
+      if (hasOneAboveOne()) {
+        await setupPaymentElement();
+      }
+    });
+  });
+
+  // Final form submit = confirm the payment
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
     paymentErrors.textContent = "";
 
-    const hasOneAboveOne = amountIds.some(
-      (id) => parseFloat(document.getElementById(id).value) >= 1
-    );
-    if (!hasOneAboveOne) {
+    if (!hasOneAboveOne()) {
       paymentErrors.textContent =
         "Please enter at least one donation amount of $1 or more.";
       return;
     }
 
-    try {
-      // 1. Send donor info + donation amounts to backend -> PaymentIntent
-      const formData = new FormData(form);
-      const res = await fetch("/api/donations", {
-        method: "POST",
-        body: formData,
-      });
-      const { clientSecret, error } = await res.json();
-      if (error) {
-        paymentErrors.textContent = error;
-        return;
-      }
+    if (!elements || !paymentElement) {
+      const ok = await setupPaymentElement();
+      if (!ok) return;
+    }
 
-      // 2. Mount Payment Element with the client secret
-      elements = stripe.elements({ clientSecret });
-      const paymentElement = elements.create("payment");
-      paymentElement.mount("#payment-element");
+    const { error } = await stripe.confirmPayment({
+      elements,
+      confirmParams: {
+        return_url: "https://duelgood.org/thank-you",
+      },
+    });
 
-      // 3. Attach a new submit listener to the form to confirm the payment
-      form.removeEventListener("submit", arguments.callee); // Remove the old listener
-      form.addEventListener("submit", async function (e) {
-        e.preventDefault();
-        const { error: stripeError } = await stripe.confirmPayment({
-          elements,
-          confirmParams: {
-            return_url: "https://duelgood.org/thank-you",
-          },
-        });
-        if (stripeError) {
-          paymentErrors.textContent = stripeError.message;
-        }
-      });
-      // Programmatically submit the form to trigger the new listener
-      form.submit();
-    } catch (err) {
-      console.error("Donation error:", err);
-      paymentErrors.textContent =
-        "An unexpected error occurred. Please try again.";
+    if (error) {
+      paymentErrors.textContent = error.message;
     }
   });
 });
