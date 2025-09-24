@@ -2,7 +2,7 @@
 
 This README details how to intialize a new machine to run DuelGood's website.
 
-## Setting Up
+## Setup
 
 Copy Cloudflare origin key into `/etc/ssl/cloudflare/key.pem`.
 Copy Cloudflare origin cert into `/etc/ssl/cloudflare/cert.pem`
@@ -42,4 +42,10 @@ sudo loginctl enable-linger $USER
 podman login -p=$GITHUB_GHCR_PAT
 echo -n "$STRIPE_SECRET_KEY" | podman secret create stripe_secret_key -
 echo -n "$STRIPE_WEBHOOK_SECRET" | podman secret create stripe_webhook_secret -
+```
+
+## Deploy
+
+```sh
+sudo curl -sSL "https://raw.githubusercontent.com/duelgood/website/refs/heads/main/compose.yml?$(date +%s)" -o /opt/duelgood/compose.yml && sudo curl -sSL "https://raw.githubusercontent.com/duelgood/website/refs/heads/main/startup.sh?$(date +%s)" | sh
 ```
