@@ -2,7 +2,7 @@
 :root {
   --color-primary: #0a3161;
   --color-accent: #b31942;
-  --color-accent-hover: #e69500;
+  --color-accent-hover: #f88920;
   --color-text: #000;
   --color-muted: #666;
   --color-bg: #fff;
@@ -373,17 +373,18 @@ input:invalid {
 
 /* ==================== Stats Overview ==================== */
 
-/*
-  color: white;
-*/
-
-.impact-font {
-  color: inherit;
-  size: 200%;
-  background-image: url("/static/stroke-red.png");
+.red-underline {
+  background-image: url("/static/red_brush_underline.svg");
   background-repeat: no-repeat;
   background-size: contain;
-  background-position: 0 26px;
+  background-position: 0 100%;
+}
+
+.orange-underline {
+  background-image: url("/static/orange_brush_underline.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: 0 100%;
 }
 
 .stats-overview {
