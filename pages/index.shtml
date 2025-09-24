@@ -24,13 +24,19 @@
    
   -->
 
-    <h1>The US spends <span class='orange-underline'><a href="#ref1">$xxx,xxx,xxx</a></span> a year on directly opposed causes.</h1>
+  <h1>
+    The US spent
+    <span class='orange-underline'>
+      ~<a href="#ref1">$xxx,xxx,xxx</a>
+    </span> 
+    in 2024 on zero-sum issues, which could have saved 
+    <span class='orange-underline'>
+      <a href="https://www.givewell.org/how-much-does-it-cost-to-save-a-life" target="_blank" rel="noopener noreferrer">xxxx</a>
+    </span> lives.
+  </h1>
 
-  <h1>That's enough to save <span class='orange-underline'><a href="https://www.givewell.org/how-much-does-it-cost-to-save-a-life" target="_blank" rel="noopener noreferrer">xxxx</a></span> lives.</h1>
-
-  DuelGood cuts this waste by matching opposing 
-  donations to net-zero causes like gay marriage and redirecting them 
-  to life-saving charities.
+  DuelGood cuts this waste by directing donations 
+  away from zero-sum efforts and to lifesaving work.
 
   <!-- Stats Grid -->
   <section class="stats-overview">

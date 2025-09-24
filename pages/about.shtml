@@ -32,15 +32,15 @@
       </p>
 
       <h2>Methodology</h2>
-      DuelGood identifies ten issue domains characterized by high 
+      DuelGood identifies five issue domains characterized by high 
       charitable spending with mutually incompatible objectives.
 
       <table border="1" cellpadding="6" cellspacing="0">
       <thead>
         <tr>
           <th>Issue</th>
-          <th>Side A</th>
-          <th>Side B</th>
+          <th></th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -60,12 +60,7 @@
           <td>Traditional definitions &amp; restrictions</td>
         </tr>
         <tr>
-          <td>Immigration</td>
-          <td>Expansion &amp; pathways to citizenship</td>
-          <td>Restriction &amp; enforcement-first policies</td>
-        </tr>
-        <tr>
-          <td>Climate</td>
+          <td>Environment</td>
           <td>Decarbonization &amp; renewable transition</td>
           <td>Fossil fuel protection &amp; climate skepticism</td>
         </tr>
@@ -74,31 +69,20 @@
           <td>Mandates for collective safety</td>
           <td>Individual liberty &amp; anti-mandate</td>
         </tr>
-        <tr>
-          <td>Stem cell research</td>
-          <td>Scientific freedom &amp; medical potential</td>
-          <td>Ethical prohibition &amp; protection of embryos</td>
-        </tr>
-        <tr>
-          <td>Death penalty</td>
-          <td>Abolition as human-rights violation</td>
-          <td>Retention as justice &amp; deterrence</td>
-        </tr>
-        <tr>
-          <td>Labor</td>
-          <td>Unionization &amp; collective bargaining</td>
-          <td>Right-to-work &amp; union limitation</td>
-        </tr>
-        <tr>
-          <td>Assisted dying</td>
-          <td>Legalization of physician aid in dying</td>
-          <td>Prohibition &amp; sanctity-of-life stance</td>
-        </tr>
       </tbody>
     </table>
 
+    The budgets of major nonprofit organizations involved in these efforts are 
+    tabulated below. 
+
 
       <h2>Caveats</h2>
+      Many issues are supported by 501(c)(3)s on one side but by private groups,
+      think tanks, political lobbying groups, or industry on the other. For instance there are 
+      virtually no anti-public transit charities, anti-union charities, anti-net neutrality, 
+      pro-factory farming, anti-vaccine, or anti-immigration charities, although there 
+      are certainly opposing groups working against one another in each of these issues. 
+
       We deliberately sampled the largest/most-visible organizations. 
       There are many smaller 
       orgs, state-level groups, PACs, dark money channels, and pass-throughs 
