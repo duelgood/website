@@ -73,15 +73,106 @@
     </table>
 
     The budgets of major nonprofit organizations involved in these efforts are 
-    tabulated below. 
+    listed below. These numbers are only a small fraction of the total amount 
+    spent, and so serve as a conservative lower bound. 
 
+    <h3>Abortion</h3>
+
+    Planned Parenthood Federation of America (501(c)(3)) spent about $403M
+    in FY2024. https://projects.propublica.org/nonprofits/organizations/131644147#:~:text=,from%20Form%20990 
     
+    Reproductive Freedom for All Foundation (formerly NARAL, 501(c)(3)) 
+    spent about $13.6M in FY2023. https://reproductivefreedomforall.org/report/2023-annual-report-reproductive-freedom-for-all/financial-overview/#:~:text=
+
+    National Abortion Federation (501(c)(3)) spent about $17.8M in FY2023. 
+    https://projects.propublica.org/nonprofits/organizations/431097957#:~:text=Notable%20Sources%20of%20Revenue%20Percent,Total%20Revenue%20Contributions%20%20%245%2C669%2C726
+      ----
+
+    Alliance Defending Freedom (501(c)(3)) spent about $97.1M in FY2023.
+    https://projects.propublica.org/nonprofits/organizations/541660459#:~:text=Revenue
+
+    Family Research Council (501(c)(3)) spent about $22.0M in FY2023.
+    https://projects.propublica.org/nonprofits/organizations/521792772#:~:text=Revenue
+
+    Americans United for Life (501(c)(3)) spent about $3.2M in FY2024.
+    https://projects.propublica.org/nonprofits/organizations/363906065#:~:text=Revenue
+
+    <h3>Guns</h3>
+    Everytown for Gun Safety Support Fund (501(c)(3)) spent about $41.1M in FY2023.
+    https://projects.propublica.org/nonprofits/organizations/261598353#:~:text=Revenue
+
+    Brady Center to Prevent Gun Violence (501(c)(3)) spent about $13.5M in FY2023.
+    https://projects.propublica.org/nonprofits/organizations/521285097#:~:text=Revenue
+
+    Giffords Law Center (501(c)(3)) spent about $11.4M in FY2023.
+    https://projects.propublica.org/nonprofits/organizations/464638549#:~:text=Revenue
+
+    ----
+
+    NRA Foundation (501(c)(3)) spent about $36.0M in FY2023.
+    https://projects.propublica.org/nonprofits/organizations/521710886#:~:text=Revenue
+
+    Second Amendment Foundation (501(c)(3)) spent about $7.8M in FY2023.
+    https://projects.propublica.org/nonprofits/organizations/916184167#:~:text=Revenue
+
+    Note: other pro-gun nonprofits are much smaller. 
+
+    <h3>Queer rights</h3>
+
+    The Trevor Project (501(c)(3)) spent about $97.5M in FY2023.
+    https://projects.propublica.org/nonprofits/organizations/954681287#:~:text=Revenue
+
+    Human Rights Campaign Foundation (501(c)(3)) spent about $27.35M in FY2023.
+    https://hrc-prod-requests.s3-us-west-2.amazonaws.com/HRC-HRCF-2023-Annual-Report.pdf#:~:text=
+
+    GLAAD (501(c)(3)) spent about $21.2M in FY2023.
+    https://projects.propublica.org/nonprofits/organizations/133384027#:~:text=%2425%2C260%2C642
+
+    ---
+
+    Focus on the Family (501(c)(3)) spent about $119M in FY2023.
+    https://www.focusonthefamily.com/wp-content/uploads/2025/05/2024-form-990-disclosure.pdf#:~:text=OF%20HIS%20FAMILY%2C%20CHRISTIANS%20ARE,119%2C082%2C450%20Focus%20on%20the%20Family
+
+    Alliance Defending Freedom (501(c)(3)) (same as above) $97.1M in FY2023.
+    https://projects.propublica.org/nonprofits/organizations/541660459#:~:text=Revenue
+
+    Family Research Council (501(c)(3)) (same as above) $22.0M in FY2023.
+    https://projects.propublica.org/nonprofits/organizations/521792772#:~:text=Revenue
+
+    <h3>Environment</h3>
+
+    Natural Resources Defense Council (501(c)(3)) spent about $226.9M in FY2023.
+    https://projects.propublica.org/nonprofits/organizations/132654926#:~:text=Revenue
+
+    Sierra Club Foundation (501(c)(3)) spent about $113.5M in FY2023.
+    https://projects.propublica.org/nonprofits/organizations/946069890#:~:text=Revenue
+
+    Note: Other large green nonprofits: e.g. Environmental Defense Fund, 
+    Union of Concerned Scientists, etc., each spent tens of millions.
+
+    ---- Note: this may be a poor choice of issue, since there's nobody on 
+    the other side of it
+
+    There are very few climate change denial/minimization charities, but 
+    climate change denial often overlaps with the agenda of conservative 
+    nonprofits such as:
+
+    The Heritage Foundation (501(c)(3)) spent about $107.7M in FY2023.
+    https://projects.propublica.org/nonprofits/organizations/237327730#:~:text=Revenue
+
+    Cato Institute (501(c)(3)) spent about $41.8M in FY2024
+    https://projects.propublica.org/nonprofits/organizations/237432162#:~:text=Revenue
+
+    Americans for Prosperity Foundation (501(c)(3), Koch network) spent about $9.0 M in FY2023
+    https://projects.propublica.org/nonprofits/organizations/521527294#:~:text=Revenue
+
+    <h3>Public health</h3>
 
       <h2>Caveats</h2>
       Many issues are supported by 501(c)(3)s on one side but by private groups,
       think tanks, political lobbying groups, or industry on the other. For instance there are 
       virtually no anti-public transit charities, anti-union charities, anti-net neutrality, 
-      pro-factory farming, anti-vaccine, or anti-immigration charities, although there 
+      pro-factory farming, or anti-immigration charities, although there 
       are certainly opposing groups working against one another in each of these issues. 
 
       We deliberately sampled the largest/most-visible organizations. 
