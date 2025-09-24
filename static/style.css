@@ -400,6 +400,7 @@ input:invalid {
   background-repeat: no-repeat;
   background-size: contain;
   background-position: 0 100%;
+  bottom: -5px;
 }
 
 .stats-overview {

@@ -24,9 +24,11 @@
    
   -->
 
-  <span class="background-graphic"><h1>The US spends <span class='red-underline'><a href="#ref1">$xxx,xxx,xxx</a></span> a year on directly opposed causes.</h1></span>
+  <span class="background-graphic" style="background-image: url('/static/red_blue_money.jpg');">
+    <h1>The US spends <span class='orange-underline'><a href="#ref1">$xxx,xxx,xxx</a></span> a year on directly opposed causes.</h1>
+  </span>
 
-  <h1>That's enough to save about <span class='blue-underline'><a href="https://www.givewell.org/how-much-does-it-cost-to-save-a-life" target="_blank" rel="noopener noreferrer">xxxx</a></span> lives.</h1>
+  <h1>That's enough to save <span class='orange-underline'><a href="https://www.givewell.org/how-much-does-it-cost-to-save-a-life" target="_blank" rel="noopener noreferrer">xxxx</a></span> lives.</h1>
 
   DuelGood cuts this waste by matching opposing 
   donations to net-zero causes like gay marriage and redirecting them 
