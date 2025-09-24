@@ -378,6 +378,7 @@ input:invalid {
 */
 
 .impact-font {
+  color: inherit;
   size: 200%;
   background-image: url("/static/stroke-red.png");
   background-repeat: no-repeat;
