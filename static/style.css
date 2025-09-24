@@ -373,8 +373,10 @@ input:invalid {
 
 /* ==================== Stats Overview ==================== */
 
-.impact-font {
-  font-size: 200%;
+.impact-lead {
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
 }
 
 .stats-overview {

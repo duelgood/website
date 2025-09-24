@@ -24,11 +24,11 @@
    
   -->
 
-  <h1>On average, the US spends <span class='impact-font'>$XXX,XXX,XXX</span> a year on causes working directly against one another
-  <sup><a href="#ref1" class="footnote">1</a></sup></h1>.
+  <h1 class="impact-lead" style='background: url("static/stroke-red.png") no-repeat center/cover;'>On average, the US spends <span class='impact-font'>$XXX,XXX,XXX</span> a year on causes working directly against one another
+  <sup><a href="#ref1" class="footnote">1</a></sup>.</h1>
 
-  <h1>That's enough to save about <span class='impact-font'>XXX,XXX</span> lives, wasted
-  <sup><a href="#ref2" class="footnote">2</a></sup></h1>.
+  <h1 class="impact-lead" style='background: url("static/stroke-blue.png") no-repeat center/cover;'>That's enough to save about <span class='impact-font'>XXX,XXX</span> lives, wasted
+  <sup><a href="https://www.givewell.org/how-much-does-it-cost-to-save-a-life" target="_blank" rel="noopener noreferrer">2</a></sup>.</h1>
 
   DuelGood matches opposing donations to net-zero causes like gun control and redirects them to life-saving charities.
 
@@ -91,23 +91,6 @@
     </div>
   </section>
 </main>
-<section id="references">
-  <h2>References</h2>
-  <ol>
-    <li id="ref1">
-      <a href="https://example.com/your-source" target="_blank" rel="noopener noreferrer">
-        Source Title  Example Organization
-      </a>
-      <a href="#top" class="back-link">↩</a>
-    </li>
-    <li id="ref2">
-      <a href="https://www.givewell.org/how-much-does-it-cost-to-save-a-life" target="_blank" rel="noopener noreferrer">
-        GiveWell
-      </a>
-      <a href="#top" class="back-link">↩</a>
-    </li>
-  </ol>
-</section>
 <!--#include virtual="/includes/footer" -->
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
