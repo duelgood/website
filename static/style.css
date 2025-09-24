@@ -373,16 +373,10 @@ input:invalid {
 
 /* ==================== Stats Overview ==================== */
 
-.impact-lead-container {
-  position: relative;
-  /* The height of your h1 element */
-  height: 200px;
-}
-
 .impact-lead {
   background-position: 50% 50%;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: 100%;
 }
 
 .impact-font {
