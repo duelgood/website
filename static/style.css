@@ -373,23 +373,6 @@ input:invalid {
 
 /* ==================== Stats Overview ==================== */
 
-.headline {
-  width: 100%; /* span the whole page */
-  background: no-repeat center/cover;
-  display: flex; /* keeps h1 centered if you want */
-  justify-content: center;
-  padding: 2rem 2rem; /* some breathing room */
-}
-
-.headline h1 {
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  padding: 1rem 2rem;
-  border-radius: 1rem;
-  margin: 0; /* avoid default h1 top/bottom margins */
-  text-align: center;
-}
 .orange-underline {
   background-image: url("/static/orange_brush_underline.svg");
   background-repeat: no-repeat;
