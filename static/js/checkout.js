@@ -33,12 +33,15 @@ document.addEventListener("DOMContentLoaded", () => {
   // Handle form submission
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
-    paymentErrors.textContent = "";
 
-    // Validate form
+    // Validate form (errors will be shown inline)
     const validation = validateForm(form);
     if (!validation.valid) {
-      paymentErrors.textContent = validation.errors.join(" ");
+      // Scroll to first error
+      const firstError = document.querySelector(".field-error, .error");
+      if (firstError) {
+        firstError.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
       return;
     }
 
@@ -66,11 +69,14 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       if (error) {
+        // Show payment-specific errors in the payment section
         paymentErrors.textContent = error.message;
+        paymentErrors.scrollIntoView({ behavior: "smooth", block: "center" });
         submitButton.disabled = false;
         submitButton.textContent = "Submit Donation (Test Mode)";
       }
     } catch (err) {
+      console.error("Unexpected error:", err);
       paymentErrors.textContent =
         "An unexpected error occurred. Please try again.";
       submitButton.disabled = false;
@@ -81,6 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function createPaymentElement(form, errorElement) {
   try {
+    console.log("Sending form data to /api/donations...");
     // Create FormData and send to backend
     const formData = new FormData(form);
     const response = await fetch("/api/donations", {
@@ -89,26 +96,31 @@ async function createPaymentElement(form, errorElement) {
     });
 
     const data = await response.json();
+    console.log("Response from /api/donations:", data);
 
     if (!response.ok || data.error) {
-      errorElement.textContent = data.error || "Failed to initialize payment";
+      // Don't show backend validation errors in payment box
+      // They should be handled by inline validation
+      console.error("Backend error:", data.error);
       return false;
     }
 
     // Unmount existing element if present
     if (paymentElement) {
+      console.log("Unmounting existing payment element");
       paymentElement.unmount();
     }
 
     // Create new Elements instance with client secret
+    console.log("Creating Stripe elements with clientSecret");
     elements = stripe.elements({ clientSecret: data.clientSecret });
     paymentElement = elements.create("payment");
     paymentElement.mount("#payment-element");
+    console.log("Payment element mounted successfully");
 
     return true;
   } catch (error) {
-    errorElement.textContent =
-      "Failed to initialize payment. Please try again.";
+    console.error("Error in createPaymentElement:", error);
     return false;
   }
 }
