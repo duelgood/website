@@ -91,12 +91,8 @@ function validateForm(form) {
   };
 }
 
-// Export for use in other files
-if (typeof module !== "undefined" && module.exports) {
-  module.exports = {
-    AMOUNT_FIELD_IDS,
-    getDonationAmounts,
-    validateDonationAmounts,
-    validateForm,
-  };
-}
+// Make functions globally available for checkout.js
+window.AMOUNT_FIELD_IDS = AMOUNT_FIELD_IDS;
+window.getDonationAmounts = getDonationAmounts;
+window.validateDonationAmounts = validateDonationAmounts;
+window.validateForm = validateForm;
