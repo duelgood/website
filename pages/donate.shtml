@@ -1,5 +1,6 @@
 <!--#include virtual="/includes/header" -->
-<script src="https://js.stripe.com/clover/stripe.js"></script>
+<script src="https://js.stripe.com/v3/stripe.js"></script>
+<script src="static/js/validation.js"></script>
 <script src="static/js/checkout.js" defer></script>
 <main>
   <h1>Donate</h1>
