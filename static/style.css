@@ -565,3 +565,38 @@ input:invalid {
     grid-template-columns: 1fr;
   }
 }
+
+/* Form validation error styles */
+.error {
+  border-color: #dc3545 !important;
+  background-color: #fff5f5;
+}
+
+.field-error {
+  color: #dc3545;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.fieldset-error {
+  background-color: #fff5f5;
+  border-left: 3px solid #dc3545;
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+}
+
+#payment-errors {
+  color: #dc3545;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  background-color: #fff5f5;
+  border-radius: 4px;
+  display: none;
+}
+
+#payment-errors:not(:empty) {
+  display: block;
+}
