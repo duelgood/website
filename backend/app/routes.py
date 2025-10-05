@@ -299,6 +299,34 @@ def post_donations():
         # log error with logging utility when added
         current_app.logger.error("Unhandled exception in /donations", exc_info=True)
         return jsonify({'error': 'Internal server error'}), 500
+    
+@app.route('/donate', methods=['POST'])
+def donate():
+    try:
+        session = stripe.checkout.Session.create(
+            ui_mode = 'embedded',
+            line_items=[
+                {
+                    # Provide the exact Price ID (for example, price_1234) of the product you want to sell
+                    'price': '{{PRICE_ID}}',
+                    'quantity': 1,
+                },
+            ],
+            mode='payment',
+            return_url='https://duelgood.org' + '/return.html?session_id={CHECKOUT_SESSION_ID}',
+        )
+    except Exception as e:
+        return str(e)
+
+    return jsonify(clientSecret=session.client_secret)
+
+@app.route('/session-status', methods=['GET'])
+def session_status():
+  session = stripe.checkout.Session.retrieve(request.args.get('session_id'))
+
+  return jsonify(status=session.status, customer_email=session.customer_details.email)
+
+
 
 
 @bp.route("/health", methods=["GET"])

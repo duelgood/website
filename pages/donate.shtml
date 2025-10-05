@@ -1,4 +1,6 @@
 <!--#include virtual="/includes/header" -->
+<script src="https://js.stripe.com/clover/stripe.js"></script>
+<script src="static/js/checkout.js" defer></script>
 <main>
   <h1>Donate</h1>
   <hr>
@@ -138,6 +140,10 @@
                 <div id="payment-errors" role="alert"></div>
             </fieldset>
 
+            <div id="checkout">
+                <!-- Checkout will insert the payment form here -->
+            </div>
+
             <button type="submit" class="donate-btn">Submit Donation (Test Mode)</button>
         </form>
 
@@ -145,6 +151,3 @@
   </em></p>
 </main>
 <!--#include virtual="/includes/footer" -->
-
-<script src="https://js.stripe.com/v3/"></script>
-<script src="/static/js/donate.js?v=7"></script>

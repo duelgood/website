@@ -37,6 +37,10 @@ body {
   line-height: 1.6;
 }
 
+a {
+  color: #0a3161;
+}
+
 /* Utility */
 img {
   max-width: 100%;
