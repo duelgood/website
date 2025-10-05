@@ -141,9 +141,6 @@
                 <div id="payment-errors" role="alert"></div>
             </fieldset>
 
-            <div id="checkout">
-                <!-- Checkout will insert the payment form here -->
-            </div>
 
             <button type="submit" class="donate-btn">Submit Donation (Test Mode)</button>
         </form>
