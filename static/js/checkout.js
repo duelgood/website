@@ -6,28 +6,47 @@ const stripe = Stripe(
 
 let elements = null;
 let paymentElement = null;
+let isCreatingPayment = false;
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("donation-form");
   const paymentErrors = document.getElementById("payment-errors");
   const submitButton = form.querySelector('button[type="submit"]');
 
-  // Create payment element when amounts change and total >= $1
-  AMOUNT_FIELD_IDS.forEach((id) => {
-    const element = document.getElementById(id);
-    if (!element) {
-      console.error(`Element not found: ${id}`);
-      return;
-    }
-    element.addEventListener("input", async () => {
-      const { total } = getDonationAmounts();
-      console.log(`Total donation amount: ${total}`);
+  // Check if form is complete enough to create payment element
+  function isFormReadyForPayment() {
+    const { total } = getDonationAmounts();
 
-      if (total >= 1) {
-        console.log("Creating payment element...");
-        await createPaymentElement(form, paymentErrors);
-      }
-    });
+    // Need at least $1 donation
+    if (total < 1) return false;
+
+    // Check required fields are filled
+    const email = form.email.value.trim();
+    const legalName = form.legal_name.value.trim();
+    const street = form.street_address.value.trim();
+    const city = form.city.value.trim();
+    const state = form.state.value;
+    const zip = form.zip.value.trim();
+
+    return email && legalName && street && city && state && zip;
+  }
+
+  // Try to create payment element when form becomes ready
+  async function tryCreatePaymentElement() {
+    if (isCreatingPayment || paymentElement) return;
+
+    if (isFormReadyForPayment()) {
+      isCreatingPayment = true;
+      console.log("Form is ready, creating payment element...");
+      await createPaymentElement(form, paymentErrors);
+      isCreatingPayment = false;
+    }
+  }
+
+  // Watch all form fields for changes
+  form.querySelectorAll("input, select").forEach((field) => {
+    field.addEventListener("input", tryCreatePaymentElement);
+    field.addEventListener("change", tryCreatePaymentElement);
   });
 
   // Handle form submission
@@ -50,10 +69,13 @@ document.addEventListener("DOMContentLoaded", () => {
     submitButton.textContent = "Processing...";
 
     try {
-      // Ensure payment element exists
+      // Create payment element if it doesn't exist yet
       if (!elements || !paymentElement) {
         const created = await createPaymentElement(form, paymentErrors);
         if (!created) {
+          paymentErrors.textContent =
+            "Unable to initialize payment. Please check all fields and try again.";
+          paymentErrors.scrollIntoView({ behavior: "smooth", block: "center" });
           submitButton.disabled = false;
           submitButton.textContent = "Submit Donation (Test Mode)";
           return;
