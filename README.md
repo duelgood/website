@@ -4,7 +4,7 @@ Initialize a new machine to run DuelGood's website.
 
 ## Setup
 
-To configure a fresh machine, copy the Cloudflare
+To configure a fresh Arch instance, copy the Cloudflare
 origin key into `/etc/ssl/cloudflare/key.pem` and the
 origin cert into `/etc/ssl/cloudflare/cert.pem`.
 
