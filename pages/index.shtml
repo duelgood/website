@@ -101,13 +101,13 @@
 <h1>Impact</h1>
 <hr>
 
-<b>
+<p style="font-size:x-large">
   DuelGood donors have diverted 
   $<span id="total-diverted" class='orange-underline'></span>
   from zero-sum causes, saving 
   ~<span id="lives-saved" class='orange-underline'></span> 
   lives.
-</b>
+</p>
 
 <h2>Breakdown</h2>
 <div style="width: 80%; margin: 0 auto;">

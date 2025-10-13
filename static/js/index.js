@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
         totalElement.textContent = `${data.givewell}`;
         // https://www.givewell.org/how-much-does-it-cost-to-save-a-life
         livesElement.textContent = `${Math.round(data.givewell / 3000)}`;
+        renderCausesChart(data.causes, data.givewell);
       }
     } catch (error) {
       console.error("Error fetching total:", error);
