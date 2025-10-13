@@ -100,7 +100,7 @@ def stripe_webhook():
     except ValueError as e:
         logger.error(f"Invalid payload: {e}")
         return jsonify({"error": "Invalid payload"}), 400
-    except stripe.error.SignatureVerificationError as e:
+    except stripe.SignatureVerificationError as e:
         logger.error(f"Invalid signature: {e}")
         return jsonify({"error": "Invalid signature"}), 400
     
@@ -130,7 +130,12 @@ def create_donation():
             'duelgood_amount'
         ]
         for field in cause_fields:
-            amount = float(data.get(field, 0))
+            amount_str = data.get(field, '0').strip()
+            try: 
+                amount = float(amount_str) if amount_str else 0.0
+            except ValueError:
+                amount = 0.0
+
             if amount > 0:
                 total += amount
                 causes[field] = amount
