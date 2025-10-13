@@ -94,13 +94,13 @@ def get_stats():
         
         # Aggregate causes from Stripe (stub: implement fetching PaymentIntents)
         causes = {
-            "planned_parenthood_amount": 0,
-            "focus_on_the_family_amount": 0,
-            "everytown_for_gun_safety_amount": 0,
-            "nra_foundation_amount": 0,
-            "trevor_project_amount": 0,
-            "family_research_council_amount": 0,
-            "duelgood_amount": 0
+            "planned_parenthood_amount": 10000,
+            "focus_on_the_family_amount": 10000,
+            "everytown_for_gun_safety_amount": 10000,
+            "nra_foundation_amount": 10000,
+            "trevor_project_amount": 10000,
+            "family_research_council_amount": 10000,
+            "duelgood_amount": 100
         }
         # Fetch and sum from metadata (similar to get_total_from_stripe)
         # For now, placeholder
