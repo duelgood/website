@@ -152,18 +152,17 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   async function renderCausesChart(causes, givewell) {
-    if (chartInstance) {
-      chartInstance.destroy();
-    }
+    if (chartInstance) chartInstance.destroy();
 
     const ctx = document.getElementById("causes-chart").getContext("2d");
+
     const labels = [
-      "Planned Parenthood",
-      "Focus on the Family",
-      "Everytown for Gun Safety",
+      "PP",
+      "FotF",
+      "Everytown",
       "NRA Foundation",
       "Trevor Project",
-      "Family Research Council",
+      "FRC",
       "DuelGood",
       "GiveWell",
     ];
@@ -199,28 +198,50 @@ document.addEventListener("DOMContentLoaded", function () {
       "/static/logos/givewell.png",
     ];
 
+    // --- Helper: preload all images ---
+    async function loadImages(urls) {
+      return Promise.all(
+        urls.map(
+          (url) =>
+            new Promise((resolve) => {
+              const img = new Image();
+              img.onload = () => resolve(img);
+              img.onerror = () => {
+                console.warn("Logo failed to load:", url);
+                resolve(null);
+              };
+              img.src = url;
+            })
+        )
+      );
+    }
+
     const images = await loadImages(logoUrls);
 
+    // --- Custom plugin to draw images under bars ---
     const imagePlugin = {
       id: "imagePlugin",
       afterDraw: (chart) => {
         const {
           ctx,
-          chartArea: { left, right, top, bottom },
-          scales: { x, y },
+          chartArea: { bottom },
+          scales: { x },
         } = chart;
 
+        const imgSize = Math.min(50, chart.width / (images.length * 2)); // auto-scale
+        const gap = 10; // space between chart and images
+
         chart.data.datasets[0].data.forEach((value, index) => {
-          if (value > 0) {
-            const barX = x.getPixelForValue(index);
-            const barTop = y.getPixelForValue(value);
-            const img = images[index];
-            if (img) {
-              const imgSize = 40;
-              const imgY = bottom + 10;
-              ctx.drawImage(img, barX - imgSize / 2, imgY, imgSize, imgSize);
-            }
-          }
+          const img = images[index];
+          if (!img) return;
+
+          const barX = x.getPixelForValue(index);
+          const imgX = barX - imgSize / 2;
+          const imgY = bottom + gap;
+
+          ctx.save();
+          ctx.drawImage(img, imgX, imgY, imgSize, imgSize);
+          ctx.restore();
         });
       },
     };
@@ -240,15 +261,29 @@ document.addEventListener("DOMContentLoaded", function () {
         ],
       },
       options: {
+        layout: {
+          padding: { bottom: 70 }, // give room for logos
+        },
         scales: {
           y: { beginAtZero: true },
-          x: { display: false },
+          x: {
+            display: false, // hide text labels since logos replace them
+          },
         },
-        plugins: [imagePlugin],
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              title: (context) => labels[context[0].dataIndex],
+              label: (context) =>
+                `$${context.parsed.y.toLocaleString()} donated`,
+            },
+          },
+        },
       },
+      plugins: [imagePlugin],
     });
   }
-
   // Update on load
   update();
 
