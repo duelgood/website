@@ -114,8 +114,9 @@
   <canvas id="causes-chart"></canvas>
 </div>
 
-<script src="/static/js/index.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="/static/js/index.js"></script>
+
 <!--#include virtual="/includes/footer" -->
 
 
