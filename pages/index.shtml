@@ -94,20 +94,27 @@
     </div>
   </section>
 </main>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-geo@4.3.0/build/index.umd.min.js"></script>
 <script src="/static/js/map.js"></script>
 -->
 
-<h1>
-  The US has given 
-  $<span id="total-amount" class='orange-underline'></span> 
-  through DuelGood, saving
+<h1>Impact</h1>
+
+<b>
+  DuelGood donors have diverted 
+  $<span id="total-diverted" class='orange-underline'></span>
+  from zero-sum causes, saving 
   ~<span id="lives-saved" class='orange-underline'></span> 
   lives.
-</h1>
-<script src="/static/js/index.js"></script>
+</b>
 
+<h2>Breakdown</h2>
+<div style="width: 80%; margin: 0 auto;">
+  <canvas id="causes-chart"></canvas>
+</div>
+
+<script src="/static/js/index.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <!--#include virtual="/includes/footer" -->
 
 

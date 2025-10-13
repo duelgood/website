@@ -21,7 +21,7 @@ TOTAL_DONATIONS_KEY = "total_donations"
 bp = Blueprint("api", __name__)
 
 def get_total_from_stripe():
-    """Fetch total donations from Stripe (SSOT)"""
+    """Fetch total donations from Stripe"""
     try:
         # Fetch all successful payment intents
         total = 0
@@ -86,6 +86,40 @@ def get_total():
     except Exception as e:
         logger.error(f"Error getting total: {e}")
         return jsonify({"error": "Failed to fetch total"}), 500
+    
+@bp.route("/api/stats", methods=["GET"])
+def get_stats():
+    try:
+        stats = {"total": get_cached_total()}
+        
+        # Aggregate causes from Stripe (stub: implement fetching PaymentIntents)
+        causes = {
+            "planned_parenthood_amount": 0,
+            "focus_on_the_family_amount": 0,
+            "everytown_for_gun_safety_amount": 0,
+            "nra_foundation_amount": 0,
+            "trevor_project_amount": 0,
+            "family_research_council_amount": 0,
+            "duelgood_amount": 0
+        }
+        # Fetch and sum from metadata (similar to get_total_from_stripe)
+        # For now, placeholder
+        stats["causes"] = causes
+        
+        # Calculate GiveWell: 2 * (min(pp, fotf) + min(eg, nra) + min(tp, frc))
+        pp = causes["planned_parenthood_amount"]
+        fotf = causes["focus_on_the_family_amount"]
+        eg = causes["everytown_for_gun_safety_amount"]
+        nra = causes["nra_foundation_amount"]
+        tp = causes["trevor_project_amount"]
+        frc = causes["family_research_council_amount"]
+        givewell = 2 * (min(pp, fotf) + min(eg, nra) + min(tp, frc))
+        stats["givewell"] = givewell
+        
+        return jsonify(stats), 200
+    except Exception as e:
+        logger.error(f"Error getting stats: {e}")
+        return jsonify({"error": "Failed to fetch stats"}), 500
 
 @bp.route("/api/webhook", methods=["POST"])
 def stripe_webhook():
