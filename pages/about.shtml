@@ -44,37 +44,9 @@
         <li>Queer rights</li>
       </ul>
 
-    We picked large, well-known charities representing each side of these issues.
-
-    <table border="1" cellpadding="6" cellspacing="0">
-      <tbody>
-        <tr>
-          <td>Legal access &amp; reproductive autonomy</td>
-          <td>Planned Parenthood</td>
-        </tr>
-        <tr>
-          <td>Prohibition &amp fetal personhood</td>
-          <td>Susan B. Anthony Pro-Life America</td>
-        </tr>
-        <tr>
-          <td>Restrictions &amp; regulation for safety</td>
-          <td>Everytown for Gun Safety</td>
-        </tr>
-
-        <tr>
-          <td>Expansive Second Amendment rights</td>
-          <td>NRA Foundation</td>
-        </tr>
-        <tr>
-          <td>Legal equality &amp; recognition</td>
-          <td>The Trevor Project</td>
-        </tr>
-        <tr>
-          <td>Traditional definitions &amp; restrictions</td>
-          <td>Family Research Council</td>
-        </tr>
-      </tbody>
-    </table> 
+    We picked large, well-known charities representing each side of these issues whose 
+    work is generally opposed to each other. 
+   
 
     </main>
 <!--#include virtual="/includes/footer" -->

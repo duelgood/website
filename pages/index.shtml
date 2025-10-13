@@ -110,8 +110,13 @@
 </p>
 
 <h2>Breakdown</h2>
-<div style="width: 80%; margin: 0 auto;">
+
+<div style="width: 95%; margin: 0 auto;">
   <canvas id="causes-chart"></canvas>
+</div>
+
+<div class="map-container">
+  <canvas id="us-map"></canvas>
 </div>
 
 <script src="/static/js/chart.umd.min.js"></script>
