@@ -26,9 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const ctx = document.getElementById("us-map").getContext("2d");
 
     // Fetch US states topojson
-    const response = await fetch(
-      "https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json"
-    );
+    const response = await fetch("/static/js/us-states.json");
     const us = await response.json();
 
     // State code mapping (abbrev to FIPS)
