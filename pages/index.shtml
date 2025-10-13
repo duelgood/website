@@ -117,6 +117,7 @@
 <script src="/static/js/chart.umd.min.js"></script>
 <script src="/static/js/index.js"></script>
 
+</main>
 <!--#include virtual="/includes/footer" -->
 
 

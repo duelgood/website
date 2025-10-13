@@ -21,7 +21,13 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  let chartInstance = null;
+
   function renderCausesChart(causes, givewell) {
+    if (chartInstance) {
+      chartInstance.destroy();
+    }
+
     const ctx = document.getElementById("causes-chart").getContext("2d");
     const labels = [
       "PP",
@@ -65,6 +71,12 @@ document.addEventListener("DOMContentLoaded", function () {
       "/static/logos/givewell.png",
     ];
 
+    const images = logoUrls.map((url) => {
+      const img = new Image();
+      img.src = url;
+      return img;
+    });
+
     const imagePlugin = {
       id: "imagePlugin",
       afterDraw: (chart) => {
@@ -75,27 +87,28 @@ document.addEventListener("DOMContentLoaded", function () {
         } = chart;
         chart.data.datasets[0].data.forEach((value, index) => {
           if (value > 0) {
-            // Only draw for non-zero bars
-            const barX = x.getPixelForValue(index); // X position of bar
-            const barTop = y.getPixelForValue(value); // Top of bar
-            const img = new Image();
-            img.src = logoUrls[index];
-            img.onload = () => {
-              const imgSize = 40; // Image size (adjust as needed)
+            const barX = x.getPixelForValue(index);
+            const barTop = y.getPixelForValue(value);
+            const img = images[index];
+            if (img.complete && img.naturalHeight > 0) {
+              // Check if loaded
+              const imgSize = 40;
               ctx.drawImage(
                 img,
                 barX - imgSize / 2,
-                barTop - imgSize - 5,
+                barTop - imgSize - 10,
                 imgSize,
                 imgSize
-              ); // Center above bar
-            };
+              ); // Adjust -10 for spacing
+            } else {
+              console.warn(`Image failed to load: ${logoUrls[index]}`);
+            }
           }
         });
       },
     };
 
-    new Chart(ctx, {
+    chartInstance = new Chart(ctx, {
       type: "bar",
       data: {
         labels: labels, // Keep labels for tooltips/legend, but hide x-axis if needed
