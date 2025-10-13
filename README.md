@@ -50,7 +50,6 @@ echo -n "$STRIPE_WEBHOOK_SECRET" | podman secret create stripe_webhook_secret -
 cd "/opt/duelgood" || exit 1
 podman-compose -p duelgood pull
 podman-compose down --volumes --remove-orphans || true
-podman rm -f duelgood-db duelgood-backend duelgood-web 2>/dev/null || true
+podman rm -f duelgood-redis duelgood-backend duelgood-web 2>/dev/null || true
 podman-compose -p duelgood up -d
-podman-compose -p duelgood -f /opt/duelgood/compose.yml exec -T backend sh -c "flask db init 2>/dev/null || true; flask db migrate || true; flask db upgrade || true"
 ```

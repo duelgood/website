@@ -1,51 +1,31 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+import redis
 import os
-import logging
-from logging.handlers import RotatingFileHandler
-from datetime import datetime
-import click
-from flask.cli import with_appcontext
-from flask_migrate import Migrate, upgrade
-from sqlalchemy_utils import database_exists, create_database
 
-db = SQLAlchemy()
-migrate = Migrate()
+def read_secret(name):
+    path = f"/run/secrets/{name}"
+    try:
+        with open(path) as f:
+            return f.read().strip()
+    except FileNotFoundError:
+        return os.environ.get(name)
 
 def create_app():
     app = Flask(__name__)
     
-    app.logger.setLevel(logging.INFO)
-
-    stream_handler = logging.StreamHandler()
-    stream_handler.setLevel(logging.INFO)
-    app.logger.addHandler(stream_handler)
-
-    # Database config
-    app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
-    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-    db.init_app(app)
-
-    # Import models
-    from .models import Donation
+    # Configure Redis
+    redis_host = os.environ.get("REDIS_HOST", "localhost")
+    redis_port = int(os.environ.get("REDIS_PORT", 6379))
     
-    # Import and register routes blueprint
-    from .routes import bp as api_bp
-    app.register_blueprint(api_bp)
-
-    @app.cli.command("db-init")
-    @with_appcontext
-    def db_init():
-        """Initialize DB if not exists, then apply migrations."""
-        uri = app.config["SQLALCHEMY_DATABASE_URI"]
-
-        if not database_exists(uri):
-            create_database(uri)
-            click.echo("Database created.")
-
-        upgrade()
-        click.echo("Database schema is up to date.")
-
-
-    migrate.init_app(app, db)
+    app.redis_client = redis.Redis(
+        host=redis_host,
+        port=redis_port,
+        decode_responses=True,
+        socket_connect_timeout=5
+    )
+    
+    # Register blueprints
+    from . import routes
+    app.register_blueprint(routes.bp)
+    
     return app

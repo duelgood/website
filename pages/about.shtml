@@ -5,30 +5,23 @@
 
       <h2>Mission</h2>
 
-      <blockquote>
-        A single death is a tragedy; 
-        a million deaths is a 
-        million tragedies.
-      </blockquote>
-
-      There are charities doing noble work in all of these 
-      zero-sum areas, and money to them is not wasted. 
-
       <p>
-        When you donate to a net-zero cause through DuelGood, 
-        your donation is matched with an equal opposing donation 
-        and both go to life-saving charities.
+        DuelGood's mission is to reduce inefficiency and social division by
+        pairing donations made to opposite sides of contested public issues 
+        and channelling the opposing funds to outstanding charities. 
       </p>
       <p>
         For example, if Alice donates $10 to the pro-life 
         Cause A and Bob donates $8 to the pro-choice Cause B, 
-        then $8 + $8 = $16 goes to charity and the remaining $2 goes to Cause A. 
+        then $8 + $8 = $16 goes to lifesaving charity and the remaining $2 goes to Cause A. 
       </p>
       <p>
         Our operations are funded by donors who choose to support us. 100% of
         all other donations (minus standard bank and credit card fees) go
         to charity or the party of your choice.
       </p>
+
+      <h2>How It Works</h2>
 
       <p>
         Matched amounts go directly to <a href="https://www.givewell.org/charities/top-charities">
@@ -72,137 +65,41 @@
       </tbody>
     </table>
 
+    We picked a large, well-known charities representing each side of these issues.
+
+    <table border="1" cellpadding="6" cellspacing="0">
+      <tbody>
+        <tr>
+          <td>Legal access &amp; reproductive autonomy</td>
+          <td>Planned Parenthood</td>
+        </tr>
+        <tr>
+          <td>Prohibition &amp fetal personhood</td>
+          <td>Susan B. Anthony Pro-Life America</td>
+        </tr>
+        <tr>
+          <td>Restrictions &amp; regulation for safety</td>
+          <td>Everytown for Gun Safety</td>
+        </tr>
+
+        <tr>
+          <td>Expansive Second Amendment rights</td>
+          <td>NRA Foundation</td>
+        </tr>
+        <tr>
+          <td>Legal equality &amp; recognition</td>
+          <td>The Trevor Project</td>
+        </tr>
+        <tr>
+          <td>Traditional definitions &amp; restrictions</td>
+          <td>Family Research Council</td>
+        </tr>
+      </tbody>
+    </table>
+
     The budgets of major nonprofit organizations involved in these efforts are 
     listed below. These numbers are only a small fraction of the total amount 
     spent, and so serve as a conservative lower bound. 
 
-    <h3>Abortion</h3>
-
-    Planned Parenthood Federation of America (501(c)(3)) spent about $403M
-    in FY2024. https://projects.propublica.org/nonprofits/organizations/131644147#:~:text=,from%20Form%20990 
-    
-    Reproductive Freedom for All Foundation (formerly NARAL, 501(c)(3)) 
-    spent about $13.6M in FY2023. https://reproductivefreedomforall.org/report/2023-annual-report-reproductive-freedom-for-all/financial-overview/#:~:text=
-
-    National Abortion Federation (501(c)(3)) spent about $17.8M in FY2023. 
-    https://projects.propublica.org/nonprofits/organizations/431097957#:~:text=Notable%20Sources%20of%20Revenue%20Percent,Total%20Revenue%20Contributions%20%20%245%2C669%2C726
-      ----
-
-    Alliance Defending Freedom (501(c)(3)) spent about $97.1M in FY2023.
-    https://projects.propublica.org/nonprofits/organizations/541660459#:~:text=Revenue
-
-    Family Research Council (501(c)(3)) spent about $22.0M in FY2023.
-    https://projects.propublica.org/nonprofits/organizations/521792772#:~:text=Revenue
-
-    Americans United for Life (501(c)(3)) spent about $3.2M in FY2024.
-    https://projects.propublica.org/nonprofits/organizations/363906065#:~:text=Revenue
-
-
-    ----
-
-    Total: ~ $556M
-    <h3>Guns</h3>
-    Everytown for Gun Safety Support Fund (501(c)(3)) spent about $41.1M in FY2023.
-    https://projects.propublica.org/nonprofits/organizations/261598353#:~:text=Revenue
-
-    Brady Center to Prevent Gun Violence (501(c)(3)) spent about $13.5M in FY2023.
-    https://projects.propublica.org/nonprofits/organizations/521285097#:~:text=Revenue
-
-    Giffords Law Center (501(c)(3)) spent about $11.4M in FY2023.
-    https://projects.propublica.org/nonprofits/organizations/464638549#:~:text=Revenue
-
-    ----
-
-    NRA Foundation (501(c)(3)) spent about $36.0M in FY2023.
-    https://projects.propublica.org/nonprofits/organizations/521710886#:~:text=Revenue
-
-    Second Amendment Foundation (501(c)(3)) spent about $7.8M in FY2023.
-    https://projects.propublica.org/nonprofits/organizations/916184167#:~:text=Revenue
-
-    Note: other pro-gun nonprofits are much smaller.
-    
-    ---
-
-    Total: ~ $109.8M
-
-    <h3>Queer rights</h3>
-
-    The Trevor Project (501(c)(3)) spent about $97.5M in FY2023.
-    https://projects.propublica.org/nonprofits/organizations/954681287#:~:text=Revenue
-
-    Human Rights Campaign Foundation (501(c)(3)) spent about $27.35M in FY2023.
-    https://hrc-prod-requests.s3-us-west-2.amazonaws.com/HRC-HRCF-2023-Annual-Report.pdf#:~:text=
-
-    GLAAD (501(c)(3)) spent about $21.2M in FY2023.
-    https://projects.propublica.org/nonprofits/organizations/133384027#:~:text=%2425%2C260%2C642
-
-    ---
-
-    Focus on the Family (501(c)(3)) spent about $119M in FY2023.
-    https://www.focusonthefamily.com/wp-content/uploads/2025/05/2024-form-990-disclosure.pdf#:~:text=OF%20HIS%20FAMILY%2C%20CHRISTIANS%20ARE,119%2C082%2C450%20Focus%20on%20the%20Family
-
-    Alliance Defending Freedom (501(c)(3)) (same as above) $97.1M in FY2023.
-    https://projects.propublica.org/nonprofits/organizations/541660459#:~:text=Revenue
-
-    Family Research Council (501(c)(3)) (same as above) $22.0M in FY2023.
-    https://projects.propublica.org/nonprofits/organizations/521792772#:~:text=Revenue
-
-    ---
-
-    Total: ~384.15
-
-    Grand total: ~1 billion
-
-    A one-dollar contribution to one organization does 
-    not have the same impact as a one-dollar contribution 
-    to another organization. However, if everyone donated 
-    through DuelGood for these organizations, we could have 
-    diverted 
-
-    122.3M from pro and anti-abortion access causes. 
-
-    146M from pro and anti-queer rights causes. 
-
-    43.8M from pro and anti-gun access causes. 
-
-    This could have saved anywhere from 35,000 to 64,000
-    lives.  
-
-
-    This number is a gross underestimate. For instance, 
-    the total spent by Planned Parenthood is greater 
-    than $1B by itself. 
-    https://oversight.house.gov/wp-content/uploads/2015/09/Committee-Findings-Planned-Parenthood-Investigation.pdf
-    This tells us that the total 
-    going to zero-sum causes each year is in the billions, 
-    which lets us roughly quantify how many lives 
-    could be saved if just 
-      <h2>Caveats</h2>
-      Many issues are supported by 501(c)(3)s on one side but by private groups,
-      think tanks, political lobbying groups, or industry on the other. For instance there are 
-      virtually no anti-public transit charities, anti-union charities, anti-net neutrality, 
-      pro-factory farming, or anti-immigration charities, although there 
-      are certainly opposing groups working against one another in each of these issues. 
-
-      We deliberately sampled the largest/most-visible organizations. 
-      There are many smaller 
-      orgs, state-level groups, PACs, dark money channels, and pass-throughs 
-      that would raise the total if included. The result is a conservative 
-      lower-bound for the ten categories sampled.
-
-      Many opposing dollars aren't in neat “pairings.” For example, Planned Parenthood 
-      is a network of national + affiliate charities + clinics; anti-abortion spending 
-      includes both political advocacy groups and a large number of independent 
-      pregnancy centers (the Guardian analysis tallies many of those centers). 
-      Some dollars are political (PACs), some are charitable (501(c)(3)), and some 
-      are 501(c)(4)/dark money - mixing them is messy but still informative if your 
-      goal is to estimate how much money is invested on both sides of a fight.
-
-      “Wasted” is a value judgment. Donors and organizations typically view the 
-      spending as defending values or protecting rights; the word “wasted” here 
-      was used in the utilitarian sense of “resources whose net social effect 
-      cancels when both sides spend heavily.” We present raw revenue numbers so 
-      you can form your own judgment. (If you want a pure “net effect” analysis, we'd 
-      need outcome measures and causal impact studies - a much bigger research project.)
     </main>
 <!--#include virtual="/includes/footer" -->

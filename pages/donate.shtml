@@ -31,38 +31,37 @@
                     <div>
                         <label for="planned_parenthood_amount">Planned Parenthood</label>
                         <p><a href="https://www.plannedparenthood.org/">Planned Parenthood</a> provides reproductive healthcare services including contraception, 
-                          abortion, and sexual health education.</p>
+                            abortion, and sexual health education.</p>
                         <input type="number" id="planned_parenthood_amount" name="planned_parenthood_amount" min="0" step="1" value="0" autocomplete="off">
                     </div>
                     <div>
-                        <label for="national_right_to_life_committee_amount">The National Right to Life Committee</label>
-                        <p>The <a href="https://nrlc.org/">National Right to Life Committee</a> advocates against abortion through legislative 
-                          lobbying, political action, public education, and grassroots organizing.</p>
-                        <input type="number" id="national_right_to_life_committee_amount" name="national_right_to_life_committee_amount" min="0" step="1" value="0" autocomplete="off">
+                        <label for="focus_on_the_family_amount">Focus on the Family</label>
+                        <p><a href="https://www.focusonthefamily.com/">Focus on the Family</a> is a large conservative family-values organization 
+                            that actively opposes Planned Parenthood, abortion, and related reproductive-health programs.</p>
+                        <input type="number" id="focus_on_the_family_amount" name="focus_on_the_family_amount" min="0" step="1" value="0" autocomplete="off">
                     </div>
                     <div>
                         <label for="everytown_for_gun_safety_amount">Everytown for Gun Safety</label>
                         <p><a href="https://www.everytown.org/">Everytown for Gun Safety</a> works to prevent gun violence through advocacy for gun safety legislation, 
-                          public education campaigns, and research on gun violence prevention.</p>
+                            public education campaigns, and research on gun violence prevention.</p>
                         <input type="number" id="everytown_for_gun_safety_amount" name="everytown_for_gun_safety_amount" min="0" step="1" value="0" autocomplete="off">
                     </div>
                     <div>
                         <label for="nra_foundation_amount">The NRA Foundation</label>
                         <p>The <a href="https://www.nrafoundation.org/">NRA Foundation</a> funds firearms education, training, safety programs, and shooting 
-                          sports development, supporting the National Rifle Association's educational mission.</p>
+                            sports development, supporting the National Rifle Association's educational mission.</p>
                         <input type="number" id="nra_foundation_amount" name="nra_foundation_amount" min="0" step="1" value="0" autocomplete="off">
                     </div>
                     <div>
                         <label for="trevor_project_amount">The Trevor Project</label>
                         <p>The <a href="https://www.thetrevorproject.org/">Trevor Project</a> provides crisis intervention services, suicide prevention 
-                          resources, and mental health support specifically for queer youth through hotlines, text services, and educational programs.</p>
+                            resources, and mental health support specifically for queer youth through hotlines, text services, and educational programs.</p>
                         <input type="number" id="trevor_project_amount" name="trevor_project_amount" min="0" step="1" value="0" autocomplete="off">
                     </div>
                     <div>
-                        <label for="alliance_defending_freedom_amount">Alliance Defending Freedom</label>
-                        <p>The <a href="https://adflegal.org/">Alliance Defending Freedom</a> provides legal advocacy and representation in cases involving religious liberty, 
-                          parental rights, and opposition to LGBTQ+ rights.</p>
-                        <input type="number" id="alliance_defending_freedom_amount" name="alliance_defending_freedom_amount" min="0" step="1" value="0" autocomplete="off">
+                        <label for="family_research_council_amount">Family Research Council</label>
+                        <p>The <a href="https://www.frc.org/">Family Research Council</a> lobbies against policies expanding protections and rights for queer individuals.</p>
+                        <input type="number" id="family_research_council_amount" name="family_research_council_amount" min="0" step="1" value="0" autocomplete="off">
                     </div>
                     <div>
                         <label for="duelgood_amount">DuelGood</label>
@@ -86,7 +85,7 @@
             <fieldset>
                 <legend>Contact Information</legend>
                 <label>
-                    Email Address:
+                    Address:
                     <input type="email" name="email" required placeholder="you@example.com" maxlength="255" title="Please enter a valid email address">
                 </label>
                 
