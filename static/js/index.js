@@ -106,8 +106,8 @@ document.addEventListener("DOMContentLoaded", function () {
             borderWidth: 1,
             borderColor: "#fff",
             backgroundColor: (context) => {
-              const value = context.parsed.v;
-              return value > 0 ? "#0A3161" : "#f0f0f0"; // Blue for donations, gray for none
+              const value = context.raw.value;
+              return value > 0 ? "#0A3161" : "#f0f0f0";
             },
           },
         ],
@@ -119,7 +119,7 @@ document.addEventListener("DOMContentLoaded", function () {
             callbacks: {
               label: (context) => {
                 const state = context.label;
-                const amount = context.parsed.v;
+                const amount = context.raw.value;
                 return `${state}: $${amount.toFixed(2)}`;
               },
             },
@@ -129,11 +129,6 @@ document.addEventListener("DOMContentLoaded", function () {
           projection: {
             axis: "x",
             projection: "albersUsa",
-          },
-          color: {
-            axis: "x",
-            quantize: 5,
-            legend: { display: false },
           },
         },
       },
