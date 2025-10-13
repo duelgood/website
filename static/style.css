@@ -37,6 +37,10 @@ body {
   line-height: 1.6;
 }
 
+main {
+  flex: 1;
+}
+
 a {
   color: #0a3161;
 }
@@ -187,10 +191,12 @@ main {
 
 /* ==================== Footer ==================== */
 footer {
+  flex-shrink: 0;
+  width: 100%;
   background-color: var(--color-bg);
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   padding: 2rem 0 1.5rem;
-  margin-top: auto;
+  margin-bottom: auto;
   box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
 }
 
