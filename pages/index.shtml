@@ -102,11 +102,11 @@
 <h1>
   The US has given
   <span class='orange-underline'>
-    <a id="total-amount" href="https://www.duelgood.org/about#methodology"></a>
+    $<a id="total-amount"></a>
   </span> 
   through DuelGood, saving
   <span class='orange-underline'>
-    ~<a id="lives-saved" href="https://www.givewell.org/how-much-does-it-cost-to-save-a-life" target="_blank" rel="noopener noreferrer"></a>
+    ~<a id="lives-saved"></a>
   </span> lives.
 </h1>
 <script src="/static/js/index.js"></script>
