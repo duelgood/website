@@ -157,12 +157,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const ctx = document.getElementById("causes-chart").getContext("2d");
 
     const labels = [
-      "PP",
-      "FotF",
-      "Everytown",
+      "Planned Parenthood",
+      "Focus on the Family",
+      "Everytown for Gun Safety",
       "NRA Foundation",
       "Trevor Project",
-      "FRC",
+      "Family Research Council",
       "DuelGood",
       "GiveWell",
     ];
@@ -194,7 +194,7 @@ document.addEventListener("DOMContentLoaded", function () {
       "/static/logos/nra_foundation.png",
       "/static/logos/trevor_project.png",
       "/static/logos/family_research_council.png",
-      "/static/logo.png",
+      "/static/logos/favicon.png",
       "/static/logos/givewell.png",
     ];
 
