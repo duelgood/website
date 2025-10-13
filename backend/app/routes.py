@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request, current_app, render_template_stri
 import os
 import stripe
 import logging
+import json
 
 logger = logging.getLogger(__name__)
 
@@ -16,14 +17,20 @@ def read_secret(name):
 stripe.api_key = read_secret("stripe_secret_key")
 endpoint_secret = read_secret("stripe_webhook_secret")
 
-TOTAL_DONATIONS_KEY = "total_donations"
+CAUSES_KEY = "causes"  # Hash: cause -> total amount
+STATES_KEY = "states"  # Hash: state -> total amount
+DONORS_KEY = "donors"  # List: JSON strings of {"name": ..., "amount": ..., "email": ...}
 
 bp = Blueprint("api", __name__)
 
-def get_total_from_stripe():
-    """Fetch total donations from Stripe"""
+def get_metadata_from_stripe():
+    """Fetch payment intent metadata from Stripe"""
+
+    # need to get donors names and the amount they 
+    # donated
+
+    # the total amount to each cause too
     try:
-        # Fetch all successful payment intents
         total = 0
         starting_after = None
         
@@ -51,68 +58,121 @@ def get_total_from_stripe():
         logger.error(f"Error fetching from Stripe: {e}")
         raise
 
-def get_cached_total():
-    """Get total from Redis cache, fallback to Stripe"""
+def get_cached_stats():
+    """Get all stats from Redis, fallback to rebuilding from Stripe"""
     try:
-        cached = current_app.redis_client.get(TOTAL_DONATIONS_KEY)
-        if cached is not None:
-            return float(cached)
+        causes = current_app.redis_client.hgetall(CAUSES_KEY) or {}
+        states = current_app.redis_client.hgetall(STATES_KEY) or {}
+        donors_raw = current_app.redis_client.lrange(DONORS_KEY, 0, -1) or []
+        donors = [json.loads(d) for d in donors_raw]  # List of dicts
+        return {
+            "causes": {k: float(v) for k, v in causes.items()},
+            "states": {k: float(v) for k, v in states.items()},
+            "donors": donors
+        }
     except Exception as e:
-        logger.warning(f"Redis error, fetching from Stripe: {e}")
+        logger.warning(f"Redis error for stats: {e}")
     
-    # Cache miss or error - fetch from Stripe
-    total = get_total_from_stripe()
-    try:
-        current_app.redis_client.set(TOTAL_DONATIONS_KEY, total)
-    except Exception as e:
-        logger.warning(f"Failed to cache total: {e}")
-    
-    return total
+    # Rebuild from Stripe
+    return rebuild_stats_from_stripe()
 
-def update_cached_total(amount_cents):
-    """Increment the cached total by the given amount"""
+def rebuild_stats_from_stripe():
+    """Rebuild all stats from Stripe PaymentIntents"""
     try:
-        current_app.redis_client.incrbyfloat(TOTAL_DONATIONS_KEY, amount_cents / 100)
+        total = 0
+        causes = {}
+        states = {}
+        donors = []
+        starting_after = None
+        
+        while True:
+            payment_intents = stripe.PaymentIntent.list(limit=100, starting_after=starting_after)
+            for pi in payment_intents.data:
+                if pi.status == "succeeded":
+                    amount_dollars = pi.amount / 100
+                    total += amount_dollars
+                    metadata = pi.metadata
+                    
+                    # Aggregate causes
+                    for cause in ['planned_parenthood_amount', 'focus_on_the_family_amount', 
+                                  'everytown_for_gun_safety_amount', 'nra_foundation_amount',
+                                  'trevor_project_amount', 'family_research_council_amount',
+                                  'duelgood_amount']:
+                        if cause in metadata:
+                            causes[cause] = causes.get(cause, 0) + float(metadata[cause])
+                    
+                    # Aggregate states
+                    if 'state' in metadata:
+                        states[metadata['state']] = states.get(metadata['state'], 0) + amount_dollars
+                    
+                    # Collect donors (last 100 for simplicity)
+                    if len(donors) < 100:
+                        donors.append({
+                            "name": metadata.get('display_name', 'Anonymous'),
+                            "amount": amount_dollars,
+                            "email": metadata.get('email', '')
+                        })
+            
+            if not payment_intents.has_more:
+                break
+            starting_after = payment_intents.data[-1].id
+        
+        # Cache in Redis
+        current_app.redis_client.hset(CAUSES_KEY, mapping={k: str(v) for k, v in causes.items()})
+        current_app.redis_client.hset(STATES_KEY, mapping={k: str(v) for k, v in states.items()})
+        current_app.redis_client.delete(DONORS_KEY)  # Clear list
+        for d in donors:
+            current_app.redis_client.rpush(DONORS_KEY, json.dumps(d))
+        
+        return {
+            "total": total,
+            "causes": causes,
+            "states": states,
+            "donors": donors
+        }
     except Exception as e:
-        logger.error(f"Failed to update cache: {e}")
-        # If Redis fails, we'll fetch from Stripe on next request
+        logger.error(f"Error rebuilding stats: {e}")
+        raise
 
-@bp.route("/api/total", methods=["GET"])
-def get_total():
-    """API endpoint to get total donations"""
-    try:
-        total = get_cached_total()
-        return jsonify({"total": total}), 200
+def update_cached_stats(metadata, amount_dollars):
+    """Update caches with new payment metadata"""
+    try:        
+        # Update causes
+        for cause in ['planned_parenthood_amount', 'focus_on_the_family_amount', 
+                      'everytown_for_gun_safety_amount', 'nra_foundation_amount',
+                      'trevor_project_amount', 'family_research_council_amount',
+                      'duelgood_amount']:
+            if cause in metadata:
+                current_app.redis_client.hincrbyfloat(CAUSES_KEY, cause, float(metadata[cause]))
+        
+        # Update states
+        if 'state' in metadata:
+            current_app.redis_client.hincrbyfloat(STATES_KEY, metadata['state'], amount_dollars)
+        
+        # Add donor
+        donor = {
+            "name": metadata.get('display_name', 'Anonymous'),
+            "amount": amount_dollars,
+            "email": metadata.get('email', '')
+        }
+        current_app.redis_client.rpush(DONORS_KEY, json.dumps(donor))
+        # Trim list to last 100
+        current_app.redis_client.ltrim(DONORS_KEY, -100, -1)
     except Exception as e:
-        logger.error(f"Error getting total: {e}")
-        return jsonify({"error": "Failed to fetch total"}), 500
+        logger.error(f"Failed to update caches: {e}")
     
 @bp.route("/api/stats", methods=["GET"])
 def get_stats():
     try:
-        stats = {"total": get_cached_total()}
-        
-        # Aggregate causes from Stripe (stub: implement fetching PaymentIntents)
-        causes = {
-            "planned_parenthood_amount": 10000,
-            "focus_on_the_family_amount": 10000,
-            "everytown_for_gun_safety_amount": 10000,
-            "nra_foundation_amount": 10000,
-            "trevor_project_amount": 10000,
-            "family_research_council_amount": 10000,
-            "duelgood_amount": 100
-        }
-        # Fetch and sum from metadata (similar to get_total_from_stripe)
-        # For now, placeholder
-        stats["causes"] = causes
-        
-        # Calculate GiveWell: 2 * (min(pp, fotf) + min(eg, nra) + min(tp, frc))
-        pp = causes["planned_parenthood_amount"]
-        fotf = causes["focus_on_the_family_amount"]
-        eg = causes["everytown_for_gun_safety_amount"]
-        nra = causes["nra_foundation_amount"]
-        tp = causes["trevor_project_amount"]
-        frc = causes["family_research_council_amount"]
+        stats = get_cached_stats()
+
+        causes = stats["causes"]
+        pp = causes.get("planned_parenthood_amount", 0)
+        fotf = causes.get("focus_on_the_family_amount", 0)
+        eg = causes.get("everytown_for_gun_safety_amount", 0)
+        nra = causes.get("nra_foundation_amount", 0)
+        tp = causes.get("trevor_project_amount", 0)
+        frc = causes.get("family_research_council_amount", 0)
         givewell = 2 * (min(pp, fotf) + min(eg, nra) + min(tp, frc))
         stats["givewell"] = givewell
         
@@ -138,13 +198,13 @@ def stripe_webhook():
         logger.error(f"Invalid signature: {e}")
         return jsonify({"error": "Invalid signature"}), 400
     
-    # Handle payment intent succeeded event
     if event["type"] == "payment_intent.succeeded":
         payment_intent = event["data"]["object"]
-        amount = payment_intent["amount"]
+        amount_dollars = payment_intent["amount"] / 100
+        metadata = payment_intent["metadata"]
         
-        logger.info(f"Payment succeeded: {payment_intent['id']}, amount: {amount}")
-        update_cached_total(amount)
+        logger.info(f"Payment succeeded: {payment_intent['id']}, amount: {amount_dollars}")
+        update_cached_stats(metadata, amount_dollars)
     
     return jsonify({"status": "success"}), 200
 

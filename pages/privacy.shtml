@@ -53,7 +53,7 @@
     <section id="how">
       <h2>How We Use Your Information</h2>
       <ul class="list-tight">
-        <li>We store all the information listed above in our secure servers.</li>
+        <li>We store all the information listed above with Stripe.</li>
         <li>We will use your email to contact you with information regarding your 
           donations, e.g. donation failed to process, donation cancellations, 
           tax deduction information. 
