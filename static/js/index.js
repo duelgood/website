@@ -137,19 +137,33 @@ document.addEventListener("DOMContentLoaded", function () {
 
   let chartInstance = null;
 
-  function renderCausesChart(causes, givewell) {
+  function loadImages(urls) {
+    return Promise.all(
+      urls.map(
+        (url) =>
+          new Promise((resolve) => {
+            const img = new Image();
+            img.onload = () => resolve(img);
+            img.onerror = () => resolve(null);
+            img.src = url;
+          })
+      )
+    );
+  }
+
+  async function renderCausesChart(causes, givewell) {
     if (chartInstance) {
       chartInstance.destroy();
     }
 
     const ctx = document.getElementById("causes-chart").getContext("2d");
     const labels = [
-      "PP",
-      "FotF",
-      "Everytown",
+      "Planned Parenthood",
+      "Focus on the Family",
+      "Everytown for Gun Safety",
       "NRA Foundation",
       "Trevor Project",
-      "FRC",
+      "Family Research Council",
       "DuelGood",
       "GiveWell",
     ];
@@ -185,11 +199,7 @@ document.addEventListener("DOMContentLoaded", function () {
       "/static/logos/givewell.png",
     ];
 
-    const images = logoUrls.map((url) => {
-      const img = new Image();
-      img.src = url;
-      return img;
-    });
+    const images = await loadImages(logoUrls);
 
     const imagePlugin = {
       id: "imagePlugin",
@@ -199,25 +209,16 @@ document.addEventListener("DOMContentLoaded", function () {
           chartArea: { left, right, top, bottom },
           scales: { x, y },
         } = chart;
+
         chart.data.datasets[0].data.forEach((value, index) => {
           if (value > 0) {
             const barX = x.getPixelForValue(index);
-            let barTop = y.getPixelForValue(value);
-            // Clamp barTop to ensure it's within chart area
-            barTop = Math.max(barTop, top + 10); // At least 10px below top
+            const barTop = y.getPixelForValue(value);
             const img = images[index];
-            if (img.complete && img.naturalHeight > 0) {
+            if (img) {
               const imgSize = 40;
-              const imgY = barTop - imgSize - 10;
-              if (imgY > top) {
-                // Ensure image is visible
-                ctx.drawImage(img, barX - imgSize / 2, imgY, imgSize, imgSize);
-                console.log(
-                  `Drew image for index ${index} at x:${barX}, y:${imgY}`
-                ); // Debug
-              }
-            } else {
-              console.warn(`Image not ready: ${logoUrls[index]}`);
+              const imgY = bottom + 10;
+              ctx.drawImage(img, barX - imgSize / 2, imgY, imgSize, imgSize);
             }
           }
         });
@@ -227,7 +228,7 @@ document.addEventListener("DOMContentLoaded", function () {
     chartInstance = new Chart(ctx, {
       type: "bar",
       data: {
-        labels: labels, // Keep labels for tooltips/legend, but hide x-axis if needed
+        labels,
         datasets: [
           {
             label: "Donations ($)",
@@ -241,11 +242,9 @@ document.addEventListener("DOMContentLoaded", function () {
       options: {
         scales: {
           y: { beginAtZero: true },
-          x: {
-            display: false, // Hide x-axis text labels since we're using images
-          },
+          x: { display: false },
         },
-        plugins: [imagePlugin], // Register the plugin
+        plugins: [imagePlugin],
       },
     });
   }
