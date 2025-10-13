@@ -53,11 +53,51 @@ document.addEventListener("DOMContentLoaded", function () {
       "#f88920",
       "#f88920",
     ];
+    const logoUrls = [
+      "/static/logos/planned_parenthood.png",
+      "/static/logos/focus_on_the_family.png",
+      "/static/logos/everytown_for_gun_safety.png",
+      "/static/logos/nra_foundation.png",
+      "/static/logos/trevor_project.png",
+      "/static/logos/family_research_council.png",
+      "/static/logo.png",
+      "/static/logos/givewell.png",
+    ];
+
+    const imagePlugin = {
+      id: "imagePlugin",
+      afterDraw: (chart) => {
+        const {
+          ctx,
+          chartArea: { left, right, top, bottom },
+          scales: { x, y },
+        } = chart;
+        chart.data.datasets[0].data.forEach((value, index) => {
+          if (value > 0) {
+            // Only draw for non-zero bars
+            const barX = x.getPixelForValue(index); // X position of bar
+            const barTop = y.getPixelForValue(value); // Top of bar
+            const img = new Image();
+            img.src = logoUrls[index];
+            img.onload = () => {
+              const imgSize = 40; // Image size (adjust as needed)
+              ctx.drawImage(
+                img,
+                barX - imgSize / 2,
+                barTop - imgSize - 5,
+                imgSize,
+                imgSize
+              ); // Center above bar
+            };
+          }
+        });
+      },
+    };
 
     new Chart(ctx, {
       type: "bar",
       data: {
-        labels: labels,
+        labels: labels, // Keep labels for tooltips/legend, but hide x-axis if needed
         datasets: [
           {
             label: "Donations ($)",
@@ -71,7 +111,11 @@ document.addEventListener("DOMContentLoaded", function () {
       options: {
         scales: {
           y: { beginAtZero: true },
+          x: {
+            display: false, // Hide x-axis text labels since we're using images
+          },
         },
+        plugins: [imagePlugin], // Register the plugin
       },
     });
   }
