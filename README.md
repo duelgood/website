@@ -1,6 +1,6 @@
 # DuelGood
 
-This README details how to intialize a new machine to run DuelGood's website.
+This README details how to initialize a new machine to run DuelGood's website.
 
 ## Setup
 
