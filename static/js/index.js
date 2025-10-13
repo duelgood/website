@@ -24,12 +24,12 @@ document.addEventListener("DOMContentLoaded", function () {
   function renderCausesChart(causes, givewell) {
     const ctx = document.getElementById("causes-chart").getContext("2d");
     const labels = [
-      "Planned Parenthood",
-      "Focus on the Family",
-      "Everytown for Gun Safety",
+      "PP",
+      "FotF",
+      "Everytown",
       "NRA Foundation",
       "Trevor Project",
-      "Family Research Council",
+      "FRC",
       "DuelGood",
       "GiveWell",
     ];
