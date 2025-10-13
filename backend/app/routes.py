@@ -251,6 +251,10 @@ def create_donation():
                 "display_name": data.get("display_name", "Anonymous"),
                 "email": data["email"],
                 "legal_name": data["legal_name"],
+                "street_address": data["street_address"],
+                "city": data["city"],
+                "state": data["state"],
+                "zip": data["zip"],
                 **{field: str(amount) for field, amount in causes.items()}
             }
         )
