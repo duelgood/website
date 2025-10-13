@@ -102,11 +102,11 @@
 <h1>
   The US has given
   <span class='orange-underline'>
-    $<a id="total-amount"></a>
+    $<div id="total-amount"></div>
   </span> 
   through DuelGood, saving
   <span class='orange-underline'>
-    ~<a id="lives-saved"></a>
+    ~<div id="lives-saved"></div>
   </span> lives.
 </h1>
 <script src="/static/js/index.js"></script>
