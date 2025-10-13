@@ -207,20 +207,22 @@ document.addEventListener("DOMContentLoaded", function () {
         chart.data.datasets[0].data.forEach((value, index) => {
           if (value > 0) {
             const barX = x.getPixelForValue(index);
-            const barTop = y.getPixelForValue(value);
+            let barTop = y.getPixelForValue(value);
+            // Clamp barTop to ensure it's within chart area
+            barTop = Math.max(barTop, top + 10); // At least 10px below top
             const img = images[index];
             if (img.complete && img.naturalHeight > 0) {
-              // Check if loaded
               const imgSize = 40;
-              ctx.drawImage(
-                img,
-                barX - imgSize / 2,
-                barTop - imgSize - 10,
-                imgSize,
-                imgSize
-              ); // Adjust -10 for spacing
+              const imgY = barTop - imgSize - 10;
+              if (imgY > top) {
+                // Ensure image is visible
+                ctx.drawImage(img, barX - imgSize / 2, imgY, imgSize, imgSize);
+                console.log(
+                  `Drew image for index ${index} at x:${barX}, y:${imgY}`
+                ); // Debug
+              }
             } else {
-              console.warn(`Image failed to load: ${logoUrls[index]}`);
+              console.warn(`Image not ready: ${logoUrls[index]}`);
             }
           }
         });
