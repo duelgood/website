@@ -1,12 +1,12 @@
-// validation.js - Donation form validation logic with inline error display
+// form validation logic
 
 const AMOUNT_FIELD_IDS = [
   "planned_parenthood_amount",
-  "national_right_to_life_committee_amount",
+  "focus_on_the_family_amount",
   "everytown_for_gun_safety_amount",
   "nra_foundation_amount",
   "trevor_project_amount",
-  "alliance_defending_freedom_amount",
+  "family_research_council_amount",
   "duelgood_amount",
 ];
 
