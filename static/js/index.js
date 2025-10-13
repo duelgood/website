@@ -16,8 +16,8 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     } catch (error) {
       console.error("Error fetching total:", error);
-      totalElement.textContent = "a lot";
-      livesElement.textContent = "a few";
+      totalElement.textContent = "loading...";
+      livesElement.textContent = "loading...";
     }
   }
 
@@ -53,6 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
       "#f88920",
       "#f88920",
     ];
+
     const logoUrls = [
       "/static/logos/planned_parenthood.png",
       "/static/logos/focus_on_the_family.png",
