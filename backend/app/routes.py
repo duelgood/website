@@ -114,6 +114,54 @@ def stripe_webhook():
     
     return jsonify({"status": "success"}), 200
 
+@bp.route("/api/donations", methods=["POST"])
+def create_donation():
+    try:
+        # Extract and validate form data
+        data = request.form
+        total = 0
+        causes = {}
+        
+        # Calculate total from cause amounts (convert to cents)
+        cause_fields = [
+            'planned_parenthood_amount', 'focus_on_the_family_amount',
+            'everytown_for_gun_safety_amount', 'nra_foundation_amount',
+            'trevor_project_amount', 'family_research_council_amount',
+            'duelgood_amount'
+        ]
+        for field in cause_fields:
+            amount = float(data.get(field, 0))
+            if amount > 0:
+                total += amount
+                causes[field] = amount
+        
+        if total < 1:
+            return jsonify({"error": "Minimum donation is $1"}), 400
+        
+        # Validate required fields
+        required = ['email', 'legal_name', 'street_address', 'city', 'state', 'zip']
+        for field in required:
+            if not data.get(field):
+                return jsonify({"error": f"Missing {field}"}), 400
+        
+        # Create Stripe PaymentIntent (amount in cents)
+        intent = stripe.PaymentIntent.create(
+            amount=int(total * 100),
+            currency="usd",
+            metadata={
+                "display_name": data.get("display_name", "Anonymous"),
+                "email": data["email"],
+                "legal_name": data["legal_name"],
+                **{field: str(amount) for field, amount in causes.items()}
+            }
+        )
+        
+        return jsonify({"clientSecret": intent.client_secret}), 200
+    
+    except Exception as e:
+        logger.error(f"Error creating donation: {e}")
+        return jsonify({"error": "Failed to create payment intent"}), 500
+
 @bp.route("/api/health", methods=["GET"])
 def get_health():
     """Health check endpoint"""

@@ -1,11 +1,14 @@
-# DuelGood
+# README
 
-This README details how to initialize a new machine to run DuelGood's website.
+Initialize a new machine to run DuelGood's website.
 
 ## Setup
 
-Copy Cloudflare origin key into `/etc/ssl/cloudflare/key.pem`.
-Copy Cloudflare origin cert into `/etc/ssl/cloudflare/cert.pem`
+To configure a fresh machine, copy the Cloudflare
+origin key into `/etc/ssl/cloudflare/key.pem` and the
+origin cert into `/etc/ssl/cloudflare/cert.pem`.
+
+Then, run
 
 ```sh
 sudo chmod 644 "/etc/ssl/cloudflare/cert.pem"
@@ -44,6 +47,8 @@ echo -n "$STRIPE_WEBHOOK_SECRET" | podman secret create stripe_webhook_secret -
 ```
 
 ## Deploy
+
+To apply any new changes and start the container, run the following commands.
 
 ```sh
 cd "/opt/duelgood" || exit 1
