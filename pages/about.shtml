@@ -35,37 +35,16 @@
       </p>
 
       <div id="methodology">"<h2>Methodology</h2></div>
-      DuelGood identifies three issue domains characterized by high 
+      DuelGood identifies three issues characterized by high 
       charitable spending with mutually incompatible objectives.
 
-      <table border="1" cellpadding="6" cellspacing="0">
-      <thead>
-        <tr>
-          <th>Issue</th>
-          <th></th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Abortion</td>
-          <td>Legal access &amp; reproductive autonomy</td>
-          <td>Prohibition &amp; fetal personhood</td>
-        </tr>
-        <tr>
-          <td>Guns</td>
-          <td>Restrictions &amp; regulation for safety</td>
-          <td>Expansive Second Amendment rights</td>
-        </tr>
-        <tr>
-          <td>Queer rights</td>
-          <td>Legal equality &amp; recognition</td>
-          <td>Traditional definitions &amp; restrictions</td>
-        </tr>
-      </tbody>
-    </table>
+      <ul>
+        <li>Abortion access</li>
+        <li>Gun access</li>
+        <li>Queer rights</li>
+      </ul>
 
-    We picked a large, well-known charities representing each side of these issues.
+    We picked large, well-known charities representing each side of these issues.
 
     <table border="1" cellpadding="6" cellspacing="0">
       <tbody>
