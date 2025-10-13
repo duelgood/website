@@ -28,7 +28,6 @@ Then, run
 ```sh
 sudo mkdir -p /opt/duelgood
 sudo curl -sSL "https://raw.githubusercontent.com/duelgood/website/refs/heads/main/compose.yml?$(date +%s)" -o /opt/duelgood/compose.yml
-cd "/opt/duelgood" || exit 1
 
 grep -qxF 'net.ipv4.ip_unprivileged_port_start=80' /etc/sysctl.conf || echo 'net.ipv4.ip_unprivileged_port_start=80' | sudo tee -a /etc/sysctl.conf
 sudo sysctl -p
