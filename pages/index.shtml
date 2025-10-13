@@ -97,7 +97,6 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-geo@4.3.0/build/index.umd.min.js"></script>
 <script src="/static/js/map.js"></script>
-<script src="/static/js/index.js"></script>
 -->
 
 <h1>
@@ -110,9 +109,7 @@
     ~<a id="lives-saved" href="https://www.givewell.org/how-much-does-it-cost-to-save-a-life" target="_blank" rel="noopener noreferrer"></a>
   </span> lives.
 </h1>
-
-<h2>Breakdown</h2>
-
+<script src="/static/js/index.js"></script>
 
 <!--#include virtual="/includes/footer" -->
 
