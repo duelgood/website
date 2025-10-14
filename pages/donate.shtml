@@ -85,7 +85,7 @@
             <fieldset>
                 <legend>Contact Information</legend>
                 <label>
-                    Address:
+                    Email:
                     <input type="email" name="email" required placeholder="you@example.com" maxlength="255" title="Please enter a valid email address">
                 </label>
                 
