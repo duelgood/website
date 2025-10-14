@@ -312,8 +312,11 @@ input:invalid {
 }
 
 .causes-container img {
-  height: auto;
-  width: 100%;
+  height: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  width: auto;
+  max-width: 100%;
 }
 
 @media (max-width: 600px) {
