@@ -13,15 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
           data.givewell / 3000
         ).toLocaleString()}`;
         renderCausesChart(data.causes, data.givewell);
-
-        const stateData = data.states;
-        const numericStates = {};
-        for (const [key, value] of Object.entries(stateData)) {
-          numericStates[key] =
-            typeof value === "object" ? value.parsedValue : value;
-        }
-
-        renderStatesMap(numericStates);
+        renderStatesMap(data.states);
       }
     } catch (error) {
       console.error("Error fetching total:", error);
@@ -210,7 +202,7 @@ document.addEventListener("DOMContentLoaded", function () {
       "/static/logos/nra.png",
       "/static/logos/trevor_project.png",
       "/static/logos/family_research_council.png",
-      "/static/logos/favicon.png",
+      "/static/logos/duelgood.png",
       "/static/logos/givewell.png",
     ];
 
