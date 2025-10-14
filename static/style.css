@@ -311,6 +311,11 @@ input:invalid {
   border: 1px solid #eee;
 }
 
+.causes-container img {
+  height: auto;
+  width: 100%;
+}
+
 @media (max-width: 600px) {
   form,
   #success-message {
