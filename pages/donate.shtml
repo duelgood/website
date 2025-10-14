@@ -29,7 +29,7 @@
                 <legend>Causes</legend>
                 <div class="causes-container">
                     <div>
-                        <label for="planned_parenthood_amount">Planned Parenthood</label>
+                        <label for="planned_parenthood_amount"><img src="/static/wordmarks/planned_parenthood.png" alt="Planned Parenthood wordmark"></label>
                         <p><a href="https://www.plannedparenthood.org/">Planned Parenthood</a> provides reproductive healthcare services including contraception, 
                             abortion, and sexual health education.</p>
                         <input type="number" id="planned_parenthood_amount" name="planned_parenthood_amount" min="0" step="1" value="0" autocomplete="off">
