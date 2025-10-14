@@ -28,6 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Fetch US states topojson
     const response = await fetch("/static/js/us-states.json");
     const us = await response.json();
+    console.log("TopoJSON loaded:", us);
 
     // State code mapping (abbrev to FIPS)
     const stateCodeMap = {
@@ -84,29 +85,29 @@ document.addEventListener("DOMContentLoaded", function () {
       WY: "56",
     };
 
-    const data = us.objects.states.geometries.map((feature) => {
+    const features = us.objects.states.geometries;
+    const values = features.map((feature) => {
       const stateAbbrev = Object.keys(stateCodeMap).find(
         (key) => stateCodeMap[key] === feature.properties.STATE
       );
-      const amount = states[stateAbbrev] || 0;
-      return {
-        feature: feature,
-        value: amount,
-      };
+      return states[stateAbbrev] || 0;
     });
+
+    console.log("Features and values:", features.length, values);
 
     new Chart(ctx, {
       type: "choropleth",
       data: {
-        labels: us.objects.states.geometries.map((d) => d.properties.NAME),
+        labels: features.map((d) => d.properties.NAME),
         datasets: [
           {
             label: "Donations ($)",
-            data: data,
+            data: features, // Array of features
+            values: values, // Separate values array
             borderWidth: 1,
             borderColor: "#fff",
             backgroundColor: (context) => {
-              const value = context.raw.value;
+              const value = context.parsed.v;
               return value > 0 ? "#0A3161" : "#f0f0f0";
             },
           },
@@ -119,7 +120,7 @@ document.addEventListener("DOMContentLoaded", function () {
             callbacks: {
               label: (context) => {
                 const state = context.label;
-                const amount = context.raw.value;
+                const amount = context.parsed.v;
                 return `${state}: $${amount.toFixed(2)}`;
               },
             },
