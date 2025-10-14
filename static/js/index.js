@@ -23,11 +23,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   async function renderStatesMap(states) {
-    console.log("=== DEBUG: renderStatesMap called ===");
-    console.log("States data received:", states);
-    console.log("Type of states:", typeof states);
-    console.log("States keys:", Object.keys(states));
-
     const ctx = document.getElementById("us-map").getContext("2d");
 
     // Fetch US states topojson
@@ -93,22 +88,7 @@ document.addEventListener("DOMContentLoaded", function () {
       Object.entries(stateCodeMap).map(([abbrev, fips]) => [fips, abbrev])
     );
 
-    console.log(
-      "FIPS to Abbrev map (first 5):",
-      Object.entries(fipsToAbbrev).slice(0, 5)
-    );
-
     const features = window.topojson.feature(us, us.objects.states).features;
-    console.log("Total features:", features.length);
-    console.log("First feature properties:", features[0]?.properties);
-    console.log(
-      "First feature ALL property keys:",
-      Object.keys(features[0]?.properties || {})
-    );
-    console.log("Second feature properties:", features[1]?.properties);
-
-    // Check what property contains the state identifier
-    console.log("First feature id:", features[0]?.id);
 
     // Map features to their donation values
     const dataPoints = features.map((feature) => {
@@ -116,32 +96,13 @@ document.addEventListener("DOMContentLoaded", function () {
       const stateAbbrev = fipsToAbbrev[fipsCode];
       const value = states[stateAbbrev] || 0;
 
-      // Log first few matches
-      if (
-        stateAbbrev === "IN" ||
-        stateAbbrev === "MD" ||
-        features.indexOf(feature) < 3
-      ) {
-        console.log(
-          `Feature: ${feature.properties.name}, FIPS: ${fipsCode}, Abbrev: ${stateAbbrev}, Value: ${value}`
-        );
-      }
-
       return {
         feature: feature,
         value: value,
       };
     });
 
-    console.log("DataPoints created:", dataPoints.length);
-    console.log(
-      "DataPoints with values > 0:",
-      dataPoints.filter((d) => d.value > 0)
-    );
-
     const stateLabels = features.map((f) => f.properties.name);
-    console.log("State labels (first 5):", stateLabels.slice(0, 5));
-    console.log("State labels length:", stateLabels.length);
 
     // Destroy any previous chart instance
     if (window.usMapChart) window.usMapChart.destroy();
@@ -149,7 +110,7 @@ document.addEventListener("DOMContentLoaded", function () {
     window.usMapChart = new Chart(ctx, {
       type: "choropleth",
       data: {
-        labels: stateLabels, // ✅ Changed from NAME to name
+        labels: stateLabels,
         datasets: [
           {
             label: "Donations ($)",
@@ -158,14 +119,6 @@ document.addEventListener("DOMContentLoaded", function () {
             borderWidth: 1,
             backgroundColor: (ctx) => {
               const value = ctx.raw?.value ?? 0;
-              if (value > 0) {
-                console.log(
-                  "Coloring state with value:",
-                  value,
-                  "Raw:",
-                  ctx.raw
-                );
-              }
               return value > 0 ? "#0A3161" : "#f0f0f0";
             },
           },
@@ -180,14 +133,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 const stateName =
                   context.raw?.feature?.properties?.name || "Unknown";
                 const amount = context.raw?.value ?? 0;
-                console.log(
-                  "Tooltip - State:",
-                  stateName,
-                  "Amount:",
-                  amount,
-                  "Full context.raw:",
-                  context.raw
-                );
                 return `${stateName}: ${amount.toFixed(2)}`;
               },
             },
@@ -201,8 +146,6 @@ document.addEventListener("DOMContentLoaded", function () {
         },
       },
     });
-
-    console.log("=== Chart created ===");
   }
 
   let chartInstance = null;
