@@ -119,6 +119,7 @@
   <canvas id="us-map"></canvas>
 </div>
 
+<script src="static/js/topojson-client.js"></script>
 <script src="/static/js/chart.umd.min.js"></script>
 <script src="/static/js/chartjs-chart-geo.umd.min.js"></script>
 <script src="/static/js/index.js"></script>

@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
       WY: "56",
     };
 
-    const features = us.objects.states.geometries;
+    const features = window.topojson.feature(us, us.objects.states).features;
 
     // Combine each feature with its donation value
     const dataPoints = features.map((feature) => {
