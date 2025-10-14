@@ -31,9 +31,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   async function renderStatesMap(states) {
-    console.log("States data:", states);
-    console.log("Sample state keys:", Object.keys(states).slice(0, 5));
-
     const ctx = document.getElementById("us-map").getContext("2d");
 
     // Fetch US states topojson
@@ -94,20 +91,24 @@ document.addEventListener("DOMContentLoaded", function () {
       WY: "56",
     };
 
+    // Create reverse lookup: FIPS code → state abbreviation
+    const fipsToAbbrev = Object.fromEntries(
+      Object.entries(stateCodeMap).map(([abbrev, fips]) => [fips, abbrev])
+    );
+
     const features = window.topojson.feature(us, us.objects.states).features;
 
-    // Combine each feature with its donation value
+    // Map features to their donation values
     const dataPoints = features.map((feature) => {
-      const stateAbbrev = Object.keys(stateCodeMap).find(
-        (key) => stateCodeMap[key] === feature.properties.STATE
-      );
+      const fipsCode = feature.properties.STATE;
+      const stateAbbrev = fipsToAbbrev[fipsCode]; // Use reverse lookup
       return {
-        feature: feature, // GeoJSON geometry
-        value: states[stateAbbrev] || 0, // Donation value
+        feature: feature,
+        value: states[stateAbbrev] || 0,
       };
     });
 
-    // Destroy any previous chart instance if necessary
+    // Destroy any previous chart instance
     if (window.usMapChart) window.usMapChart.destroy();
 
     window.usMapChart = new Chart(ctx, {
@@ -117,11 +118,10 @@ document.addEventListener("DOMContentLoaded", function () {
         datasets: [
           {
             label: "Donations ($)",
-            data: dataPoints, // ✅ must contain {feature, value}
+            data: dataPoints,
             borderColor: "#fff",
             borderWidth: 1,
             backgroundColor: (ctx) => {
-              // ✅ use ctx.raw.value safely
               const value = ctx.raw?.value ?? 0;
               return value > 0 ? "#0A3161" : "#f0f0f0";
             },
