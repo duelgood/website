@@ -6,123 +6,31 @@
     </div>
   </noscript>
 
-  <!-- The totals for this month would look better 
-   as a bar chart-->
+  <h1>Impact</h1>
+  <hr>
 
-  <!--  
+  <p style="font-size:x-large">
+    Together, DuelGood donors have diverted 
+    $<b id="total-diverted" class='orange-underline'></b>
+    from zero-sum causes and saved 
+    ~<b id="lives-saved" class='orange-underline'></b> 
+    lives.
+  </p>
 
-    Lives saved 
-      NUMBER
+  <h2>Breakdown</h2>
 
-    Total to each charity
-      Givewell
-      $NUMBER
+  <div style="width: 95%; margin: 0 auto;">
+    <canvas id="causes-chart"></canvas>
+  </div>
 
-      ...
+  <div class="map-container">
+    <canvas id="us-map"></canvas>
+  </div>
 
-    
-   
-  
-
-  <h1>
-    The US spends over
-    <span class='orange-underline'>
-      ~<a href="https://www.duelgood.org/about#methodology">$1,000,000,000</a>
-    </span> 
-    a year on zero-sum issues, which could have saved
-    <span class='orange-underline'>
-      <a href="https://www.givewell.org/how-much-does-it-cost-to-save-a-life" target="_blank" rel="noopener noreferrer">330,000</a>
-    </span> lives.
-  </h1>
-
-  DuelGood cuts this waste by directing donations 
-  away from zero-sum efforts and to lifesaving work.
-
-  <section class="stats-overview">
-    <div class="stats-row">
-      <div class="stat-item primary">
-        <div class="stat-label">Total to Charity</div>
-        <div class="stat-value" id="total-amount">$0</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-label">Lives Saved</div>
-        <div class="stat-value" id="lives-saved">0</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-label">This Month</div>
-        <div class="stat-value" id="month-amount">$0</div>
-      </div>
-    </div>
-    
-    <div class="stats-row secondary">
-      <div class="stat-item">
-        <div class="stat-label">Lives Saved This Month</div>
-        <div class="stat-value" id="lives-saved-month">0</div>
-      </div>
-      <div class="stat-item cause-a">
-        <div class="stat-label">Total to Cause A</div>
-        <div class="stat-value" id="a">$0</div>
-      </div>
-      <div class="stat-item cause-b">
-        <div class="stat-label">Total to Cause B</div>
-        <div class="stat-value" id="b">$0</div>
-      </div>
-    </div>
-  </section>
-
-  <section class="donors-section">
-    <div class="donor-lists">
-      <div class="donor-list-container">
-        <h2>Top Donors (All Time)</h2>
-        <div class="donor-list" id="top-donors-all">
-          <div class="donor-item placeholder">Loading...</div>
-        </div>
-      </div>
-      <div class="donor-list-container">
-        <h2>Top Donors (This Month)</h2>
-        <div class="donor-list" id="top-donors-month">
-          <div class="donor-item placeholder">Coming soon...</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="map-section">
-    <h2>Donations Across the US</h2>
-    <div class="map-container">
-      <canvas id="us-map"></canvas>
-    </div>
-  </section>
-</main>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-chart-geo@4.3.0/build/index.umd.min.js"></script>
-<script src="/static/js/map.js"></script>
--->
-
-<h1>Impact</h1>
-<hr>
-
-<p style="font-size:x-large">
-  Together, DuelGood donors have diverted 
-  $<b id="total-diverted" class='orange-underline'></b>
-  from zero-sum causes and saved 
-  ~<b id="lives-saved" class='orange-underline'></b> 
-  lives.
-</p>
-
-<h2>Breakdown</h2>
-
-<div style="width: 95%; margin: 0 auto;">
-  <canvas id="causes-chart"></canvas>
-</div>
-
-<div class="map-container">
-  <canvas id="us-map"></canvas>
-</div>
-
-<script src="static/js/topojson-client.js"></script>
-<script src="/static/js/chart.umd.min.js"></script>
-<script src="/static/js/chartjs-chart-geo.umd.min.js"></script>
-<script src="/static/js/index.js"></script>
+  <script src="static/js/topojson-client.js"></script>
+  <script src="/static/js/chart.umd.min.js"></script>
+  <script src="/static/js/chartjs-chart-geo.umd.min.js"></script>
+  <script src="/static/js/index.js"></script>
 
 </main>
 <!--#include virtual="/includes/footer" -->

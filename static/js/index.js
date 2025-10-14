@@ -31,6 +31,9 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   async function renderStatesMap(states) {
+    console.log("States data:", states);
+    console.log("Sample state keys:", Object.keys(states).slice(0, 5));
+
     const ctx = document.getElementById("us-map").getContext("2d");
 
     // Fetch US states topojson
