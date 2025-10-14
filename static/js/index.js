@@ -28,9 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Fetch US states topojson
     const response = await fetch("/static/js/us-states.json");
     const us = await response.json();
-    console.log("TopoJSON loaded:", us);
 
-    // State code mapping (abbrev to FIPS)
     const stateCodeMap = {
       AL: "01",
       AK: "02",
@@ -86,30 +84,34 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     const features = us.objects.states.geometries;
-    const values = features.map((feature) => {
+
+    // Combine each feature with its donation value
+    const dataPoints = features.map((feature) => {
       const stateAbbrev = Object.keys(stateCodeMap).find(
         (key) => stateCodeMap[key] === feature.properties.STATE
       );
-      return states[stateAbbrev] || 0;
+      return {
+        feature: feature, // GeoJSON geometry
+        value: states[stateAbbrev] || 0, // Donation value
+      };
     });
 
-    console.log("Features and values:", features.length, values);
+    // Destroy any previous chart instance if necessary
+    if (window.usMapChart) window.usMapChart.destroy();
 
-    new Chart(ctx, {
+    window.usMapChart = new Chart(ctx, {
       type: "choropleth",
       data: {
-        labels: features.map((d) => d.properties.NAME),
+        labels: features.map((f) => f.properties.NAME),
         datasets: [
           {
             label: "Donations ($)",
-            data: features.map((feature, i) => ({
-              feature,
-              value: values[i],
-            })),
-            borderWidth: 1,
+            data: dataPoints, // ✅ must contain {feature, value}
             borderColor: "#fff",
-            backgroundColor: (context) => {
-              const value = context.raw.value;
+            borderWidth: 1,
+            backgroundColor: (ctx) => {
+              // ✅ use ctx.raw.value safely
+              const value = ctx.raw?.value ?? 0;
               return value > 0 ? "#0A3161" : "#f0f0f0";
             },
           },
@@ -122,7 +124,7 @@ document.addEventListener("DOMContentLoaded", function () {
             callbacks: {
               label: (context) => {
                 const state = context.label;
-                const amount = context.raw.value;
+                const amount = context.raw?.value ?? 0;
                 return `${state}: $${amount.toFixed(2)}`;
               },
             },
@@ -131,7 +133,7 @@ document.addEventListener("DOMContentLoaded", function () {
         scales: {
           projection: {
             axis: "x",
-            projection: "albersUsa",
+            projection: "albersUsa", // ✅ required for Geo chart
           },
         },
       },
