@@ -23,6 +23,11 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   async function renderStatesMap(states) {
+    console.log("=== DEBUG: renderStatesMap called ===");
+    console.log("States data received:", states);
+    console.log("Type of states:", typeof states);
+    console.log("States keys:", Object.keys(states));
+
     const ctx = document.getElementById("us-map").getContext("2d");
 
     // Fetch US states topojson
@@ -88,17 +93,44 @@ document.addEventListener("DOMContentLoaded", function () {
       Object.entries(stateCodeMap).map(([abbrev, fips]) => [fips, abbrev])
     );
 
+    console.log(
+      "FIPS to Abbrev map (first 5):",
+      Object.entries(fipsToAbbrev).slice(0, 5)
+    );
+
     const features = window.topojson.feature(us, us.objects.states).features;
+    console.log("Total features:", features.length);
+    console.log("First feature properties:", features[0]?.properties);
+    console.log("Second feature properties:", features[1]?.properties);
 
     // Map features to their donation values
     const dataPoints = features.map((feature) => {
       const fipsCode = feature.properties.STATE;
-      const stateAbbrev = fipsToAbbrev[fipsCode]; // Use reverse lookup
+      const stateAbbrev = fipsToAbbrev[fipsCode];
+      const value = states[stateAbbrev] || 0;
+
+      // Log first few matches
+      if (
+        stateAbbrev === "IN" ||
+        stateAbbrev === "MD" ||
+        features.indexOf(feature) < 3
+      ) {
+        console.log(
+          `Feature: ${feature.properties.NAME}, FIPS: ${fipsCode}, Abbrev: ${stateAbbrev}, Value: ${value}`
+        );
+      }
+
       return {
         feature: feature,
-        value: states[stateAbbrev] || 0,
+        value: value,
       };
     });
+
+    console.log("DataPoints created:", dataPoints.length);
+    console.log(
+      "DataPoints with values > 0:",
+      dataPoints.filter((d) => d.value > 0)
+    );
 
     // Destroy any previous chart instance
     if (window.usMapChart) window.usMapChart.destroy();
@@ -115,6 +147,14 @@ document.addEventListener("DOMContentLoaded", function () {
             borderWidth: 1,
             backgroundColor: (ctx) => {
               const value = ctx.raw?.value ?? 0;
+              if (value > 0) {
+                console.log(
+                  "Coloring state with value:",
+                  value,
+                  "Raw:",
+                  ctx.raw
+                );
+              }
               return value > 0 ? "#0A3161" : "#f0f0f0";
             },
           },
@@ -128,6 +168,14 @@ document.addEventListener("DOMContentLoaded", function () {
               label: (context) => {
                 const state = context.label;
                 const amount = context.raw?.value ?? 0;
+                console.log(
+                  "Tooltip - State:",
+                  state,
+                  "Amount:",
+                  amount,
+                  "Full context.raw:",
+                  context.raw
+                );
                 return `${state}: $${amount.toFixed(2)}`;
               },
             },
@@ -141,6 +189,8 @@ document.addEventListener("DOMContentLoaded", function () {
         },
       },
     });
+
+    console.log("=== Chart created ===");
   }
 
   let chartInstance = null;
