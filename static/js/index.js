@@ -13,7 +13,15 @@ document.addEventListener("DOMContentLoaded", function () {
           data.givewell / 3000
         ).toLocaleString()}`;
         renderCausesChart(data.causes, data.givewell);
-        renderStatesMap(data.states);
+
+        const stateData = data.states;
+        const numericStates = {};
+        for (const [key, value] of Object.entries(stateData)) {
+          numericStates[key] =
+            typeof value === "object" ? value.parsedValue : value;
+        }
+
+        renderStatesMap(numericStates);
       }
     } catch (error) {
       console.error("Error fetching total:", error);
@@ -133,7 +141,7 @@ document.addEventListener("DOMContentLoaded", function () {
         scales: {
           projection: {
             axis: "x",
-            projection: "albersUsa", // ✅ required for Geo chart
+            projection: "albersUsa",
           },
         },
       },
@@ -293,5 +301,5 @@ document.addEventListener("DOMContentLoaded", function () {
   update();
 
   // Optional: Refresh every 60 seconds
-  setInterval(update, 60000);
+  // setInterval(update, 60000);
 });
