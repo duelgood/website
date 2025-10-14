@@ -101,7 +101,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const features = window.topojson.feature(us, us.objects.states).features;
     console.log("Total features:", features.length);
     console.log("First feature properties:", features[0]?.properties);
+    console.log(
+      "First feature ALL property keys:",
+      Object.keys(features[0]?.properties || {})
+    );
     console.log("Second feature properties:", features[1]?.properties);
+
+    // Check what property contains the state identifier
+    console.log("First feature id:", features[0]?.id);
 
     // Map features to their donation values
     const dataPoints = features.map((feature) => {
