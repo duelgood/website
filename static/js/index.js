@@ -177,17 +177,18 @@ document.addEventListener("DOMContentLoaded", function () {
           tooltip: {
             callbacks: {
               label: (context) => {
-                const state = context.label;
+                const stateName =
+                  context.raw?.feature?.properties?.name || "Unknown";
                 const amount = context.raw?.value ?? 0;
                 console.log(
                   "Tooltip - State:",
-                  state,
+                  stateName,
                   "Amount:",
                   amount,
                   "Full context.raw:",
                   context.raw
                 );
-                return `${state}: $${amount.toFixed(2)}`;
+                return `${stateName}: ${amount.toFixed(2)}`;
               },
             },
           },
