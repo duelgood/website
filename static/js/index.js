@@ -102,12 +102,14 @@ document.addEventListener("DOMContentLoaded", function () {
         datasets: [
           {
             label: "Donations ($)",
-            data: features, // Array of features
-            values: values, // Separate values array
+            data: features.map((feature, i) => ({
+              feature,
+              value: values[i],
+            })),
             borderWidth: 1,
             borderColor: "#fff",
             backgroundColor: (context) => {
-              const value = context.parsed.v;
+              const value = context.raw.value;
               return value > 0 ? "#0A3161" : "#f0f0f0";
             },
           },
@@ -120,7 +122,7 @@ document.addEventListener("DOMContentLoaded", function () {
             callbacks: {
               label: (context) => {
                 const state = context.label;
-                const amount = context.parsed.v;
+                const amount = context.raw.value;
                 return `${state}: $${amount.toFixed(2)}`;
               },
             },
