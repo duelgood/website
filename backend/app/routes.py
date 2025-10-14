@@ -67,7 +67,7 @@ def get_cached_stats():
         donors = [json.loads(d) for d in donors_raw]  # List of dicts
         return {
             "causes": {k: float(v) for k, v in causes.items()},
-            "states": {k: float(v) for k, v in states.items()},
+            "states": {k: float(v["parsedValue"]) if isinstance(v, dict) else float(v) for k, v in states.items()},
             "donors": donors
         }
     except Exception as e:
