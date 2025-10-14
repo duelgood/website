@@ -112,7 +112,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Map features to their donation values
     const dataPoints = features.map((feature) => {
-      const fipsCode = feature.id;
+      const fipsCode = feature.id; // ✅ Changed from feature.properties.STATE
       const stateAbbrev = fipsToAbbrev[fipsCode];
       const value = states[stateAbbrev] || 0;
 
@@ -139,13 +139,17 @@ document.addEventListener("DOMContentLoaded", function () {
       dataPoints.filter((d) => d.value > 0)
     );
 
+    const stateLabels = features.map((f) => f.properties.name);
+    console.log("State labels (first 5):", stateLabels.slice(0, 5));
+    console.log("State labels length:", stateLabels.length);
+
     // Destroy any previous chart instance
     if (window.usMapChart) window.usMapChart.destroy();
 
     window.usMapChart = new Chart(ctx, {
       type: "choropleth",
       data: {
-        labels: features.map((f) => f.properties.name), // ✅ Changed from NAME to name
+        labels: stateLabels, // ✅ Changed from NAME to name
         datasets: [
           {
             label: "Donations ($)",
@@ -199,6 +203,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     console.log("=== Chart created ===");
   }
+
   let chartInstance = null;
 
   function loadImages(urls) {
