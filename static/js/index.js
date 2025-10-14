@@ -194,7 +194,7 @@ document.addEventListener("DOMContentLoaded", function () {
       "/static/logos/planned_parenthood.png",
       "/static/logos/focus_on_the_family.png",
       "/static/logos/everytown_for_gun_safety.png",
-      "/static/logos/nra_foundation.png",
+      "/static/logos/nra.png",
       "/static/logos/trevor_project.png",
       "/static/logos/family_research_council.png",
       "/static/logos/favicon.png",
