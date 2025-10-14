@@ -2,14 +2,6 @@ from flask import Flask
 import redis
 import os
 
-def read_secret(name):
-    path = f"/run/secrets/{name}"
-    try:
-        with open(path) as f:
-            return f.read().strip()
-    except FileNotFoundError:
-        return os.environ.get(name)
-
 def create_app():
     app = Flask(__name__)
     
