@@ -10,28 +10,37 @@
         pairing donations made to opposite sides of contested public issues 
         and channelling the opposing funds to outstanding charities. 
       </p>
-      <p>
-        For example, if Alice donates $10 to the pro-life 
-        Cause A and Bob donates $8 to the pro-choice Cause B, 
-        then $8 + $8 = $16 goes to lifesaving charity and the remaining $2 goes to Cause A. 
-      </p>
-      <p>
-        Our operations are funded by donors who choose to support us. 100% of
-        all other donations (minus standard bank and credit card fees) go
-        to charity or the party of your choice.
-      </p>
 
       <h2>How It Works</h2>
 
       <p>
-        Matched amounts go directly to <a href="https://www.givewell.org/charities/top-charities">
+        Paired amounts go to <a href="https://www.givewell.org/charities/top-charities">
         GiveWell's Top Charities Fund</a>, high-impact and cost-effective programs 
         that save or improve lives the most per dollar. GiveWell is a highly transparent, 
         reputable, and research-backed organization whose selected charities are the 
         gold standard for impact. <a href="https://www.givewell.org/about">More about GiveWell</a>. 
       </p>
       <p>
-        The remainder will go to whichever cause received more donations of its pair.
+        The remainder after subtracting the paired amount will still go to its original organization. 
+      </p>
+      <p>
+        For example, say Alice is pro-choice and 
+        Bob is pro-life. Alice donates ten dollars to Planned Parenthood, 
+        while Bob donates ten dollars to Focus on the Family. These 
+        organizations then work against each other, creating social division
+        and waste. 
+      </p>
+      <p>
+        If Alice and Bob had given through DuelGood, then the ten dollars 
+        to Planned Parenthood and the ten dollars to Focus on the Family 
+        would cancel. GiveWell would receive twenty dollars to save lives, 
+        and both Alice and Bob would have advanced their goals by 
+        eliminating funding to the opposing cause. 
+      </p>
+      <p>
+        Our operations are funded by donors who choose to support us. 100% of
+        all other donations (minus standard bank and credit card fees) go
+        to charity or the party of your choice.
       </p>
 
       <div id="methodology"><h2>Methodology</h2></div>
