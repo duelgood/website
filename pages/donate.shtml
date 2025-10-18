@@ -142,7 +142,7 @@
 
 
             <button type="submit" class="donate-btn">Submit Donation (Test Mode)</button>
-        </form>
+    </form>
 
   <p><em>Note: This is test mode. No actual payment will be processed.
   </em></p>
