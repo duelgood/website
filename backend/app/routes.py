@@ -88,30 +88,29 @@ def rebuild_stats_from_stripe():
         while True:
             payment_intents = stripe.PaymentIntent.list(limit=100, status="succeeded", starting_after=starting_after)
             for pi in payment_intents.data:
-                if pi.status == "succeeded":
-                    amount_dollars = pi.amount / 100
-                    total += amount_dollars
-                    metadata = pi.metadata
-                    
-                    # Aggregate causes
-                    for cause in ['planned_parenthood_amount', 'focus_on_the_family_amount', 
-                                  'everytown_for_gun_safety_amount', 'nra_foundation_amount',
-                                  'trevor_project_amount', 'family_research_council_amount',
-                                  'duelgood_amount']:
-                        if cause in metadata:
-                            causes[cause] = causes.get(cause, 0) + float(metadata[cause])
-                    
-                    # Aggregate states
-                    if 'state' in metadata:
-                        states[metadata['state']] = states.get(metadata['state'], 0) + amount_dollars
-                    
-                    # Collect donors (last 100 for simplicity)
-                    if len(donors) < 100:
-                        donors.append({
-                            "name": metadata.get('display_name', 'Anonymous'),
-                            "amount": amount_dollars,
-                            "email": metadata.get('email', '')
-                        })
+                amount_dollars = pi.amount / 100
+                total += amount_dollars
+                metadata = pi.metadata
+                
+                # Aggregate causes
+                for cause in ['planned_parenthood_amount', 'focus_on_the_family_amount', 
+                                'everytown_for_gun_safety_amount', 'nra_foundation_amount',
+                                'trevor_project_amount', 'family_research_council_amount',
+                                'duelgood_amount']:
+                    if cause in metadata:
+                        causes[cause] = causes.get(cause, 0) + float(metadata[cause])
+                
+                # Aggregate states
+                if 'state' in metadata:
+                    states[metadata['state']] = states.get(metadata['state'], 0) + amount_dollars
+                
+                # Collect donors (last 100 for simplicity)
+                if len(donors) < 100:
+                    donors.append({
+                        "name": metadata.get('display_name', 'Anonymous'),
+                        "amount": amount_dollars,
+                        "email": metadata.get('email', '')
+                    })
             
             if not payment_intents.has_more:
                 break
