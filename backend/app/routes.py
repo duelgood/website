@@ -23,41 +23,6 @@ DONORS_KEY = "donors"  # List: JSON strings of {"name": ..., "amount": ..., "ema
 
 bp = Blueprint("api", __name__)
 
-def get_metadata_from_stripe():
-    """Fetch payment intent metadata from Stripe"""
-
-    # need to get donors names and the amount they 
-    # donated
-
-    # the total amount to each cause too
-    try:
-        total = 0
-        starting_after = None
-        
-        while True:
-            params = {
-                "limit": 100,
-            }
-            if starting_after:
-                params["starting_after"] = starting_after
-            
-            payment_intents = stripe.PaymentIntent.list(**params)
-            
-            for pi in payment_intents.data:
-                if pi.status == "succeeded":
-                    total += pi.amount
-            
-            if not payment_intents.has_more:
-                break
-            
-            starting_after = payment_intents.data[-1].id
-        
-        # Convert from cents to dollars
-        return total / 100
-    except Exception as e:
-        logger.error(f"Error fetching from Stripe: {e}")
-        raise
-
 def get_cached_stats():
     """Get all stats from Redis, fallback to rebuilding from Stripe"""
     try:
