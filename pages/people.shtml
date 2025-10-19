@@ -5,8 +5,8 @@
             <h2>Board</h2>
 
             <img src="/static/headshots/zeke.png" width="30%" alt="A young man with short dark hair and trimmed beard
-    stands against a plain background. He is wearing a light-colored, short-sleeved button-up shirt and has 
-    his arms crossed. His expression is neutral and confident, with a direct gaze into the camera.">
+            stands against a plain background. He is wearing a light-colored, short-sleeved button-up shirt. His 
+            expression is neutral and confident, with a direct gaze into the camera.">
             <h3>Zeke Ulrich</h3>
             <p>
                 Zeke is DuelGood's president and cofounder. He also works for the government,
@@ -17,7 +17,8 @@
                 time with his friends and little sisters.
             </p>
 
-            <img src="/static/headshots/shubham.jpg" width="30%" alt="">
+            <img src="/static/headshots/shubham.jpg" width="30%" alt="A young man with short dark hair 
+            wearing a white collared shirt poses for a neutral studio portrait against a plain white background.">
             <h3>Shubham Saluja Kumar Agarwal</h3>
             <p>
                 Shubham is DuelGood's secretary and cofounder. In his computer engineering path, 
@@ -25,10 +26,11 @@
                 sensing circuits, studied ASIC + MCU + semiconductor design, and interned from 
                 Idaho to India. Shubham cofounded Bechtel Center Innovators of Tomorrow while 
                 involved in IEEE and the autonomous robotics club, but always finds time for 
-                friends, family, girlfriend, and curiousity.
+                friends, family, girlfriend, and curiosity.
             </p>
 
-            <img src="/static/headshots/eva.jpg" width="30%" alt="">
+            <img src="/static/headshots/eva.jpg" width="30%" alt="A woman in a blue and white tie-dye outfit 
+            sits on the edge of a cliff overlooking a lake with a small green peninsula below, surrounded by calm water and trees.">
             <h3>Eva McIntosh</h3>
             <p>
                 Eva is DuelGood's treasurer and cofounder. In between her internship and studying
