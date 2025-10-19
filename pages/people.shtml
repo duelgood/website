@@ -9,24 +9,34 @@
     his arms crossed. His expression is neutral and confident, with a direct gaze into the camera.">
             <h3>Zeke Ulrich</h3>
             <p>
-                Zeke is DuelGood's president. He also works for the government,
+                Zeke is DuelGood's president and cofounder. He also works for the government,
                 serves in the Marine Corp Reserve, and learns computer engineering at
-                Purdue University, where he belongs to Eta Kappa Nu, Tau Beta Pi, and Purdue's Effective Altruism
+                Purdue, where he belongs to Eta Kappa Nu, Tau Beta Pi, and the school's effective altruism
                 community. In the future he hopes to study international relations as a Truman
-                scholar, start a family, and volunteer as a firefighter. He enjoys athletics and spending
+                scholar, start a family, and volunteer as a firefighter. Zeke enjoys athletics and spending
                 time with his friends and little sisters.
             </p>
 
             <img src="/static/headshots/shubham.jpg" width="30%" alt="">
-            <h3>Shubham Kumar Agarwal</h3>
+            <h3>Shubham Saluja Kumar Agarwal</h3>
             <p>
-                Shubham's bio here.
+                Shubham is DuelGood's secretary and cofounder. In his computer engineering path, 
+                he's published research in nano machine learning and wireless 
+                sensing circuits, studied ASIC + MCU + semiconductor design, and interned from 
+                Idaho to India. Shubham cofounded Bechtel Center Innovators of Tomorrow while 
+                involved in IEEE and the autonomous robotics club, but always finds time for 
+                friends, family, girlfriend, and curiousity.
             </p>
 
             <img src="/static/headshots/eva.jpg" width="30%" alt="">
             <h3>Eva McIntosh</h3>
             <p>
-                Eva's bio here.
+                Eva is DuelGood's treasurer and cofounder. In between her internship and studying
+                computer science at Virginia Commonwealth University, she travels around the world, swims 
+                for fun and competition, and lives in books. After graduating Eva plans to work in 
+                cybersecurity and go on adventures with her younger sisters. On snowy evenings, you'll 
+                find her brewing tea, goofing around with her roommate in the kitchen, and watching 
+                Bollywood movies. 
             </p>
 
 </main>
