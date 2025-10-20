@@ -1,61 +1,48 @@
 <!--# include virtual="/includes/header" -->
-    <main>
-      <h1>About</h1>
-      <hr>
+<main>
+  <h1>About</h1>
+  <hr />
 
-      <h2>Mission</h2>
+  <h2>Mission</h2>
 
-      <p>
-        DuelGood's mission is to reduce inefficiency and social division by
-        pairing donations made to opposite sides of contested public issues 
-        and channelling the opposing funds to outstanding charities. 
-      </p>
+  <p>
+    DuelGood's mission is to reduce inefficiency and social division by pairing
+    donations made to opposite sides of contested public issues and channeling
+    the opposing funds to outstanding charities.
+  </p>
 
-      <h2>How It Works</h2>
+  <h2>How It Works</h2>
 
-      <p>
-        Paired amounts go to <a href="https://www.givewell.org/charities/top-charities">
-        GiveWell's Top Charities Fund</a>, high-impact and cost-effective programs 
-        that save or improve lives the most per dollar. GiveWell is a highly transparent, 
-        reputable, and research-backed organization whose selected charities are the 
-        gold standard for impact. <a href="https://www.givewell.org/about">More about GiveWell</a>. 
-      </p>
-      <p>
-        The remainder after subtracting the paired amount will still go to its original organization. 
-      </p>
-      <p>
-        For example, say Alice is pro-choice and 
-        Bob is pro-life. Alice donates ten dollars to Planned Parenthood, 
-        while Bob donates ten dollars to Focus on the Family. These 
-        organizations then work against each other, creating social division
-        and waste. 
-      </p>
-      <p>
-        If Alice and Bob had given through DuelGood, then the ten dollars 
-        to Planned Parenthood and the ten dollars to Focus on the Family 
-        would cancel. GiveWell would receive twenty dollars to save lives, 
-        and both Alice and Bob would have advanced their goals by 
-        eliminating funding to the opposing cause. 
-      </p>
-      <p>
-        Our operations are funded by donors who choose to support us. 100% of
-        all other donations (minus standard bank and credit card fees) go
-        to charity or the party of your choice.
-      </p>
-
-      <div id="methodology"><h2>Methodology</h2></div>
-      DuelGood identifies three issues characterized by high 
-      charitable spending with mutually incompatible objectives.
-
-      <ul>
-        <li>Abortion access</li>
-        <li>Gun access</li>
-        <li>Queer rights</li>
-      </ul>
-
-    We picked large, well-known charities representing each side of these issues whose 
-    work is generally opposed to each other. 
-   
-
-    </main>
+  <p>
+    Paired amounts go to
+    <a href="https://www.givewell.org/charities/top-charities">
+      GiveWell's Top Charities Fund</a
+    >, high-impact and cost-effective programs that save or improve lives the
+    most per dollar. GiveWell is a highly transparent, reputable, and
+    research-backed organization whose selected charities are the gold standard
+    for impact.
+    <a href="https://www.givewell.org/about">More about GiveWell</a>.
+  </p>
+  <p>
+    The remainder after subtracting the paired amount will still go to its
+    original organization.
+  </p>
+  <p>
+    For example, say Alice is pro-choice and Bob is pro-life. Alice donates ten
+    dollars to Planned Parenthood, while Bob donates ten dollars to Focus on the
+    Family. These organizations then work against each other, creating social
+    division and waste.
+  </p>
+  <p>
+    If Alice and Bob had given through DuelGood, then the ten dollars to Planned
+    Parenthood and the ten dollars to Focus on the Family would cancel. GiveWell
+    would receive twenty dollars to save lives, and both Alice and Bob would
+    have advanced their goals by eliminating funding to the opposing cause.
+  </p>
+  <p>
+    Our operations are funded by donors who choose to support us. 100% of all
+    other donations (minus standard bank and credit card fees) go to charity or
+    the party of your choice.
+  </p>
+</main>
 <!--#include virtual="/includes/footer" -->

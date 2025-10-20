@@ -1,78 +1,133 @@
 <!--# include virtual="/includes/header" -->
 <main>
   <h1>Frequently Asked Questions</h1>
-  <hr>
-  <p class="meta">Last Updated: <time datetime="2025-09-03">September 3, 2025</time></p>
-    
+  <hr />
+  <p class="meta">
+    Last Updated: <time datetime="2025-09-03">September 3, 2025</time>
+  </p>
+
   <div class="toc" aria-labelledby="toc-heading">
     <h2 id="toc-heading">Contents</h2>
     <ol>
-        <li><a href="#legal">Legal</a></li>
-        <li><a href="#process">Process</a></li>
-        <li><a href="#transparency">Transparency</a></li>
-        <li><a href="#misc">Miscellaneous</a></li>
+      <li><a href="#legal">Legal</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#transparency">Transparency</a></li>
+      <li><a href="#misc">Miscellaneous</a></li>
     </ol>
-    </div>
+  </div>
 
-    <section id="legal">
-      <h2>Legal</h2>
-      <p><strong>Are donations tax-deductible?</strong></p>
-      <p>Yes. You'll receive a receipt for tax deduction
-        at the email you provide when donating.
-      </p>
-      <p><strong>Is what DuelGood does legal?</strong></p>
-      <p>Yes.</p>
-      <p><strong>There's plenty of diametrically opposed groups that aren't charities.
-        Why doesn't DuelGood have the option to donate to 
-        political organizations, advocacy groups, or other non-501(c)(3) entities?
-      </strong></p>
-      <p>For DuelGood to maintain its 501(c)(3) status and allow donors to claim 
-        deductions, the funds must be used for charitable purposes as defined by section 501(c)(3). 
-        Passing funds through to 501(c)(4)s, political organizations, or other non-charitable entities 
-        would violate this requirement.</p>
-      <p><strong>What is DuelGood's Employer Identification Number (EIN)?</strong></p>
-      <p>39-4197138</p>
-    </section>
-
-    <section id="process">
-      <h2>Process</h2>
-      <p><strong>How does this work behind the scenes?</strong></p>
-      When you donate to us with credit, debit, or ACH transfer, your
-      donation goes into DuelGood's bank account. We then send a tax 
-      receipt for a deduction to your email. On the first of each month 
-      we calculate how much each cause received in the last month and 
-      send the appropriate amount to each charity. 
-    </section>
-
-    <section id="transparency">
-      <h2>Transparency</h2>
-      <p><strong>How can I verify my donations actually go where you say?</strong></p>
-      <p></p> 
-      <!-- We need to publish our donation receipts so people can check totals -->
-      <!-- We also need to make it possible to get a list of all donations made 
-        -->
-      <p><strong>Is DuelGood politically biased?</strong></p>
-      <p>No. We cannot direct funds preferentially. DuelGood 
-        is designed to be as neutral as possible. 
-      </p>
-      <p><strong>Is my personal information secure?</strong></p>
-      <p>Extremely.</p>
-      <p><strong>Can I get a refund?</strong></p>
-      <p>No.</p>
-    </section>
-
-    <section id="misc">
-      <h2>Miscellaneous</h2>
-      <p><strong>What is the optimal strategy I should take to maximize the impact my donation has?</strong></p>
-      This is an area of active research. If you have any thoughts regarding 
-      this, please reach out to us. 
-    </section>
-
+  <section id="legal">
+    <h2>Legal</h2>
+    <p><strong>Are donations tax-deductible?</strong></p>
     <p>
-      DuelGood is dedicated to transparency and making what we do 
-      comprehensible. If your question isn't answered here, please 
-      visit our <a href="https://duelgood.org/contact">contact page</a> and 
-      reach out.
+      Yes, donors can deduct contributions made to DuelGood under IRC Section
+      170. You'll receive a receipt for tax deduction at the email you provide
+      when donating.
     </p>
+    <p>
+      <strong>
+        Why doesn't DuelGood have the option to donate to political
+        organizations, advocacy groups, or other non-501(c)(3) entities?
+      </strong>
+    </p>
+    <p>
+      For DuelGood to maintain its 501(c)(3) status and allow donors to claim
+      deductions, the funds must be used for charitable purposes as defined by
+      section 501(c)(3). Passing funds through to 501(c)(4)s, political
+      organizations, or other non-charitable entities would violate this
+      requirement.
+    </p>
+    <p>
+      <strong>What is DuelGood's Employer Identification Number (EIN)?</strong>
+    </p>
+    <p>39-4197138</p>
+    <p>
+      <strong>What is DuelGood's public charity status?</strong>
+    </p>
+    <p>170(b)(1)(A)(vi).</p>
+  </section>
+
+  <section id="process">
+    <h2>Process</h2>
+    <p><strong>How does this work behind the scenes?</strong></p>
+    When you donate to us with credit, debit, or ACH transfer, your donation
+    goes into DuelGood's bank account. We then send a tax receipt for a
+    deduction to your email. Every month we forward the appropriate amount
+    to each charity.
+    <p><strong>How did DuelGood choose which charities to feature?</strong></p>
+    <p>     
+      DuelGood identifies three issues characterized by high 
+      charitable spending with mutually incompatible objectives.
+
+      <ul>
+        <li>Abortion access</li>
+        <li>Gun access</li>
+        <li>Queer rights</li>
+      </ul>
+
+    For each area, we picked large, well-known charities whose 
+    work opposes one another. In the future we may add more 
+    cause areas or change charities
+  </p>
+  </section>
+
+  <section id="transparency">
+    <h2>Transparency</h2>
+    <p>
+      <strong>How can I verify my donations actually go where you say?</strong>
+    </p>
+    <p></p>
+    <!-- We need to publish our donation receipts so people can check totals -->
+    <!-- We also need to make it possible to get a list of all donations made 
+        -->
+    <p><strong>Is DuelGood biased?</strong></p>
+    <p>
+      Hopefully not. DuelGood is designed to be as
+      neutral as possible, and has no control over how funds 
+      are distributed beyond selecting charities. 
+    </p>
+    <p><strong>Is my personal information secure?</strong></p>
+    <p>Extremely. All personal information you provide is stored 
+      with Stripe, a trusted payment provider with the highest 
+      level of certification in the industry.</p>
+    <p><strong>Can I get a refund?</strong></p>
+    <p>DuelGood is currently working to draft a donation refund policy
+      and establish an easier refund process. In the future, you'll
+      likely be able to refund a donation up until the end of the 
+      month. For now, please contact us before the end of the month
+      when the donation was initiated and we'll work to issue a refund, 
+      provided the total value of the donation was under $600. 
+    </p>
+  </section>
+
+  <section id="misc">
+    <h2>Miscellaneous</h2>
+    <p>
+      <strong>
+        What is the optimal strategy I should take to maximize the impact my
+        donation has?
+      </strong>
+    </p>
+    <p>This is an area of active research. If you have any thoughts regarding this,
+    please reach out to us.</p>
+    <p>
+      <strong>
+        Why do donations cancel out dollar for dollar if the amount 
+        of money can effect a different amount of change for different 
+        charities?
+      </strong>
+      <p>
+        For simplicity and because it's difficult to measure 
+        impact per dollar for the given issues. 
+      </p>
+    </p>
+
+  </section>
+
+  <p>
+    DuelGood is dedicated to transparency and making what we do comprehensible.
+    If your question isn't answered here, please visit our
+    <a href="https://duelgood.org/contact">contact page</a> and reach out.
+  </p>
 </main>
 <!--#include virtual="/includes/footer" -->
