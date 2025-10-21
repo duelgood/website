@@ -1,7 +1,6 @@
 from flask import Blueprint, jsonify, request, current_app, render_template_string
 import os
 import stripe
-from stripe import errors as StripeErrors
 import logging
 import json
 
@@ -229,7 +228,7 @@ def create_or_update_donation():
                     currency="usd",
                     metadata=metadata,
                 )
-            except StripeErrors.InvalidRequestError:
+            except:
                 # Intent not found or already confirmed, fall back to creating a new one
                 intent = stripe.PaymentIntent.create(
                     amount=int(total * 100),
