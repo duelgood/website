@@ -4,9 +4,8 @@ BACKEND_IMAGE := $(REGISTRY)/duelgood/duelgood-backend
 
 TIMESTAMP := $(shell date +%Y%m%d-%H%M%S)
 
-all: git container
+all: login git container
 
-# Build and push web image
 podman-web:
 	podman build \
     --platform linux/amd64 \
@@ -17,7 +16,6 @@ podman-web:
 	podman push $(WEB_IMAGE):latest
 	podman push $(WEB_IMAGE):$(TIMESTAMP)
 
-# Build and push backend image
 podman-backend:
 	podman build \
     --platform linux/amd64 \
@@ -27,18 +25,18 @@ podman-backend:
 	podman push $(BACKEND_IMAGE):latest
 	podman push $(BACKEND_IMAGE):$(TIMESTAMP)
 
-# Build both
 container: podman-web podman-backend
 
-# Secret scanning
 scan:
 	gitleaks detect --report-format json --report-path gitleaks-report.json
 
-# Commit & push repo
 git:
 	git add .
 	git commit -m "Update $(TIMESTAMP)"
 	git push
+
+login:
+	podman login ghcr.io --username $(PODMAN_USERNAME) --password $(GITHUB_GHCR_PAT)
 
 .PHONY: podman-web podman-backend container scan git
 
