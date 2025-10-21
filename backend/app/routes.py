@@ -88,7 +88,8 @@ def rebuild_stats_from_stripe():
         current_app.redis_client.hset(STATES_KEY, mapping={k: str(v) for k, v in states.items()})
         current_app.redis_client.delete(DONORS_KEY)  # Clear list
         for d in donors:
-            current_app.redis_client.rpush(DONORS_KEY, json.dumps(d))
+            current_app.redis_client.lpush(DONORS_KEY, json.dumps(d))
+        current_app.redis_client.ltrim(DONORS_KEY, 0, 99)
         
         return {
             "total": total,
@@ -121,9 +122,9 @@ def update_cached_stats(metadata, amount_dollars):
             "amount": amount_dollars,
             "email": metadata.get('email', '')
         }
-        current_app.redis_client.rpush(DONORS_KEY, json.dumps(donor))
+        current_app.redis_client.lpush(DONORS_KEY, json.dumps(donor))
         # Trim list to last 100
-        current_app.redis_client.ltrim(DONORS_KEY, -100, -1)
+        current_app.redis_client.ltrim(DONORS_KEY, 0, 99)
     except Exception as e:
         logger.error(f"Failed to update caches: {e}")
     

@@ -308,8 +308,6 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    // donors.reverse();
-
     const ul = document.createElement("ul");
     ul.style.listStyle = "none";
     ul.style.padding = "0";
