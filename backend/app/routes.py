@@ -205,6 +205,7 @@ def create_or_update_donation():
             return jsonify({"error": "Minimum donation is $1"}), 400
         
         # Validate required fields
+        
         required = ['email', 'legal_name', 'street_address', 'city', 'state', 'zip']
         for field in required:
             if not data.get(field):
