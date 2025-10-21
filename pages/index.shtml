@@ -17,7 +17,7 @@
     lives.
   </p>
 
-  <h2>Breakdown</h2>
+  <h2>Total</h2>
 
   <div style="width: 95%; margin: 0 auto;">
     <canvas id="causes-chart"></canvas>
@@ -26,6 +26,13 @@
   <div class="map-container">
     <canvas id="us-map"></canvas>
   </div>
+
+  <h2>Recent Donors</h2>
+
+  <div id="recent-donors">
+    <p>Loading donors...</p>
+  </div>
+
 
   <script src="static/js/topojson-client.js"></script>
   <script src="/static/js/chart.umd.min.js"></script>

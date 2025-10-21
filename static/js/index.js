@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
         ).toLocaleString()}`;
         renderCausesChart(data.causes, data.givewell);
         renderStatesMap(data.states);
+        renderDonorList(data.donors);
       }
     } catch (error) {
       console.error("Error fetching total:", error);
@@ -297,6 +298,43 @@ document.addEventListener("DOMContentLoaded", function () {
       plugins: [imagePlugin],
     });
   }
+
+  async function renderDonorList(donors) {
+    const listContainer = document.getElementById("recent-donors");
+    listContainer.innerHTML = ""; // clear any existing content
+
+    if (!donors || donors.length === 0) {
+      listContainer.innerHTML = "<p>No recent donors yet.</p>";
+      return;
+    }
+
+    const ul = document.createElement("ul");
+    ul.style.listStyle = "none";
+    ul.style.padding = "0";
+    ul.style.margin = "0";
+
+    donors.forEach((donor) => {
+      const li = document.createElement("li");
+      li.style.padding = "8px 0";
+      li.style.borderBottom = "1px solid #eee";
+
+      const name = donor.name || "Anonymous";
+      const amount = donor.amount ? `$${donor.amount.toLocaleString()}` : "";
+
+      li.innerHTML = `
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div><strong>${name}</strong></div>
+        <div style="text-align: right; font-size: 0.9em; color: #666;">
+          ${amount}
+        </div>
+      </div>
+    `;
+      ul.appendChild(li);
+    });
+
+    listContainer.appendChild(ul);
+  }
+
   // Update on load
   update();
 

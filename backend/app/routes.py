@@ -77,7 +77,6 @@ def rebuild_stats_from_stripe():
                     donors.append({
                         "name": metadata.get('display_name', 'Anonymous'),
                         "amount": amount_dollars,
-                        "email": metadata.get('email', '')
                     })
             
             if not payment_intents.has_more:

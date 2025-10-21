@@ -396,6 +396,14 @@ input:invalid {
   height: 400px;
 }
 
+#recent-donors {
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+}
+
 .orange-underline {
   background-image: url("/static/orange_brush_underline.svg");
   background-repeat: no-repeat;
