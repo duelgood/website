@@ -5,6 +5,7 @@ const stripe = Stripe(
 );
 
 let currentPaymentIntentId = null;
+let paymentElementTimer = null;
 let elements = null;
 let paymentElement = null;
 let isCreatingPayment = false;
