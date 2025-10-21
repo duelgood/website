@@ -73,17 +73,20 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  async function tryCreatePaymentElement() {
-    if (isCreatingPayment) return;
-    if (!isFormReadyForPayment()) return;
+  function tryCreatePaymentElement() {
+    // Clear any previous pending attempt
+    clearTimeout(paymentElementTimer);
 
-    isCreatingPayment = true;
-    const form = document.getElementById("donation-form");
-    const paymentErrors = document.getElementById("payment-errors");
+    // Wait 1 second after the last change
+    paymentElementTimer = setTimeout(async () => {
+      // Only create if form is ready and payment element not yet created
+      if (!isFormReadyForPayment()) return;
+      if (paymentElement || isCreatingPayment) return;
 
-    await createPaymentElement(form, paymentErrors);
-
-    isCreatingPayment = false;
+      isCreatingPayment = true;
+      await createPaymentElement(form, paymentErrors);
+      isCreatingPayment = false;
+    }, 1000);
   }
 
   // Watch all form fields for changes
