@@ -1,6 +1,8 @@
-# README
+# ![DuelGood Logo](https://www.duelgood.org/static/logo.png)
 
-Initialize a new machine to run DuelGood's website.
+This repository is public because DuelGood believes that open source builds trust, makes it easier to identify vulnerabilities, and invites community collaboration.
+
+Visitors are encouraged to suggest accessibility, efficiency, and language improvements.
 
 ## Setup
 
