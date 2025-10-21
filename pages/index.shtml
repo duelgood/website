@@ -27,7 +27,13 @@
     <canvas id="us-map"></canvas>
   </div>
 
-  <h2>Recent Donors</h2>
+  <!--Include total donors with the highest donations-->
+
+  <h2>Recent</h2>
+
+  <!--include just this month's donation cause breakdown-->
+
+  <!--include just this month's state breakdown-->
 
   <div id="recent-donors">
     <p>Loading donors...</p>
