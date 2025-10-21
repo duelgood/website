@@ -73,6 +73,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  async function tryCreatePaymentElement() {
+    if (isCreatingPayment) return;
+    if (!isFormReadyForPayment()) return;
+
+    isCreatingPayment = true;
+    const form = document.getElementById("donation-form");
+    const paymentErrors = document.getElementById("payment-errors");
+
+    await createPaymentElement(form, paymentErrors);
+
+    isCreatingPayment = false;
+  }
+
   // Watch all form fields for changes
   form.querySelectorAll("input, select").forEach((field) => {
     field.addEventListener("input", tryCreatePaymentElement);
