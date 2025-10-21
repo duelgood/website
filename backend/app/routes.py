@@ -51,7 +51,10 @@ def rebuild_stats_from_stripe():
         starting_after = None
         
         while True:
-            payment_intents = stripe.PaymentIntent.list(limit=100, status="succeeded", starting_after=starting_after)
+            payment_intents = stripe.PaymentIntent.search(
+                query="status:'succeeded'",
+                limit=100,
+            )
             for pi in payment_intents.data:
                 amount_dollars = pi.amount / 100
                 total += amount_dollars
