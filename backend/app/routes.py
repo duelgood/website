@@ -173,7 +173,7 @@ def stripe_webhook():
     return jsonify({"status": "success"}), 200
 
 @bp.route("/api/donations", methods=["POST"])
-def create_donation():
+def create_or_update_donation():
     try:
         # Extract and validate form data
         data = request.form
@@ -208,26 +208,49 @@ def create_donation():
                 return jsonify({"error": f"Missing {field}"}), 400
         
         # Create Stripe PaymentIntent (amount in cents)
-        intent = stripe.PaymentIntent.create(
-            amount=int(total * 100),
-            currency="usd",
-            metadata={
-                "display_name": data.get("display_name", "Anonymous"),
-                "email": data["email"],
-                "legal_name": data["legal_name"],
-                "street_address": data["street_address"],
-                "city": data["city"],
-                "state": data["state"],
-                "zip": data["zip"],
-                **{field: str(amount) for field, amount in causes.items()}
-            }
-        )
+        metadata = {
+            "display_name": data.get("display_name", "Anonymous"),
+            "email": data["email"],
+            "legal_name": data["legal_name"],
+            "street_address": data["street_address"],
+            "city": data["city"],
+            "state": data["state"],
+            "zip": data["zip"],
+            **{field: str(amount) for field, amount in causes.items()},
+        }
+
+        payment_intent_id = data.get("payment_intent_id")
+        if payment_intent_id:
+            try:
+                intent = stripe.PaymentIntent.modify(
+                    payment_intent_id,
+                    amount=int(total * 100),
+                    currency="usd",
+                    metadata=metadata,
+                )
+            except stripe.error.InvalidRequestError:
+                # Intent not found or already confirmed, fall back to creating a new one
+                intent = stripe.PaymentIntent.create(
+                    amount=int(total * 100),
+                    currency="usd",
+                    metadata=metadata,
+                )
+        else:
+            # Create a new PaymentIntent
+            intent = stripe.PaymentIntent.create(
+                amount=int(total * 100),
+                currency="usd",
+                metadata=metadata,
+            )
         
-        return jsonify({"clientSecret": intent.client_secret}), 200
+        return jsonify({
+            "clientSecret": intent.client_secret,
+            "paymentIntentId": intent.id
+        }), 200
     
     except Exception as e:
-        logger.error(f"Error creating donation: {e}")
-        return jsonify({"error": "Failed to create payment intent"}), 500
+        logger.error(f"Error creating/udating donation: {e}")
+        return jsonify({"error": "Failed to create or update payment intent"}), 500
 
 @bp.route("/api/health", methods=["GET"])
 def get_health():

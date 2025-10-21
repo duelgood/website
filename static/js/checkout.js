@@ -4,6 +4,7 @@ const stripe = Stripe(
   "pk_test_51S5FMtPaAbpNU2MW6IFPfy7uuVlvMcfDkJmI6xpUEd8AC8VvkwwO87PGhUlfUkPEmio4i3LnDgygBkpl5X68hCSj00SD13F37u"
 );
 
+let currentPaymentIntentId = null;
 let elements = null;
 let paymentElement = null;
 let isCreatingPayment = false;
@@ -32,14 +33,43 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Try to create payment element when form becomes ready
-  async function tryCreatePaymentElement() {
-    if (isCreatingPayment || paymentElement) return;
+  async function createPaymentElement(form, errorElement) {
+    try {
+      console.log("Sending form data to /api/donations...");
+      const formData = new FormData(form);
 
-    if (isFormReadyForPayment()) {
-      isCreatingPayment = true;
-      console.log("Form is ready, creating payment element...");
-      await createPaymentElement(form, paymentErrors);
-      isCreatingPayment = false;
+      if (currentPaymentIntentId) {
+        formData.append("payment_intent_id", currentPaymentIntentId);
+      }
+
+      const response = await fetch("/api/donations", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+      console.log("Response from /api/donations:", data);
+
+      if (!response.ok || data.error) {
+        console.error("Backend error:", data.error);
+        return false;
+      }
+
+      // Save latest PaymentIntent ID
+      currentPaymentIntentId = data.paymentIntentId;
+
+      // Unmount old element if needed
+      if (paymentElement) paymentElement.unmount();
+
+      elements = stripe.elements({ clientSecret: data.clientSecret });
+      paymentElement = elements.create("payment");
+      paymentElement.mount("#payment-element");
+      console.log("Payment element mounted successfully");
+
+      return true;
+    } catch (error) {
+      console.error("Error in createPaymentElement:", error);
+      return false;
     }
   }
 

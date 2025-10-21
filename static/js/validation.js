@@ -1,5 +1,3 @@
-// form validation logic
-
 const AMOUNT_FIELD_IDS = [
   "planned_parenthood_amount",
   "focus_on_the_family_amount",
