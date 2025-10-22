@@ -87,7 +87,7 @@ def rebuild_stats_from_stripe():
         current_app.redis_client.hset(CAUSES_KEY, mapping={k: str(v) for k, v in causes.items()})
         current_app.redis_client.hset(STATES_KEY, mapping={k: str(v) for k, v in states.items()})
         current_app.redis_client.delete(DONORS_KEY)  # Clear list
-        for d in donors:
+        for d in reversed(donors):
             current_app.redis_client.lpush(DONORS_KEY, json.dumps(d))
         current_app.redis_client.ltrim(DONORS_KEY, 0, 99)
         
@@ -205,7 +205,7 @@ def create_or_update_donation():
             return jsonify({"error": "Minimum donation is $1"}), 400
         
         # Validate required fields
-        
+
         required = ['email', 'legal_name', 'street_address', 'city', 'state', 'zip']
         for field in required:
             if not data.get(field):
