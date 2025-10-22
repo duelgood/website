@@ -43,11 +43,28 @@ services:
       retries: 5
       start_period: 10s
 
+  mail:
+    image: ghcr.io/duelgood/duelgood-mail:latest
+    container_name: duelgood-mail
+    network_mode: host
+    restart: unless-stopped
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+      - mail_data:/var/spool/postfix
+      - mail_config:/etc/postfix
+      - opendkim_keys:/etc/opendkim/keys
+    environment:
+      - DOMAIN=duelgood.org
+      - HOSTNAME=mail.duelgood.org
+
 volumes:
   nginx-logs:
     driver: local
   redis_data:
     driver: local
+  mail_data:
+  mail_config:
+  opendkim_keys:
 
 secrets:
   stripe_secret_key:

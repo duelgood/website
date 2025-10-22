@@ -3,6 +3,7 @@ import os
 import stripe
 import logging
 import json
+from mail import send_receipt_email
 
 logger = logging.getLogger(__name__)
 
@@ -172,6 +173,13 @@ def stripe_webhook():
         
         logger.info(f"Payment succeeded: {payment_intent['id']}, amount: {amount_dollars}")
         update_cached_stats(metadata, amount_dollars)
+
+        # Send receipt for donation
+        donor_email = metadata.get("email")
+        donor_name = metadata.get("legal_name", "Anonymous")
+        causes = {k: v for k, v in metadata.items() if k.endswith("_amount")}
+        if donor_email:
+            send_receipt_email(donor_email, donor_name, amount_dollars, causes)
     
     return jsonify({"status": "success"}), 200
 
