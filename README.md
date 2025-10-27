@@ -57,7 +57,7 @@ sudo loginctl enable-linger $USER
 podman login -p=$GITHUB_GHCR_PAT
 echo -n "$STRIPE_SECRET_KEY" | podman secret create stripe_secret_key -
 echo -n "$STRIPE_WEBHOOK_SECRET" | podman secret create stripe_webhook_secret -
-podman secret create dkim_private_key /etc/opendkim/keys/duelgood.org/mail.private
+sudo cat /etc/opendkim/keys/duelgood.org/mail.private | podman secret create dkim_private_key -
 ```
 
 ## Deploy
@@ -69,5 +69,5 @@ cd "/opt/duelgood" || exit 1
 podman-compose -p duelgood pull
 podman-compose down --volumes --remove-orphans || true
 podman rm -f duelgood-redis duelgood-mail duelgood-backend duelgood-web 2>/dev/null || true
-podman-compose -p duelgood up -d
+podman-compose --verbose -p duelgood up -d
 ```

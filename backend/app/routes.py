@@ -3,7 +3,7 @@ import os
 import stripe
 import logging
 import json
-from mail import send_receipt_email
+from .mail import send_receipt_email
 
 logger = logging.getLogger(__name__)
 
