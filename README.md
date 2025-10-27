@@ -54,7 +54,7 @@ systemctl --user enable --now podman.socket
 mkdir -p ~/.config/systemd/user
 sudo loginctl enable-linger $USER
 
-podman login -p=$GITHUB_GHCR_PAT
+podman login ghcr.io -p=$GITHUB_GHCR_PAT
 echo -n "$STRIPE_SECRET_KEY" | podman secret create stripe_secret_key -
 echo -n "$STRIPE_WEBHOOK_SECRET" | podman secret create stripe_webhook_secret -
 sudo cat /etc/opendkim/keys/duelgood.org/mail.private | podman secret create dkim_private_key -

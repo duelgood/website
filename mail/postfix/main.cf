@@ -12,9 +12,9 @@ smtp_tls_security_level = may
 
 # DKIM integration
 milter_default_action = accept
-milter_protocol = 2
-smtpd_milters = inet:localhost:8891
-non_smtpd_milters = inet:localhost:8891
+milter_protocol = 6
+smtpd_milters = unix:/opendkim/opendkim.sock
+non_smtpd_milters = unix:/opendkim/opendkim.sock
 
 # Basic mail settings
 home_mailbox = Maildir/

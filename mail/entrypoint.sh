@@ -9,6 +9,10 @@ cp "$SECRET_PATH" "$DKIM_KEY_PATH"
 chown opendkim:opendkim "$DKIM_KEY_PATH"
 chmod 600 "$DKIM_KEY_PATH"
 
+mkdir -p /var/spool/postfix/opendkim
+chown opendkim:postfix /var/spool/postfix/opendkim
+chmod 750 /var/spool/postfix/opendkim
+
 # Ensure postfix is initialized
 service postfix start > /dev/null 2>&1 || true
 postfix stop 2>/dev/null || true
