@@ -6,7 +6,7 @@ MAIL_IMAGE := $(REGISTRY)/duelgood/mail
 
 TIMESTAMP := $(shell date +%Y%m%d-%H%M%S)
 
-all: login git container
+all: git container
 
 podman-web:
 	podman build \

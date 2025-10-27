@@ -49,7 +49,7 @@ grep -qxF 'net.ipv4.ip_unprivileged_port_start=80' /etc/sysctl.conf || echo 'net
 sudo sysctl -p
 
 sudo pacman -Syu --noconfirm
-sudo pacman -Sy --noconfirm podman podman-compose
+sudo pacman -Sy --noconfirm podman podman-compose opendkim
 systemctl --user enable --now podman.socket
 mkdir -p ~/.config/systemd/user
 sudo loginctl enable-linger $USER
