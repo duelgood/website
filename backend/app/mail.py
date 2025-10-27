@@ -40,6 +40,6 @@ https://duelgood.org
         with smtplib.SMTP(smtp_host, smtp_port) as server:
             server.send_message(msg)
 
-        logger.info(f"Receipt email sent to {to_email}")
+        print(f"Receipt email sent to {to_email}")
     except Exception as e:
-        logger.error(f"Failed to send receipt email to {to_email}: {e}")
+        print(f"Failed to send receipt email to {to_email}: {e}")

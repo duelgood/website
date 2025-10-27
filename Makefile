@@ -1,6 +1,8 @@
 REGISTRY := ghcr.io
-WEB_IMAGE := $(REGISTRY)/duelgood/duelgood-web
-BACKEND_IMAGE := $(REGISTRY)/duelgood/duelgood-backend
+WEB_IMAGE := $(REGISTRY)/duelgood/web
+BACKEND_IMAGE := $(REGISTRY)/duelgood/backend
+MAIL_IMAGE := $(REGISTRY)/duelgood/mail
+
 
 TIMESTAMP := $(shell date +%Y%m%d-%H%M%S)
 
@@ -11,7 +13,7 @@ podman-web:
     --platform linux/amd64 \
     --tag $(WEB_IMAGE):latest \
     --tag $(WEB_IMAGE):$(TIMESTAMP) \
-    .
+    -f web/Containerfile web
 
 	podman push $(WEB_IMAGE):latest
 	podman push $(WEB_IMAGE):$(TIMESTAMP)
@@ -21,11 +23,22 @@ podman-backend:
     --platform linux/amd64 \
     --tag $(BACKEND_IMAGE):latest \
     --tag $(BACKEND_IMAGE):$(TIMESTAMP) \
-    -f backend/Dockerfile backend
+    -f backend/Containerfile backend
+
 	podman push $(BACKEND_IMAGE):latest
 	podman push $(BACKEND_IMAGE):$(TIMESTAMP)
 
-container: podman-web podman-backend
+podman-mail:
+	podman build \
+    --platform linux/amd64 \
+    --tag $(MAIL_IMAGE):latest \
+    --tag $(MAIL_IMAGE):$(TIMESTAMP) \
+    -f mail/Containerfile mail
+
+	podman push $(MAIL_IMAGE):latest
+	podman push $(MAIL_IMAGE):$(TIMESTAMP)
+
+container: podman-web podman-backend podman-mail
 
 scan:
 	gitleaks detect --report-format json --report-path gitleaks-report.json

@@ -1,0 +1,4 @@
+SOCKET="inet:8891@localhost"
+USER=opendkim
+GROUP=opendkim
+PIDFILE=/var/run/opendkim/opendkim.pid

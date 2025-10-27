@@ -1,0 +1,25 @@
+myhostname = mail.duelgood.org
+myorigin = /etc/mailname
+mydestination = localhost
+relayhost = 
+inet_interfaces = all
+inet_protocols = all
+
+smtpd_tls_cert_file = /etc/ssl/cloudflare/fullchain.pem
+smtpd_tls_key_file = /etc/ssl/cloudflare/privkey.pem
+smtpd_use_tls = yes
+smtp_tls_security_level = may
+
+# DKIM integration
+milter_default_action = accept
+milter_protocol = 2
+smtpd_milters = inet:localhost:8891
+non_smtpd_milters = inet:localhost:8891
+
+# Basic mail settings
+home_mailbox = Maildir/
+alias_maps = hash:/etc/aliases
+alias_database = hash:/etc/aliases
+
+# Adjust if you want logs verbose
+# debug_peer_list = 127.0.0.1

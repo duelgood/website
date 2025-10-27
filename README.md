@@ -17,6 +17,16 @@ sudo chmod 644 "/etc/ssl/cloudflare/cert.pem"
 sudo chmod 600 "/etc/ssl/cloudflare/key.pem"
 ```
 
+Next, to set up email, run
+
+```sh
+mkdir -p /etc/opendkim/keys/duelgood.org
+cd /etc/opendkim/keys/duelgood.org
+opendkim-genkey -s mail -d duelgood.org
+chown opendkim:opendkim mail.private
+chmod 600 mail.private
+```
+
 Go to GitHub and create a personal access token with permission
 to read, write, and delete packages.
 
@@ -26,6 +36,7 @@ Obtain Stripe secrets via the Stripe web interface.
 export STRIPE_SECRET_KEY=sk_XXXX
 export STRIPE_WEBHOOK_SECRET=whsec_XXXX
 export GITHUB_GHCR_PAT=ghp_XXXX
+export DKIM_PRIVATE_KEY=$(sudo cat /etc/opendkim/keys/duelgood.org/mail.private)
 ```
 
 Then, run
@@ -46,6 +57,7 @@ sudo loginctl enable-linger $USER
 podman login -p=$GITHUB_GHCR_PAT
 echo -n "$STRIPE_SECRET_KEY" | podman secret create stripe_secret_key -
 echo -n "$STRIPE_WEBHOOK_SECRET" | podman secret create stripe_webhook_secret -
+podman secret create dkim_private_key /etc/opendkim/keys/duelgood.org/mail.private
 ```
 
 ## Deploy

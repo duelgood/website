@@ -31,6 +31,9 @@ def get_cached_stats():
         states = current_app.redis_client.hgetall(STATES_KEY) or {}
         donors_raw = current_app.redis_client.lrange(DONORS_KEY, 0, -1) or []
         donors = [json.loads(d) for d in donors_raw]  # List of dicts
+        if not causes and not states and not donors:
+            logger.warning("Redis cache empty, rebuilding stats from Stripe")
+            return rebuild_stats_from_stripe()
         return {
             "causes": {k: float(v) for k, v in causes.items()},
             "states": {k: float(v["parsedValue"]) if isinstance(v, dict) else float(v) for k, v in states.items()},
@@ -50,6 +53,8 @@ def rebuild_stats_from_stripe():
         states = {}
         donors = []
         starting_after = None
+    
+        # We are not paginating correctly here
         
         while True:
             payment_intents = stripe.PaymentIntent.search(

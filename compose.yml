@@ -49,13 +49,18 @@ services:
     network_mode: host
     restart: unless-stopped
     volumes:
-      - /etc/letsencrypt:/etc/letsencrypt:ro
       - mail_data:/var/spool/postfix
-      - mail_config:/etc/postfix
-      - opendkim_keys:/etc/opendkim/keys
     environment:
       - DOMAIN=duelgood.org
       - HOSTNAME=mail.duelgood.org
+    secrets:
+      - dkim_private_key
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "25"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
 
 volumes:
   nginx-logs:
@@ -70,4 +75,6 @@ secrets:
   stripe_secret_key:
     external: true
   stripe_webhook_secret:
+    external: true
+  dkim_private_key:
     external: true

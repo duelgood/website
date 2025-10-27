@@ -3,9 +3,6 @@ logs/
 *.log
 gitleaks-report.json
 
-# Docker
-.dockerignore
-
 # Temporary files
 *.tmp
 *.temp
@@ -28,4 +25,4 @@ ssl/
 # Development
 *.dev
 *.bck
-TODO.md
+TODO.*
