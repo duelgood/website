@@ -51,5 +51,5 @@ git:
 login:
 	podman login ghcr.io --username $(PODMAN_USERNAME) --password $(GITHUB_GHCR_PAT)
 
-.PHONY: podman-web podman-backend container scan git
+.PHONY: podman-web podman-backend podman-mail container scan git
 

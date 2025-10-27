@@ -68,6 +68,6 @@ To apply any new changes and start the container, run the following commands.
 cd "/opt/duelgood" || exit 1
 podman-compose -p duelgood pull
 podman-compose down --volumes --remove-orphans || true
-podman rm -f duelgood-redis duelgood-backend duelgood-web 2>/dev/null || true
+podman rm -f duelgood-redis duelgood-mail duelgood-backend duelgood-web 2>/dev/null || true
 podman-compose -p duelgood up -d
 ```
