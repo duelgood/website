@@ -185,6 +185,8 @@ def stripe_webhook():
         causes = {k: v for k, v in metadata.items() if k.endswith("_amount")}
         if donor_email:
             send_receipt_email(donor_email, donor_name, amount_dollars, causes)
+
+        print("donor_email, donor_name, amount_dollars, causes") # DEBUG, remove when possible
     
     return jsonify({"status": "success"}), 200
 
