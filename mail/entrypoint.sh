@@ -4,9 +4,6 @@ set -x  # Enable tracing (prints each command before execution)
 
 echo "Starting entrypoint script..."
 
-# Start rsyslog for logging
-service rsyslog start
-
 DKIM_KEY_PATH="/etc/opendkim/keys/duelgood.org/mail.private"
 SECRET_PATH="/run/secrets/dkim_private_key"
 
