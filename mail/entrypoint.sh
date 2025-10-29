@@ -4,6 +4,8 @@ set -x  # Enable tracing (prints each command before execution)
 
 echo "Starting entrypoint script..."
 
+service rsyslog start
+
 DKIM_KEY_PATH="/etc/opendkim/keys/duelgood.org/mail.private"
 SECRET_PATH="/run/secrets/dkim_private_key"
 
@@ -39,4 +41,5 @@ fi
 
 service postfix start
 echo "Postfix started. Tailing logs to keep container alive..."
+touch /var/log/mail.log
 exec tail -f /var/log/mail.log
