@@ -6,3 +6,4 @@ tlsmgr    unix  -       -       y       1000?   1       tlsmgr
 rewrite   unix  -       -       y       -       -       trivial-rewrite
 bounce    unix  -       -       y       -       0       bounce
 defer     unix  -       -       y       -       0       bounce
+postlog   unix-dgram -  n       -       -       1       postlogd
