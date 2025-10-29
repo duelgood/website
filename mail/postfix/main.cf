@@ -23,3 +23,5 @@ alias_database = hash:/etc/aliases
 
 # Adjust if you want logs verbose
 # debug_peer_list = 127.0.0.1
+
+maillog_file = /dev/stdout
