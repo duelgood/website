@@ -15,7 +15,9 @@ COPY entrypoint.sh /entrypoint.sh
 RUN mkdir -p /etc/opendkim/keys/duelgood.org /var/spool/postfix && \
     chown -R opendkim:opendkim /etc/opendkim && \
     chmod 700 /etc/opendkim/keys && \
-    chmod +x /entrypoint.sh
+    chmod +x /entrypoint.sh && \
+    echo "duelgood.org" > /etc/mailname && \
+    echo "127.0.0.1 mail.duelgood.org duelgood.org" >> /etc/hosts
 
 EXPOSE 25
 
