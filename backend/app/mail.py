@@ -1,6 +1,8 @@
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+import logging
+logger = logging.getLogger(__name__)
 
 def send_receipt_email(to_email, donor_name, amount_dollars, causes):
     """Send a thank-you email to the donor."""
@@ -40,6 +42,6 @@ https://duelgood.org
         with smtplib.SMTP(smtp_host, smtp_port) as server:
             server.send_message(msg)
 
-        print(f"Receipt email sent to {to_email}")
+        logger.info(f"Receipt email sent to {to_email}")
     except Exception as e:
-        print(f"Failed to send receipt email to {to_email}: {e}")
+        logger.error(f"Failed to send receipt email to {to_email}: {e}")
