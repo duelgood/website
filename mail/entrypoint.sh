@@ -27,11 +27,11 @@ postfix stop 2>&1 || true
 echo "Postfix initialization complete."
 
 echo "Starting OpenDKIM as opendkim user..."
-# runuser is necessary to fix an issue 
-# where opendkim would find the opendkim 
-# user unavilable
-if runuser -u opendkim -- /usr/sbin/opendkim -f -x /etc/opendkim.conf & 2>&1; then
-    echo "OpenDKIM started successfully."
+runuser -u opendkim -- /usr/sbin/opendkim -f -x /etc/opendkim.conf &
+OPENDKIM_PID=$!
+sleep 2  # Give it time to start/fail
+if kill -0 $OPENDKIM_PID 2>/dev/null; then
+    echo "OpenDKIM started successfully (PID: $OPENDKIM_PID)."
 else
     echo "Failed to start OpenDKIM." >&2
     exit 1
