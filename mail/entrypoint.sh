@@ -27,8 +27,10 @@ postfix stop 2>&1 || true
 echo "Postfix initialization complete."
 
 echo "Starting OpenDKIM as opendkim user..."
-# Capture and log output from su command
-if su opendkim -c '/usr/sbin/opendkim -f -x /etc/opendkim.conf &' 2>&1; then
+# runuser is necessary to fix an issue 
+# where opendkim would find the opendkim 
+# user unavilable
+if runuser -u opendkim -- /usr/sbin/opendkim -f -x /etc/opendkim.conf & 2>&1; then
     echo "OpenDKIM started successfully."
 else
     echo "Failed to start OpenDKIM." >&2
