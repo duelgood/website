@@ -44,4 +44,6 @@ else
     exit 1
 fi
 
-exec /usr/sbin/postfix start-fg
+service postfix start
+
+while true; do sleep 30; done
