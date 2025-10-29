@@ -18,7 +18,8 @@ RUN mkdir -p /etc/opendkim/keys/duelgood.org /var/spool/postfix && \
     chmod +x /entrypoint.sh && \
     chown -R postfix:postfix /var/spool/postfix && \
     echo "duelgood.org" > /etc/mailname && \
-    echo "127.0.0.1 mail.duelgood.org duelgood.org" >> /etc/hosts
+    echo "127.0.0.1 mail.duelgood.org duelgood.org" >> /etc/hosts && \
+    sed -i 's/$ModLoad imklog/#$ModLoad imklog/' /etc/rsyslog.conf
 
 EXPOSE 25
 
