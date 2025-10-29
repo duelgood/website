@@ -17,6 +17,6 @@ chmod 750 /var/spool/postfix/opendkim
 service postfix start > /dev/null 2>&1 || true
 postfix stop 2>/dev/null || true
 # Start OpenDKIM (background)
-su -c '/usr/sbin/opendkim -f -x /etc/opendkim.conf &' opendkim
+su opendkim -c '/usr/sbin/opendkim -f -x /etc/opendkim.conf &' 
 # Start Postfix in foreground (this keeps the container alive)
 exec /usr/sbin/postfix start-fg
