@@ -1,6 +1,6 @@
 myhostname = mail.duelgood.org
 myorigin = /etc/mailname
-mydestination = localhost
+mydestination = localhost, duelgood.org
 relayhost = 
 inet_interfaces = all
 inet_protocols = all
@@ -13,8 +13,8 @@ smtp_tls_security_level = may
 # DKIM integration
 milter_default_action = accept
 milter_protocol = 6
-smtpd_milters = unix:/opendkim/opendkim.sock
-non_smtpd_milters = unix:/opendkim/opendkim.sock
+smtpd_milters = unix:/var/spool/postfix/opendkim/opendkim.sock
+non_smtpd_milters = unix:/var/spool/postfix/opendkim/opendkim.sock
 
 # Basic mail settings
 home_mailbox = Maildir/

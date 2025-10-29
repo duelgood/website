@@ -27,6 +27,8 @@ chown opendkim:opendkim mail.private
 chmod 600 mail.private
 ```
 
+<!-- Technically we also need to add the public key to Cloudflare--->
+
 Go to GitHub and create a personal access token with permission
 to read, write, and delete packages.
 
