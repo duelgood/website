@@ -18,14 +18,14 @@ RUN mkdir -p /etc/opendkim/keys/duelgood.org /var/spool/postfix && \
     chmod +x /entrypoint.sh && \
     chown -R postfix:postfix /var/spool/postfix && \
     echo "duelgood.org" > /etc/mailname && \
-    echo "127.0.0.1 mail.duelgood.org duelgood.org" >> /etc/hosts
-
-RUN chown root:root /var/spool/postfix && \
+    echo "127.0.0.1 mail.duelgood.org duelgood.org" >> /etc/hosts && \
+    chown root:root /var/spool/postfix && \
     chown root:root /var/spool/postfix/pid && \
     chown root:postdrop /var/spool/postfix/public && \
     chown root:postdrop /var/spool/postfix/maildrop && \
     chown root:root /var/spool/postfix/etc && \
     chown root:root /var/spool/postfix/lib && \
+    mkdir -p /var/spool/postfix/opendkim && \
     chown root:root /var/spool/postfix/usr && \
     chown opendkim:postfix /var/spool/postfix/opendkim
 
