@@ -37,4 +37,11 @@ else
     exit 1
 fi
 
+if [ -S /var/spool/postfix/opendkim/opendkim.sock ]; then
+    echo "OpenDKIM socket created successfully."
+else
+    echo "OpenDKIM socket not found. Check OpenDKIM config/logs." >&2
+    exit 1
+fi
+
 exec /usr/sbin/postfix start-fg
