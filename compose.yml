@@ -49,6 +49,7 @@ services:
     network_mode: host
     restart: unless-stopped
     volumes:
+      - /etc/ssl/cloudflare:/etc/ssl/cloudflare:ro
       - mail_data:/var/spool/postfix
     environment:
       - DOMAIN=duelgood.org
