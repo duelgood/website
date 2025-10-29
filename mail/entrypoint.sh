@@ -37,5 +37,6 @@ else
     exit 1
 fi
 
-echo "Starting Postfix in foreground..."
-exec /usr/sbin/postfix start-fg
+service postfix start
+echo "Postfix started. Tailing logs to keep container alive..."
+exec tail -f /var/log/mail.log
