@@ -44,6 +44,8 @@ else
     exit 1
 fi
 
+echo "Checking Postfix config..."
+postfix check
 service postfix start
 
 while true; do sleep 30; done
