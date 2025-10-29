@@ -5,8 +5,8 @@ relayhost =
 inet_interfaces = all
 inet_protocols = all
 
-smtpd_tls_cert_file = /etc/ssl/cloudflare/fullchain.pem
-smtpd_tls_key_file = /etc/ssl/cloudflare/privkey.pem
+smtpd_tls_cert_file = /etc/ssl/cloudflare/cert.pem
+smtpd_tls_key_file = /etc/ssl/cloudflare/key.pem
 smtpd_use_tls = yes
 smtp_tls_security_level = may
 
