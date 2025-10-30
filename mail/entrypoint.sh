@@ -2,7 +2,7 @@
 set -e
 set -x
 
-echo "Starting mail server..."
+echo "Starting mail server version 1.0"
 
 # Setup DKIM
 DKIM_KEY_PATH="/etc/opendkim/keys/duelgood.org/mail.private"
