@@ -12,7 +12,7 @@ def send_receipt_email(to_email, donor_name, amount_dollars, causes, api_key):
                 for c, v in causes.items() if float(v) > 0]
             ) or "(none listed)"
 
-        requests.post(
+        response = requests.post(
             "https://api.mailgun.net/v3/duelgood.org/messages",
             auth=("api", api_key),
             data={"from": from_email,
@@ -33,8 +33,8 @@ DuelGood
 """
             })
         
-        logger.info(f"Receipt email sent to {to_email}")
+        logger.info(f"Reponse from sending receipt to {to_email}: {response}")
 
-    except:
+    except Exception as e:
         logger.error(f"Failed to send receipt email to {to_email}: {e}")
 
