@@ -5,7 +5,6 @@
 <main>
   <h1>Donate</h1>
   <hr>
-  <p><strong>Test Mode:</strong> No payment required. Minimum donation is $1.</p>
 
   <!--Explain how political campaign contribution laws require 
   information about residence and employment to be collected. 
@@ -69,7 +68,6 @@
                         <input type="number" id="duelgood_amount" name="duelgood_amount" min="0" step="1" value="0" autocomplete="off">
                     </div>
                 </div>
-                <!-- How can we validate that at least one donation amount is greater than one? -->
 
             </fieldset>
 
@@ -143,8 +141,5 @@
 
             <button type="submit" class="donate-btn">Submit Donation (Test Mode)</button>
     </form>
-
-  <p><em>Note: This is test mode. No actual payment will be processed.
-  </em></p>
 </main>
 <!--#include virtual="/includes/footer" -->
