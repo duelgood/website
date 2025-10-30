@@ -7,9 +7,16 @@ logger = logging.getLogger(__name__)
 def send_receipt_email(to_email, donor_name, amount_dollars, causes):
     """Send a thank-you email to the donor."""
     try:
+        # OPTION 1: Send via local Postfix (for noreply@duelgood.org)
         smtp_host = "localhost"
         smtp_port = 25 
         from_email = "noreply@duelgood.org"
+
+        # OPTION 2: Send via Gmail SMTP directly (if you need better deliverability)
+        # smtp_host = "smtp.gmail.com"
+        # smtp_port = 587
+        # from_email = "your-personal@gmail.com"  # Gmail will show as "noreply@duelgood.org" via "Send as"
+        
         subject = "Thank you for your donation to DuelGood!"
 
         # Build plain text body
@@ -40,6 +47,9 @@ https://duelgood.org
         msg.attach(MIMEText(body, "plain"))
 
         with smtplib.SMTP(smtp_host, smtp_port) as server:
+            # If using Gmail SMTP directly, add these lines:
+            # server.starttls()
+            # server.login('your-email@gmail.com', 'your-app-password')
             server.send_message(msg)
 
         logger.info(f"Receipt email sent to {to_email}")

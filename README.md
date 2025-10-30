@@ -1,10 +1,12 @@
-# ![DuelGood Logo](https://www.duelgood.org/static/logo.png)
+# ![DuelGood Logo](web/static/logo.png)
 
 This repository is public because DuelGood believes that open source builds trust, makes it easier to identify vulnerabilities, and invites community collaboration.
 
 Visitors are encouraged to suggest accessibility, efficiency, and language improvements.
 
 ## Setup
+
+### Certificate Bundles
 
 To configure a fresh Arch instance, copy the Cloudflare
 origin key into `/etc/ssl/cloudflare/key.pem` and the
@@ -17,29 +19,34 @@ sudo chmod 644 "/etc/ssl/cloudflare/cert.pem"
 sudo chmod 600 "/etc/ssl/cloudflare/key.pem"
 ```
 
-Next, to set up email, run
+### Gmail
+
+Go to Google Account settings, enable 2FA, generate and save app password, then run
 
 ```sh
-mkdir -p /etc/opendkim/keys/duelgood.org
-cd /etc/opendkim/keys/duelgood.org
-opendkim-genkey -s mail -d duelgood.org
-chown opendkim:opendkim mail.private
-chmod 600 mail.private
+export SMTP_USERNAME=your-email@gmail.com
+export SMTP_PASSWORD=your-16-character-app-password
 ```
 
-<!-- Technically we also need to add the public key to Cloudflare--->
+### GitHub
 
-Go to GitHub and create a personal access token with permission
-to read, write, and delete packages.
+Go to GitHub and create a [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) with permission
+to read, write, and delete packages. Export with
 
-Obtain Stripe secrets via the Stripe web interface.
+```sh
+export GITHUB_GHCR_PAT=ghp_XXXX
+```
+
+### Stripe
+
+Obtain Stripe secrets via the Stripe web interface, then run
 
 ```sh
 export STRIPE_SECRET_KEY=sk_XXXX
 export STRIPE_WEBHOOK_SECRET=whsec_XXXX
-export GITHUB_GHCR_PAT=ghp_XXXX
-export DKIM_PRIVATE_KEY=$(sudo cat /etc/opendkim/keys/duelgood.org/mail.private)
 ```
+
+### Configuration
 
 Then, run
 
@@ -51,15 +58,22 @@ grep -qxF 'net.ipv4.ip_unprivileged_port_start=80' /etc/sysctl.conf || echo 'net
 sudo sysctl -p
 
 sudo pacman -Syu --noconfirm
-sudo pacman -Sy --noconfirm podman podman-compose opendkim
+sudo pacman -Sy --noconfirm podman podman-compose
 systemctl --user enable --now podman.socket
 mkdir -p ~/.config/systemd/user
 sudo loginctl enable-linger $USER
 
 podman login ghcr.io -p=$GITHUB_GHCR_PAT
+
+# Create secrets
 echo -n "$STRIPE_SECRET_KEY" | podman secret create stripe_secret_key -
 echo -n "$STRIPE_WEBHOOK_SECRET" | podman secret create stripe_webhook_secret -
-sudo cat /etc/opendkim/keys/duelgood.org/mail.private | podman secret create dkim_private_key -
+echo -n "$SMTP_USERNAME" | podman secret create smtp_username -
+echo -n "$SMTP_PASSWORD" | podman secret create smtp_password -
+
+# Create email configuration
+sudo mkdir -p /opt/duelgood/postfix
+echo "$SMTP_USERNAME" | sudo tee /opt/duelgood/postfix/forward_to_email
 ```
 
 ## Deploy

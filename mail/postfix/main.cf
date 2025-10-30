@@ -1,20 +1,12 @@
-# Basic settings
+# /etc/postfix/main.cf
 myhostname = mail.duelgood.org
-mydomain = duelgood.org
-mydestination = $myhostname, localhost.$mydomain, localhost
-relayhost = 
+mydestination = localhost
 inet_interfaces = all
-
-# Security
 mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128
 
-# Mail delivery
-home_mailbox = Maildir/
-alias_maps = hash:/etc/aliases
-alias_database = hash:/etc/aliases
+# Forward all duelgood.org emails to your Gmail
+virtual_alias_maps = hash:/etc/postfix/virtual
+relay_domains = duelgood.org
 
-# Compatibility
-compatibility_level = 3.6
-
-# Logging
+# Log to stdout
 maillog_file = /dev/stdout

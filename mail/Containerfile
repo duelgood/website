@@ -1,27 +1,15 @@
 FROM docker.io/ubuntu:22.04
 
 RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y \
-        postfix postfix-pcre opendkim opendkim-tools rsyslog && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y postfix && \
     rm -rf /var/lib/apt/lists/* && \
     apt-get clean
 
-# Copy configurations
 COPY postfix/main.cf /etc/postfix/main.cf
-COPY postfix/master.cf /etc/postfix/master.cf
-COPY opendkim/opendkim.conf /etc/opendkim.conf
-COPY opendkim/default /etc/default/opendkim
 COPY entrypoint.sh /entrypoint.sh
 
-RUN mkdir -p /etc/opendkim/keys/duelgood.org && \
-    chown -R opendkim:opendkim /etc/opendkim && \
-    chmod 700 /etc/opendkim/keys && \
-    chmod +x /entrypoint.sh && \
-    echo "duelgood.org" > /etc/mailname && \
-    # Set up OpenDKIM directory
-    mkdir -p /var/spool/postfix/opendkim && \
-    chown opendkim:postfix /var/spool/postfix/opendkim && \
-    chmod 750 /var/spool/postfix/opendkim
+RUN chmod +x /entrypoint.sh && \
+    echo "duelgood.org" > /etc/mailname
 
 EXPOSE 25
 

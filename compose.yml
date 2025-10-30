@@ -28,6 +28,8 @@ services:
     secrets:
       - stripe_secret_key
       - stripe_webhook_secret
+      - smtp_username
+      - smtp_password
 
   redis:
     image: docker.io/library/redis:latest
@@ -48,29 +50,14 @@ services:
     container_name: duelgood-mail
     network_mode: host
     restart: unless-stopped
-    volumes:
-      - /etc/ssl/cloudflare:/etc/ssl/cloudflare:ro
-      - mail_data:/var/spool/postfix
-    environment:
-      - DOMAIN=duelgood.org
-      - HOSTNAME=mail.duelgood.org
     secrets:
-      - source: dkim_private_key
-        target: /run/secrets/dkim_private_key
-        mode: 0400
-    healthcheck:
-      test: ["CMD-SHELL", "echo QUIT | nc localhost 25 | grep -q '221'"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 30s
+      - smtp_username
+      - smtp_password
 
 volumes:
   nginx-logs:
     driver: local
   redis_data:
-    driver: local
-  mail_data:
     driver: local
 
 secrets:
@@ -78,5 +65,7 @@ secrets:
     external: true
   stripe_webhook_secret:
     external: true
-  dkim_private_key:
+  smtp_username:
+    external: true
+  smtp_password:
     external: true
