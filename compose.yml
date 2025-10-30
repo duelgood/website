@@ -55,13 +55,15 @@ services:
       - DOMAIN=duelgood.org
       - HOSTNAME=mail.duelgood.org
     secrets:
-      - dkim_private_key
+      - source: dkim_private_key
+        target: /run/secrets/dkim_private_key
+        mode: 0400
     healthcheck:
-      test: ["CMD", "nc", "-z", "localhost", "25"]
+      test: ["CMD-SHELL", "echo QUIT | nc localhost 25 | grep -q '221'"]
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 10s
+      start_period: 30s
 
 volumes:
   nginx-logs:
@@ -69,8 +71,7 @@ volumes:
   redis_data:
     driver: local
   mail_data:
-  mail_config:
-  opendkim_keys:
+    driver: local
 
 secrets:
   stripe_secret_key:
