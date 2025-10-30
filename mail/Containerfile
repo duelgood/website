@@ -19,15 +19,14 @@ RUN mkdir -p /etc/opendkim/keys/duelgood.org /var/spool/postfix && \
     chown -R postfix:postfix /var/spool/postfix && \
     echo "duelgood.org" > /etc/mailname && \
     echo "127.0.0.1 mail.duelgood.org duelgood.org" >> /etc/hosts && \
-    chown root:root /var/spool/postfix && \
-    chown root:root /var/spool/postfix/pid && \
-    chown root:postdrop /var/spool/postfix/public && \
-    chown root:postdrop /var/spool/postfix/maildrop && \
-    chown root:root /var/spool/postfix/etc && \
-    chown root:root /var/spool/postfix/lib && \
-    mkdir -p /var/spool/postfix/opendkim && \
-    chown root:root /var/spool/postfix/usr && \
-    chown opendkim:postfix /var/spool/postfix/opendkim
+    chown root:root /var/spool/postfix && chmod 755 /var/spool/postfix && \
+    chown root:root /var/spool/postfix/pid && chmod 755 /var/spool/postfix/pid && \
+    chown root:postdrop /var/spool/postfix/public && chmod 710 /var/spool/postfix/public && \
+    chown root:postdrop /var/spool/postfix/maildrop && chmod 730 /var/spool/postfix/maildrop && \
+    chown root:root /var/spool/postfix/etc && chmod 755 /var/spool/postfix/etc && \
+    chown root:root /var/spool/postfix/lib && chmod 755 /var/spool/postfix/lib && \
+    chown root:root /var/spool/postfix/usr && chmod 755 /var/spool/postfix/usr && \
+    mkdir -p /var/spool/postfix/opendkim && chown opendkim:postfix /var/spool/postfix/opendkim && chmod 750 /var/spool/postfix/opendkim
 
 EXPOSE 25
 
