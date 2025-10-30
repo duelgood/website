@@ -18,7 +18,6 @@ RUN mkdir -p /etc/opendkim/keys/duelgood.org && \
     chmod 700 /etc/opendkim/keys && \
     chmod +x /entrypoint.sh && \
     echo "duelgood.org" > /etc/mailname && \
-    postconf compatibility_level=3.6 && \
     # Set up OpenDKIM directory
     mkdir -p /var/spool/postfix/opendkim && \
     chown opendkim:postfix /var/spool/postfix/opendkim && \

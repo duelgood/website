@@ -1,19 +1,20 @@
+# Basic settings
 myhostname = mail.duelgood.org
-# myorigin = /etc/mailname  # REMOVE THIS LINE
-mydestination = $myhostname, localhost.$mydomain, localhost, duelgood.org
-mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128
+mydomain = duelgood.org
+mydestination = $myhostname, localhost.$mydomain, localhost
 relayhost = 
 inet_interfaces = all
-inet_protocols = all
 
-# Basic mail settings
+# Security
+mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128
+
+# Mail delivery
 home_mailbox = Maildir/
 alias_maps = hash:/etc/aliases
 alias_database = hash:/etc/aliases
 
-# Log to stdout
-maillog_file = /dev/stdout
+# Compatibility
+compatibility_level = 3.6
 
-# Comment out DKIM for now until basic setup works
-# milter_default_action = accept
-# milter_protocol = 6
+# Logging
+maillog_file = /dev/stdout
