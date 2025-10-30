@@ -1,29 +1,19 @@
-FROM debian:bookworm-slim
+FROM docker.io/mwader/postfix-relay:latest
 
+# Install OpenDKIM
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-        postfix opendkim opendkim-tools ca-certificates rsyslog netcat-openbsd && \
+    apt-get install -y opendkim opendkim-tools && \
     rm -rf /var/lib/apt/lists/*
 
 # Copy configurations
-COPY postfix/main.cf /etc/postfix/main.cf
-COPY postfix/master.cf /etc/postfix/master.cf
 COPY opendkim/opendkim.conf /etc/opendkim.conf
 COPY opendkim/default /etc/default/opendkim
 COPY entrypoint.sh /entrypoint.sh
 
-# Fix Postfix directory permissions
 RUN mkdir -p /etc/opendkim/keys/duelgood.org && \
     chown -R opendkim:opendkim /etc/opendkim && \
     chmod 700 /etc/opendkim/keys && \
-    chmod +x /entrypoint.sh && \
-    echo "duelgood.org" > /etc/mailname && \
-    echo "127.0.0.1 mail.duelgood.org duelgood.org" >> /etc/hosts
-
-# Recreate Postfix spool directory with correct permissions
-RUN rm -rf /var/spool/postfix && \
-    mkdir -p /var/spool/postfix && \
-    postfix set-permissions
+    chmod +x /entrypoint.sh
 
 # Create OpenDKIM directory
 RUN mkdir -p /var/spool/postfix/opendkim && \
