@@ -1,9 +1,8 @@
-FROM docker.io/mwader/postfix-relay:latest
+FROM docker.io/bitnami/postfix:latest
 
-# Install OpenDKIM
-RUN apt-get update && \
-    apt-get install -y opendkim opendkim-tools && \
-    rm -rf /var/lib/apt/lists/*
+# Install OpenDKIN
+USER root
+RUN install_packages opendkim opendkim-tools
 
 # Copy configurations
 COPY opendkim/opendkim.conf /etc/opendkim.conf
