@@ -22,7 +22,7 @@ RUN mkdir -p /etc/opendkim/keys/duelgood.org /var/spool/postfix && \
     chown root:root /var/spool/postfix && chmod 755 /var/spool/postfix && \
     chown root:root /var/spool/postfix/pid && chmod 755 /var/spool/postfix/pid && \
     chown root:postdrop /var/spool/postfix/public && chmod 710 /var/spool/postfix/public && \
-    chown root:postdrop /var/spool/postfix/maildrop && chmod 730 /var/spool/postfix/maildrop && \
+    chown root:postfix /var/spool/postfix/maildrop && chmod 730 /var/spool/postfix/maildrop && \
     chown root:root /var/spool/postfix/etc && chmod 755 /var/spool/postfix/etc && \
     chown root:root /var/spool/postfix/lib && chmod 755 /var/spool/postfix/lib && \
     chown root:root /var/spool/postfix/usr && chmod 755 /var/spool/postfix/usr && \
