@@ -28,17 +28,7 @@ podman-backend:
 	podman push $(BACKEND_IMAGE):latest
 	podman push $(BACKEND_IMAGE):$(TIMESTAMP)
 
-podman-mail:
-	podman build \
-    --platform linux/amd64 \
-    --tag $(MAIL_IMAGE):latest \
-    --tag $(MAIL_IMAGE):$(TIMESTAMP) \
-    -f mail/Containerfile mail
-
-	podman push $(MAIL_IMAGE):latest
-	podman push $(MAIL_IMAGE):$(TIMESTAMP)
-
-container: podman-web podman-backend podman-mail
+container: podman-web podman-backend
 
 scan:
 	gitleaks detect --report-format json --report-path gitleaks-report.json

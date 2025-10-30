@@ -28,8 +28,6 @@ services:
     secrets:
       - stripe_secret_key
       - stripe_webhook_secret
-      - smtp_username
-      - smtp_password
 
   redis:
     image: docker.io/library/redis:latest
@@ -45,17 +43,6 @@ services:
       retries: 5
       start_period: 10s
 
-  mail:
-    image: ghcr.io/duelgood/mail:latest
-    container_name: duelgood-mail
-    network_mode: host
-    restart: unless-stopped
-    secrets:
-      - source: smtp_username
-        target: /run/secrets/smtp_username
-      - source: smtp_password
-        target: /run/secrets/smtp_password
-
 volumes:
   nginx-logs:
     driver: local
@@ -66,8 +53,4 @@ secrets:
   stripe_secret_key:
     external: true
   stripe_webhook_secret:
-    external: true
-  smtp_username:
-    external: true
-  smtp_password:
     external: true

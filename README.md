@@ -19,15 +19,6 @@ sudo chmod 644 "/etc/ssl/cloudflare/cert.pem"
 sudo chmod 600 "/etc/ssl/cloudflare/key.pem"
 ```
 
-### Gmail
-
-Go to Google Account settings, enable 2FA, generate and save app password, then run
-
-```sh
-export SMTP_USERNAME=your-email@gmail.com
-export SMTP_PASSWORD=your-16-character-app-password
-```
-
 ### GitHub
 
 Go to GitHub and create a [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) with permission
@@ -68,12 +59,6 @@ podman login ghcr.io -p=$GITHUB_GHCR_PAT
 # Create secrets
 echo -n "$STRIPE_SECRET_KEY" | podman secret create stripe_secret_key -
 echo -n "$STRIPE_WEBHOOK_SECRET" | podman secret create stripe_webhook_secret -
-echo -n "$SMTP_USERNAME" | podman secret create smtp_username -
-echo -n "$SMTP_PASSWORD" | podman secret create smtp_password -
-
-# Create email configuration
-sudo mkdir -p /opt/duelgood/postfix
-echo "$SMTP_USERNAME" | sudo tee /opt/duelgood/postfix/forward_to_email
 ```
 
 ## Deploy
@@ -84,6 +69,6 @@ To apply any new changes and start the container, run the following commands.
 cd "/opt/duelgood" || exit 1
 podman-compose -p duelgood pull
 podman-compose down --volumes --remove-orphans || true
-podman rm -f duelgood-redis duelgood-mail duelgood-backend duelgood-web 2>/dev/null || true
+podman rm -f duelgood-redis duelgood-backend duelgood-frontend 2>/dev/null || true
 podman-compose --verbose -p duelgood up -d
 ```

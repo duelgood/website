@@ -4,6 +4,8 @@ from email.mime.multipart import MIMEMultipart
 import logging
 logger = logging.getLogger(__name__)
 
+# rewrite this to use SendGrid free tier instead
+
 def send_receipt_email(to_email, donor_name, amount_dollars, causes):
     """Send a thank-you email to the donor."""
     try:

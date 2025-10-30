@@ -1,4 +1,0 @@
-SOCKET="local:/var/spool/postfix/opendkim/opendkim.sock"
-USER=opendkim
-GROUP=opendkim
-PIDFILE=/var/run/opendkim/opendkim.pid
