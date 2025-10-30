@@ -55,4 +55,9 @@ postfix check
 
 echo "Starting Postfix in foreground..."
 # Use exec to replace the shell process with Postfix
-exec postfix start-fg
+postfix start-fg
+
+# If we get here, Postfix crashed
+echo "=== POSTFIX CRASHED - EXIT CODE: $? ==="
+sleep 5  # Give time to see the error
+exit 1
