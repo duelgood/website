@@ -44,7 +44,7 @@
                         <label for="everytown_for_gun_safety_amount"><img src="/static/wordmarks/everytown_for_gun_safety.png" alt="Everytown for Gun Safety wordmark"></label>
                         <p><a href="https://www.everytown.org/">Everytown for Gun Safety</a> works to prevent gun violence through advocacy for gun safety legislation, 
                             public education campaigns, and research on gun violence prevention.</p>
-                        <input type="number" id="everytown_for_gun_safety_amount" name="everytown_for_gun_safety_amount" min="0" step="1" value="0" autocomplete="off">
+                        <input type="number" id="everytown_for_gun_safety_amount" name="everytown_for_gun_safety_amount" min="0" step="1" value="0" autocomplete="do-not-autofill">
                     </div>
                     <div>
                         <label for="nra_foundation_amount"><img src="/static/wordmarks/nra_foundation.png" alt="NRA Foundation wordmark"></label>
