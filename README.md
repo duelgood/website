@@ -16,7 +16,7 @@ Then, run
 
 ```sh
 sudo chmod 644 "/etc/ssl/cloudflare/cert.pem"
-sudo chmod 600 "/etc/ssl/cloudflare/key.pem"
+sudo chmod 644 "/etc/ssl/cloudflare/key.pem"
 ```
 
 ### GitHub
