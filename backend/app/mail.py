@@ -1,10 +1,12 @@
-import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
+import os
+import requests
 import logging
 logger = logging.getLogger(__name__)
 
 # rewrite this to use SendGrid free tier instead
+
+from_email = "noreply@duelgood.org"
+
 
 def send_receipt_email(to_email, donor_name, amount_dollars, causes):
     """Send a thank-you email to the donor."""
@@ -30,16 +32,15 @@ def send_receipt_email(to_email, donor_name, amount_dollars, causes):
         body = f"""\
 Hi {donor_name},
 
-Thank you for your generous donation of ${amount_dollars:.2f} to DuelGood!
+Thank you for your generous donation of ${amount_dollars:.2f}!
 
-Your contributions support the following causes:
+You contributed to the following causes:
 {causes_str}
 
 We appreciate your support in making a positive impact.
 
 Warm regards,
 DuelGood
-https://duelgood.org
 """
 
         msg = MIMEMultipart()
@@ -57,3 +58,44 @@ https://duelgood.org
         logger.info(f"Receipt email sent to {to_email}")
     except Exception as e:
         logger.error(f"Failed to send receipt email to {to_email}: {e}")
+
+'''
+import os
+import requests
+import logging
+logger = logging.getLogger(__name__)
+
+def send_receipt_email(to_email, donor_name, amount_dollars, causes, api_key):
+    try:
+        causes_str = "\n".join(
+                [f"- {c.replace('_amount', '').replace('_', ' ').title()}: ${float(v):.2f}" 
+                for c, v in causes.items() if float(v) > 0]
+            ) or "(none listed)"
+
+        requests.post(
+            "https://api.mailgun.net/v3/duelgood.org/messages",
+            auth=("api", api_key),
+            data={"from": from_email,
+                "to": to_email,
+                "subject": "DuelGood Donation Receipt",
+                "text": f"""\
+Hi {donor_name},
+
+Thank you for your generous donation of ${amount_dollars:.2f}!
+
+You contributed to the following causes:
+{causes_str}
+
+We appreciate your support in making a positive impact.
+
+Warm regards,
+DuelGood
+"""
+            })
+        
+        logger.info(f"Receipt email sent to {to_email}")
+
+    except:
+        logger.error(f"Failed to send receipt email to {to_email}: {e}")
+
+'''

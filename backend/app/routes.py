@@ -17,6 +17,7 @@ def read_secret(name):
 
 stripe.api_key = read_secret("stripe_secret_key")
 endpoint_secret = read_secret("stripe_webhook_secret")
+mailgun_api_key = read_secret("mg_sending_api_key")
 
 CAUSES_KEY = "causes"  # Hash: cause -> total amount
 STATES_KEY = "states"  # Hash: state -> total amount
@@ -184,9 +185,7 @@ def stripe_webhook():
         donor_name = metadata.get("legal_name", "Anonymous")
         causes = {k: v for k, v in metadata.items() if k.endswith("_amount")}
         if donor_email:
-            send_receipt_email(donor_email, donor_name, amount_dollars, causes)
-
-        print("donor_email, donor_name, amount_dollars, causes") # DEBUG, remove when possible
+            send_receipt_email(donor_email, donor_name, amount_dollars, causes, mailgun_api_key)
     
     return jsonify({"status": "success"}), 200
 

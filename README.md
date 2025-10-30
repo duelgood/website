@@ -6,7 +6,7 @@ Visitors are encouraged to suggest accessibility, efficiency, and language impro
 
 ## Setup
 
-### Certificate Bundles
+### Cloudflare
 
 To configure a fresh Arch instance, copy the Cloudflare
 origin key into `/etc/ssl/cloudflare/key.pem` and the
@@ -37,6 +37,14 @@ export STRIPE_SECRET_KEY=sk_XXXX
 export STRIPE_WEBHOOK_SECRET=whsec_XXXX
 ```
 
+### Mailgun
+
+Obtain the Mailgun
+
+```sh
+export MG_SENDING_API_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+```
+
 ### Configuration
 
 Then, run
@@ -59,6 +67,7 @@ podman login ghcr.io -p=$GITHUB_GHCR_PAT
 # Create secrets
 echo -n "$STRIPE_SECRET_KEY" | podman secret create stripe_secret_key -
 echo -n "$STRIPE_WEBHOOK_SECRET" | podman secret create stripe_webhook_secret -
+echo -n "$MG_SENDING_API_KEY" | podman secret create mg_sending_api_key -
 ```
 
 ## Deploy
