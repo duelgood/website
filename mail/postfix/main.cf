@@ -1,27 +1,19 @@
 myhostname = mail.duelgood.org
-myorigin = /etc/mailname
-mydestination = localhost, duelgood.org
+# myorigin = /etc/mailname  # REMOVE THIS LINE
+mydestination = $myhostname, localhost.$mydomain, localhost, duelgood.org
+mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128
 relayhost = 
 inet_interfaces = all
 inet_protocols = all
-
-# smtpd_tls_cert_file = /etc/ssl/cloudflare/cert.pem
-# smtpd_tls_key_file = /etc/ssl/cloudflare/key.pem
-# smtpd_use_tls = yes
-# smtp_tls_security_level = may
-
-# DKIM integration
-milter_default_action = accept
-milter_protocol = 6
-# smtpd_milters = unix:/var/spool/postfix/opendkim/opendkim.sock
-# non_smtpd_milters = unix:/var/spool/postfix/opendkim/opendkim.sock
 
 # Basic mail settings
 home_mailbox = Maildir/
 alias_maps = hash:/etc/aliases
 alias_database = hash:/etc/aliases
 
-# Adjust if you want logs verbose
-# debug_peer_list = 127.0.0.1
-
+# Log to stdout
 maillog_file = /dev/stdout
+
+# Comment out DKIM for now until basic setup works
+# milter_default_action = accept
+# milter_protocol = 6
