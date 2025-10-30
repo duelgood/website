@@ -1,4 +1,4 @@
-# ![DuelGood Logo](web/static/logo.png)
+# ![DuelGood Logo](frontend/static/logo.png)
 
 This repository is public because DuelGood believes that open source builds trust, makes it easier to identify vulnerabilities, and invites community collaboration.
 

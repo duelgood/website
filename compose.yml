@@ -1,8 +1,8 @@
 services:
-  web:
-    image: ghcr.io/duelgood/web:latest
+  frontend:
+    image: ghcr.io/duelgood/frontend:latest
     network_mode: host
-    container_name: duelgood-web
+    container_name: duelgood-frontend
     restart: unless-stopped
     volumes:
       - /etc/ssl/cloudflare:/etc/ssl/cloudflare:ro
