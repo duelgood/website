@@ -20,16 +20,17 @@ chown opendkim:postfix /var/spool/postfix/opendkim
 chmod 750 /var/spool/postfix/opendkim
 echo "Postfix OpenDKIM directory setup complete."
 
-echo "Initializing Postfix..."
-# Removed redirection to show output; errors will be visible
-service postfix start || true
-postfix stop 2>&1 || true
-echo "Postfix initialization complete."
+echo "Setting compatibility level..."
+postconf compatibility_level=3.6
 
-echo "Starting OpenDKIM as opendkim user..."
+echo "Checking Postfix configuration..."
+postfix check
+
+echo "Starting OpenDKIM..."
 runuser -u opendkim -- /usr/sbin/opendkim -f -x /etc/opendkim.conf &
 OPENDKIM_PID=$!
-sleep 2  # Give it time to start/fail
+sleep 2
+
 if kill -0 $OPENDKIM_PID 2>/dev/null; then
     echo "OpenDKIM started successfully (PID: $OPENDKIM_PID)."
 else
@@ -44,8 +45,5 @@ else
     exit 1
 fi
 
-echo "Checking Postfix config..."
-postfix check
-service postfix start
-
-while true; do sleep 30; done
+echo "Starting Postfix..."
+exec postfix start-fg
