@@ -28,6 +28,7 @@ services:
     secrets:
       - stripe_secret_key
       - stripe_webhook_secret
+      - mg_sending_api_key
 
   redis:
     image: docker.io/library/redis:latest
@@ -53,4 +54,6 @@ secrets:
   stripe_secret_key:
     external: true
   stripe_webhook_secret:
+    external: true
+  mg_sending_api_key:
     external: true
