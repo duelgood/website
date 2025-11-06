@@ -55,8 +55,6 @@ Thank you for your donation! You contributed to the following causes:
 
 Please retain this email as a receipt for your donation. 
 
-We appreciate your support in making a positive impact.
-
 Warm regards,
 DuelGood
 
