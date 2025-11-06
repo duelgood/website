@@ -39,7 +39,7 @@ export STRIPE_WEBHOOK_SECRET=whsec_XXXX
 
 ### Mailgun
 
-Obtain the Mailgun
+Obtain the Mailgun sending API key, and export as
 
 ```sh
 export MG_SENDING_API_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX

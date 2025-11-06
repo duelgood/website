@@ -148,6 +148,7 @@ def get_stats():
         nra = causes.get("nra_foundation_amount", 0)
         tp = causes.get("trevor_project_amount", 0)
         frc = causes.get("family_research_council_amount", 0)
+        # This calculation is incorrect, it must be calculated on a per month basis
         givewell = 2 * (min(pp, fotf) + min(eg, nra) + min(tp, frc))
         stats["givewell"] = givewell
         
@@ -290,7 +291,6 @@ def create_or_update_donation():
 def get_health():
     """Health check endpoint"""
     try:
-        # Check Redis connection
         current_app.redis_client.ping()
         redis_status = "ok"
     except Exception as e:
