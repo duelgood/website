@@ -33,9 +33,9 @@ def send_receipt_email(to_email, donor_name, amount_dollars, donation_dt, causes
                 for c, v in causes.items() if float(v) > 0]
             ) or "(none listed)"
         """
-        
+
         causes_str = "\n".join(
-                [f"- {causes_dict[c]}: ${float(v):.2f}" for c, v in causes.items if float(v) > 0]
+                [f"- {causes_dict[c]}: ${float(v):.2f}" for c, v in causes.items() if float(v) > 0]
             ) or "None listed"
         
         donation_date_str = _format_donation_date(donation_dt)
