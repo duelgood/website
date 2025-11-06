@@ -3,6 +3,7 @@ import os
 import stripe
 import logging
 import json
+import datetime
 from .mail import send_receipt_email
 
 logger = logging.getLogger(__name__)
@@ -154,6 +155,20 @@ def get_stats():
     except Exception as e:
         logger.error(f"Error getting stats: {e}")
         return jsonify({"error": "Failed to fetch stats"}), 500
+    
+def _get_donation_datetime(event):
+    obj = event.get("data", {}).get("object", {}) or {}
+    ts = obj.get("created")
+    if not ts:
+        charges = obj.get("charges", {}).get("data", [])
+        if charges and charges[0].get("created"):
+            ts = charges[0]["created"]
+    if ts:
+        try:
+            return datetime.fromtimestamp(int(ts), tz=timezone.utc)
+        except Exception:
+            pass
+    return None
 
 @bp.route("/api/webhook", methods=["POST"])
 def stripe_webhook():
@@ -183,9 +198,10 @@ def stripe_webhook():
         # Send receipt for donation
         donor_email = metadata.get("email")
         donor_name = metadata.get("legal_name", "Anonymous")
+        donation_dt = _get_donation_datetime(event)
         causes = {k: v for k, v in metadata.items() if k.endswith("_amount")}
         if donor_email:
-            send_receipt_email(donor_email, donor_name, amount_dollars, causes, mailgun_api_key)
+            send_receipt_email(donor_email, donor_name, amount_dollars, donation_dt, causes, mailgun_api_key)
     
     return jsonify({"status": "success"}), 200
 
