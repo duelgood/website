@@ -10,14 +10,14 @@ causes = {
 }
 
 def _format_donation_date(donation_dt):
-    if donation_date is None:
+    if donation_dt is None:
         return "Unknown date"
     # donation_date may be a datetime in UTC; present it in ISO or human form:
     try:
         # show in UTC with readable format, change to local zone if desired
-        return donation_date.astimezone(timezone.utc).strftime("%B %-d, %Y %H:%M %Z")
+        return donation_dt.astimezone(timezone.utc).strftime("%B %-d, %Y %H:%M %Z")
     except Exception:
-        return str(donation_date)
+        return str(donation_dt)
 
 def send_receipt_email(to_email, donor_name, amount_dollars, donation_dt, causes, api_key):
     try:
