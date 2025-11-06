@@ -165,7 +165,7 @@ def _get_donation_datetime(event):
             ts = charges[0]["created"]
     if ts:
         try:
-            return datetime.fromtimestamp(int(ts), tz=datetime.timezone.utc)
+            return datetime.datetime.fromtimestamp(int(ts), tz=datetime.timezone.utc)
         except Exception:
             pass
     return None
