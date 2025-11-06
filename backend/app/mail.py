@@ -5,7 +5,7 @@ from datetime import timezone
 logger = logging.getLogger(__name__)
 
 from_email = "noreply@duelgood.org"
-causes = {
+causes_dict = {
     "planned_parenthood_amount": "Planned Parenthood",
     "focus_on_the_family_amount": "Focus on the Family",
     "everytown_for_gun_safety_amount": "Everytown for Gun Safety",
@@ -26,9 +26,16 @@ def _format_donation_date(donation_dt):
         return str(donation_dt)
 
 def send_receipt_email(to_email, donor_name, amount_dollars, donation_dt, causes, api_key):
-    try:        
+    try:
+        """
         causes_str = "\n".join(
-                [f"{causes[c]}: ${float(v):.2f}" for c, v in causes.items if float(v) > 0]
+                [f"- {c.replace('_amount', '').replace('_', ' ').title()}: ${float(v):.2f}" 
+                for c, v in causes.items() if float(v) > 0]
+            ) or "(none listed)"
+        """
+        
+        causes_str = "\n".join(
+                [f"- {causes_dict[c]}: ${float(v):.2f}" for c, v in causes.items if float(v) > 0]
             ) or "None listed"
         
         donation_date_str = _format_donation_date(donation_dt)
