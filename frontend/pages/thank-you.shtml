@@ -1,12 +1,17 @@
 <!--#include virtual="/includes/header" -->
 <script src="static/js/return.js" defer></script>
 <main>
-    <h1>Thank you for your donation!</h1>
+    <h1>Thank you!</h1>
 
     <p>Your donation is currently processing. 
         Once that's done, you'll receive an 
         email that will serve as your tax 
-        receipt. 
+        receipt. If the payment processes 
+        and you haven't received an email 
+        within a week, reach out at 
+        <a href="mailto:contact@duelgood.org">contact@duelgood.org</a>
+        and we'll work with you to resolve the 
+        issue. 
     </p>
 </main>
 <!--#include virtual="/includes/footer" -->

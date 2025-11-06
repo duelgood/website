@@ -61,7 +61,7 @@ Warm regards,
 DuelGood
 
 Your receipt: 
-DuelGood is a 501(c)(3) non-profit corporation. We are registered as DuelGood Incorporated, FEIN 39-4197138. No goods or services were provided to you in return for your donation. The full amount of your  ${amount_dollars:.2f} contribution on {donation_date_str} is deductible for U.S. federal income tax purposes to the extent permitted by law. This email can be used as documentation of this fact.
+DuelGood is a 501(c)(3) non-profit corporation. We are registered as DuelGood Incorporated, FEIN 39-4197138. No goods or services were provided to you in return for your donation. The full amount of your ${amount_dollars:.2f} contribution on {donation_date_str} is deductible for U.S. federal income tax purposes to the extent permitted by law. This email can be used as documentation of this fact.
 """
             })
         
