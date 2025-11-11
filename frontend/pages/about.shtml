@@ -1,44 +1,30 @@
 <!--# include virtual="/includes/header" -->
 <main>
-  <h1>About</h1>
-  <hr />
-
-  <h2>Mission</h2>
+  <h1>About DuelGood</h1>
+  <hr>
 
   <p>
-    DuelGood's mission is to reduce inefficiency and social division by pairing
-    donations made to opposite sides of contested public issues and using
-    the opposing funds to save lives.
+    DuelGood redirects donations to opposing political causes into life-saving charities instead, 
+    so donors can neutralize their opponent's funding while supporting high-impact work.
   </p>
 
-  <h2>How It Works</h2>
+  <p> 
+    When you donate to a cause through DuelGood, your donation is paired with an equal donation to the opposite side. 
+    Those paired amounts are redirected to 
+    <a href="https://www.givewell.org/charities/top-charities"> GiveWell's Top Charities Fund</a>, 
+    which supports extremely cost-effective programs that save lives.
+    If one side donates more than the other, any unpaired money still goes to the original intended organization.
+  </p>
 
   <p>
-    Paired amounts go to
-    <a href="https://www.givewell.org/charities/top-charities">
-      GiveWell's Top Charities Fund</a
-    >, high-impact and cost-effective programs that save or improve lives the
-    most per dollar. GiveWell is a highly transparent, reputable, and
-    research-backed organization whose selected charities are the gold standard
-    for impact.
-    <a href="https://www.givewell.org/about">More about GiveWell</a>.
+    For example, imagine Alice donates $100 to Planned Parenthood, while Bob donates $100 to Focus on the Family. Normally, 
+    these donations would fund opposing advocacy efforts that largely cancel each other out in the political arena.
+    Through DuelGood, that $200 is redirected to GiveWell's Top Charities instead and will provide malaria prevention for 
+    approximately 80 children, or vitamin A supplementation that could save 2-3 children's lives. Both Alice and Bob get what 
+    they actually want most: stopping $100 from going to a cause they oppose. And instead of funding a political stalemate, 
+    their donations save lives.
   </p>
-  <p>
-    The remainder after subtracting the paired amount will still go to its
-    original organization.
-  </p>
-  <p>
-    For example, say Alice is pro-choice and Bob is pro-life. Alice donates ten
-    dollars to Planned Parenthood, while Bob donates ten dollars to Focus on the
-    Family. These organizations then work against each other, creating social
-    division and waste.
-  </p>
-  <p>
-    If Alice and Bob had given through DuelGood, then the ten dollars to Planned
-    Parenthood and the ten dollars to Focus on the Family would cancel. GiveWell
-    would receive twenty dollars to save lives, and both Alice and Bob would
-    have advanced their goals by eliminating funding to the opposing cause.
-  </p>
+
   <p>
     Our operations are funded by donors who choose to support us. 100% of all
     other donations (minus standard bank and credit card fees) go to charity or
