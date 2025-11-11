@@ -139,7 +139,7 @@
             </fieldset>
 
 
-            <button type="submit" class="donate-btn">Submit Donation (Test Mode)</button>
+            <button type="submit" class="donate-btn">Submit Donation</button>
     </form>
 </main>
 <!--#include virtual="/includes/footer" -->
