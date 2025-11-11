@@ -1,6 +1,6 @@
 const stripe = Stripe(
-  "pk_test_51S5FMtPaAbpNU2MW6IFPfy7uuVlvMcfDkJmI6xpUEd8AC8VvkwwO87PGhUlfUkPEmio4i3LnDgygBkpl5X68hCSj00SD13F37u"
-);
+  "pk_live_51S2e2ePdrCPYsnSa5pfgZj23AdH7aXMna8Z3b5zdQzUnsbiAuoLpzrPcmtyY5LiivcoauwSOM56FwCd2H1CSLfAv00NgXKsmNj"
+); // TO-DO: don't hardcode this
 
 let currentPaymentIntentId = null;
 let elements = null;
