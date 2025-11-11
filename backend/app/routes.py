@@ -4,6 +4,7 @@ import stripe
 import logging
 import json
 import datetime
+from collections import defaultdict
 from .mail import send_receipt_email
 
 logger = logging.getLogger(__name__)
@@ -23,6 +24,7 @@ mailgun_api_key = read_secret("mg_sending_api_key")
 CAUSES_KEY = "causes"  # Hash: cause -> total amount
 STATES_KEY = "states"  # Hash: state -> total amount
 DONORS_KEY = "donors"  # List: JSON strings of {"name": ..., "amount": ..., "email": ...}
+MONTHLY_CAUSES_KEY = "monthly_causes"  # Hash: "YYYY-MM:cause" -> amount
 
 bp = Blueprint("api", __name__)
 
@@ -32,19 +34,22 @@ def get_cached_stats():
         causes = current_app.redis_client.hgetall(CAUSES_KEY) or {}
         states = current_app.redis_client.hgetall(STATES_KEY) or {}
         donors_raw = current_app.redis_client.lrange(DONORS_KEY, 0, -1) or []
-        donors = [json.loads(d) for d in donors_raw]  # List of dicts
+        monthly_causes = current_app.redis_client.hgetall(MONTHLY_CAUSES_KEY) or {}
+        donors = [json.loads(d) for d in donors_raw]
+        
         if not causes and not states and not donors:
             logger.warning("Redis cache empty, rebuilding stats from Stripe")
             return rebuild_stats_from_stripe()
+        
         return {
             "causes": {k: float(v) for k, v in causes.items()},
             "states": {k: float(v["parsedValue"]) if isinstance(v, dict) else float(v) for k, v in states.items()},
-            "donors": donors
+            "donors": donors,
+            "monthly_causes": {k: float(v) for k, v in monthly_causes.items()}
         }
     except Exception as e:
         logger.warning(f"Redis error for stats: {e}")
     
-    # Rebuild from Stripe
     return rebuild_stats_from_stripe()
 
 def rebuild_stats_from_stripe():
@@ -54,27 +59,38 @@ def rebuild_stats_from_stripe():
         causes = {}
         states = {}
         donors = []
+        monthly_causes = defaultdict(float)
         starting_after = None
     
-        # We are not paginating correctly here
-        
         while True:
-            payment_intents = stripe.PaymentIntent.search(
-                query="status:'succeeded'",
-                limit=100,
-            )
+            params = {
+                "query": "status:'succeeded'",
+                "limit": 100,
+            }
+            if starting_after:
+                params["starting_after"] = starting_after
+                
+            payment_intents = stripe.PaymentIntent.search(**params)
+            
             for pi in payment_intents.data:
                 amount_dollars = pi.amount / 100
                 total += amount_dollars
                 metadata = pi.metadata
                 
-                # Aggregate causes
+                # Get the month for this payment
+                created_dt = datetime.datetime.fromtimestamp(pi.created, tz=datetime.timezone.utc)
+                month_key = created_dt.strftime("%Y-%m")
+                
+                # Aggregate causes (total and monthly)
                 for cause in ['planned_parenthood_amount', 'focus_on_the_family_amount', 
                                 'everytown_for_gun_safety_amount', 'nra_foundation_amount',
                                 'trevor_project_amount', 'family_research_council_amount',
                                 'duelgood_amount']:
                     if cause in metadata:
-                        causes[cause] = causes.get(cause, 0) + float(metadata[cause])
+                        cause_amount = float(metadata[cause])
+                        causes[cause] = causes.get(cause, 0) + cause_amount
+                        monthly_key = f"{month_key}:{cause}"
+                        monthly_causes[monthly_key] += cause_amount
                 
                 # Aggregate states
                 if 'state' in metadata:
@@ -94,7 +110,8 @@ def rebuild_stats_from_stripe():
         # Cache in Redis
         current_app.redis_client.hset(CAUSES_KEY, mapping={k: str(v) for k, v in causes.items()})
         current_app.redis_client.hset(STATES_KEY, mapping={k: str(v) for k, v in states.items()})
-        current_app.redis_client.delete(DONORS_KEY)  # Clear list
+        current_app.redis_client.hset(MONTHLY_CAUSES_KEY, mapping={k: str(v) for k, v in monthly_causes.items()})
+        current_app.redis_client.delete(DONORS_KEY)
         for d in reversed(donors):
             current_app.redis_client.lpush(DONORS_KEY, json.dumps(d))
         current_app.redis_client.ltrim(DONORS_KEY, 0, 99)
@@ -103,22 +120,30 @@ def rebuild_stats_from_stripe():
             "total": total,
             "causes": causes,
             "states": states,
-            "donors": donors
+            "donors": donors,
+            "monthly_causes": dict(monthly_causes)
         }
     except Exception as e:
         logger.error(f"Error rebuilding stats: {e}")
         raise
 
-def update_cached_stats(metadata, amount_dollars):
+def update_cached_stats(metadata, amount_dollars, created_timestamp):
     """Update caches with new payment metadata"""
-    try:        
-        # Update causes
+    try:
+        # Get the month for this payment
+        created_dt = datetime.datetime.fromtimestamp(created_timestamp, tz=datetime.timezone.utc)
+        month_key = created_dt.strftime("%Y-%m")
+        
+        # Update causes (total and monthly)
         for cause in ['planned_parenthood_amount', 'focus_on_the_family_amount', 
                       'everytown_for_gun_safety_amount', 'nra_foundation_amount',
                       'trevor_project_amount', 'family_research_council_amount',
                       'duelgood_amount']:
             if cause in metadata:
-                current_app.redis_client.hincrbyfloat(CAUSES_KEY, cause, float(metadata[cause]))
+                cause_amount = float(metadata[cause])
+                current_app.redis_client.hincrbyfloat(CAUSES_KEY, cause, cause_amount)
+                monthly_key = f"{month_key}:{cause}"
+                current_app.redis_client.hincrbyfloat(MONTHLY_CAUSES_KEY, monthly_key, cause_amount)
         
         # Update states
         if 'state' in metadata:
@@ -131,26 +156,44 @@ def update_cached_stats(metadata, amount_dollars):
             "email": metadata.get('email', '')
         }
         current_app.redis_client.lpush(DONORS_KEY, json.dumps(donor))
-        # Trim list to last 100
         current_app.redis_client.ltrim(DONORS_KEY, 0, 99)
     except Exception as e:
         logger.error(f"Failed to update caches: {e}")
+
+def calculate_givewell(monthly_causes):
+    """Calculate GiveWell amount based on monthly matching"""
+    # Group by month
+    months = defaultdict(dict)
+    for key, amount in monthly_causes.items():
+        month, cause = key.split(':', 1)
+        months[month][cause] = amount
+    
+    # Calculate matching for each month
+    givewell = 0
+    for month, causes in months.items():
+        pp = causes.get('planned_parenthood_amount', 0)
+        fotf = causes.get('focus_on_the_family_amount', 0)
+        eg = causes.get('everytown_for_gun_safety_amount', 0)
+        nra = causes.get('nra_foundation_amount', 0)
+        tp = causes.get('trevor_project_amount', 0)
+        frc = causes.get('family_research_council_amount', 0)
+        
+        month_match = 2 * (min(pp, fotf) + min(eg, nra) + min(tp, frc))
+        givewell += month_match
+    
+    return givewell
     
 @bp.route("/api/stats", methods=["GET"])
 def get_stats():
     try:
         stats = get_cached_stats()
-
-        causes = stats["causes"]
-        pp = causes.get("planned_parenthood_amount", 0)
-        fotf = causes.get("focus_on_the_family_amount", 0)
-        eg = causes.get("everytown_for_gun_safety_amount", 0)
-        nra = causes.get("nra_foundation_amount", 0)
-        tp = causes.get("trevor_project_amount", 0)
-        frc = causes.get("family_research_council_amount", 0)
-        # This calculation is incorrect, it must be calculated on a per month basis
-        givewell = 2 * (min(pp, fotf) + min(eg, nra) + min(tp, frc))
+        
+        # Calculate GiveWell on a per-month basis
+        givewell = calculate_givewell(stats.get("monthly_causes", {}))
         stats["givewell"] = givewell
+        
+        # Remove monthly_causes from response (internal data)
+        stats.pop("monthly_causes", None)
         
         return jsonify(stats), 200
     except Exception as e:
@@ -192,9 +235,10 @@ def stripe_webhook():
         payment_intent = event["data"]["object"]
         amount_dollars = payment_intent["amount"] / 100
         metadata = payment_intent["metadata"]
+        created_timestamp = payment_intent["created"]
         
         logger.info(f"Payment succeeded: {payment_intent['id']}, amount: {amount_dollars}")
-        update_cached_stats(metadata, amount_dollars)
+        update_cached_stats(metadata, amount_dollars, created_timestamp)
 
         # Send receipt for donation
         donor_email = metadata.get("email")
@@ -236,7 +280,6 @@ def create_or_update_donation():
             return jsonify({"error": "Minimum donation is $1"}), 400
         
         # Validate required fields
-
         required = ['email', 'legal_name', 'street_address', 'city', 'state', 'zip']
         for field in required:
             if not data.get(field):
