@@ -153,7 +153,6 @@ def update_cached_stats(metadata, amount_dollars, created_timestamp):
         donor = {
             "name": metadata.get('display_name', 'Anonymous'),
             "amount": amount_dollars,
-            "email": metadata.get('email', '')
         }
         current_app.redis_client.lpush(DONORS_KEY, json.dumps(donor))
         current_app.redis_client.ltrim(DONORS_KEY, 0, 99)
