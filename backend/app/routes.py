@@ -66,6 +66,7 @@ def rebuild_stats_from_stripe():
             params = {
                 "query": "status:'succeeded'",
                 "limit": 100,
+                "expand": ["data.latest_charge.balance_transaction"],
             }
             if starting_after:
                 params["starting_after"] = starting_after
@@ -73,9 +74,13 @@ def rebuild_stats_from_stripe():
             payment_intents = stripe.PaymentIntent.search(**params)
             
             for pi in payment_intents.data:
-                amount_dollars = pi.amount / 100
+                charge = pi.latest_charge
+                amount_dollars = charge.balance_transaction.net / 100
                 total += amount_dollars
                 metadata = pi.metadata
+
+                gross_amount = pi.amount / 100
+                fee_ratio = amount_dollars / gross_amount if gross_amount > 0 else 1
                 
                 # Get the month for this payment
                 created_dt = datetime.datetime.fromtimestamp(pi.created, tz=datetime.timezone.utc)
@@ -87,7 +92,7 @@ def rebuild_stats_from_stripe():
                                 'trevor_project_amount', 'family_research_council_amount',
                                 'duelgood_amount']:
                     if cause in metadata:
-                        cause_amount = float(metadata[cause])
+                        cause_amount = float(metadata[cause]) * fee_ratio
                         causes[cause] = causes.get(cause, 0) + cause_amount
                         monthly_key = f"{month_key}:{cause}"
                         monthly_causes[monthly_key] += cause_amount
@@ -96,7 +101,7 @@ def rebuild_stats_from_stripe():
                 if 'state' in metadata:
                     states[metadata['state']] = states.get(metadata['state'], 0) + amount_dollars
                 
-                # Collect donors (last 100 for simplicity)
+                # Collect donors
                 if len(donors) < 100:
                     donors.append({
                         "name": metadata.get('display_name', 'Anonymous'),
@@ -127,7 +132,7 @@ def rebuild_stats_from_stripe():
         logger.error(f"Error rebuilding stats: {e}")
         raise
 
-def update_cached_stats(metadata, amount_dollars, created_timestamp):
+def update_cached_stats(metadata, amount_dollars, created_timestamp, fee_ratio=1.0):
     """Update caches with new payment metadata"""
     try:
         # Get the month for this payment
@@ -140,7 +145,7 @@ def update_cached_stats(metadata, amount_dollars, created_timestamp):
                       'trevor_project_amount', 'family_research_council_amount',
                       'duelgood_amount']:
             if cause in metadata:
-                cause_amount = float(metadata[cause])
+                cause_amount = float(metadata[cause]) * fee_ratio
                 current_app.redis_client.hincrbyfloat(CAUSES_KEY, cause, cause_amount)
                 monthly_key = f"{month_key}:{cause}"
                 current_app.redis_client.hincrbyfloat(MONTHLY_CAUSES_KEY, monthly_key, cause_amount)
@@ -232,12 +237,26 @@ def stripe_webhook():
     
     if event["type"] == "payment_intent.succeeded":
         payment_intent = event["data"]["object"]
-        amount_dollars = payment_intent["amount"] / 100
         metadata = payment_intent["metadata"]
         created_timestamp = payment_intent["created"]
+        gross_amount = payment_intent["amount"] / 100
+
+        # Fetch the charge with balance_transaction to get net amount
+        try:
+            charge = stripe.Charge.retrieve(
+                payment_intent["latest_charge"],
+                expand=["balance_transaction"]
+            )
+            amount_dollars = charge.balance_transaction.net / 100
+        except Exception as e:
+            logger.warning(f"Could not fetch balance_transaction, using gross amount: {e}")
+            amount_dollars = gross_amount
+        
+        fee_ratio = amount_dollars / gross_amount if gross_amount > 0 else 1
+
         
         logger.info(f"Payment succeeded: {payment_intent['id']}, amount: {amount_dollars}")
-        update_cached_stats(metadata, amount_dollars, created_timestamp)
+        update_cached_stats(metadata, amount_dollars, created_timestamp, fee_ratio)
 
         # Send receipt for donation
         donor_email = metadata.get("email")
