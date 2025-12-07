@@ -15,9 +15,9 @@ def create_app():
     )
     logger = logging.getLogger(__name__)
     
-    redis_host = os.environ.get("REDIS_HOST", "localhost")
+    redis_host = os.environ.get("REDIS_HOST", "127.0.0.1")
     redis_port = int(os.environ.get("REDIS_PORT", 6379))
-    
+
     app.redis_client = redis.Redis(
         host=redis_host,
         port=redis_port,
