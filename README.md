@@ -6,6 +6,14 @@ Visitors are encouraged to suggest accessibility, efficiency, and language impro
 
 ## Setup
 
+### Redis
+
+Set a strong Redis password.
+
+```sh
+export REDIS_PASSWORD=...
+```
+
 ### Cloudflare
 
 To configure a fresh Arch instance, copy the Cloudflare
@@ -68,6 +76,7 @@ podman login ghcr.io -p=$GITHUB_GHCR_PAT
 echo -n "$STRIPE_SECRET_KEY" | podman secret create stripe_secret_key -
 echo -n "$STRIPE_WEBHOOK_SECRET" | podman secret create stripe_webhook_secret -
 echo -n "$MG_SENDING_API_KEY" | podman secret create mg_sending_api_key -
+echo -n "$REDIS_PASSWORD" | podman secret create redis_password -
 ```
 
 ## Deploy

@@ -29,6 +29,7 @@ services:
       - stripe_secret_key
       - stripe_webhook_secret
       - mg_sending_api_key
+      - redis_password
 
   redis:
     image: docker.io/library/redis:latest
@@ -43,6 +44,8 @@ services:
       timeout: 5s
       retries: 5
       start_period: 10s
+    secrets:
+      - redis_password
 
 environment:
   REDIS_HOST: 127.0.0.1
@@ -60,4 +63,6 @@ secrets:
   stripe_webhook_secret:
     external: true
   mg_sending_api_key:
+    external: true
+  redis_password:
     external: true
