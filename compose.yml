@@ -46,6 +46,11 @@ services:
       start_period: 10s
     secrets:
       - redis_password
+    command:
+      - sh
+      - -c
+      - |
+        exec redis-server --requirepass "$(cat /run/secrets/redis_password)"
 
 environment:
   REDIS_HOST: 127.0.0.1

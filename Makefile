@@ -2,8 +2,6 @@ REGISTRY := ghcr.io
 frontend_IMAGE := $(REGISTRY)/duelgood/frontend
 BACKEND_IMAGE := $(REGISTRY)/duelgood/backend
 MAIL_IMAGE := $(REGISTRY)/duelgood/mail
-
-
 TIMESTAMP := $(shell date +%Y%m%d-%H%M%S)
 
 all: git container
@@ -35,7 +33,7 @@ scan:
 
 git:
 	git add .
-	git commit -m "Update $(TIMESTAMP)"
+	git commit -m "$(TIMESTAMP)"
 	git push
 
 login:
