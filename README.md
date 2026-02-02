@@ -84,6 +84,7 @@ echo -n "$REDIS_PASSWORD" | podman secret create redis_password -
 To apply any new changes and start the container, run the following commands.
 
 ```sh
+sudo curl -sSL "https://raw.githubusercontent.com/duelgood/website/refs/heads/main/compose.yml?$(date +%s)" -o /opt/duelgood/compose.yml
 cd "/opt/duelgood" || exit 1
 podman-compose -p duelgood pull
 podman-compose down --volumes --remove-orphans || true
