@@ -129,7 +129,7 @@ def rebuild_stats_from_stripe():
             "monthly_causes": dict(monthly_causes)
         }
     except Exception as e:
-        logger.error(f"Error rebuilding stats: {e}")
+        logger.exception(f"Error rebuilding stats: {e}")
         raise
 
 def update_cached_stats(metadata, amount_dollars, created_timestamp, fee_ratio=1.0):
@@ -162,7 +162,7 @@ def update_cached_stats(metadata, amount_dollars, created_timestamp, fee_ratio=1
         current_app.redis_client.lpush(DONORS_KEY, json.dumps(donor))
         current_app.redis_client.ltrim(DONORS_KEY, 0, 99)
     except Exception as e:
-        logger.error(f"Failed to update caches: {e}")
+        logger.exception(f"Failed to update caches: {e}")
 
 def calculate_givewell(monthly_causes):
     """Calculate GiveWell amount based on monthly matching"""
@@ -201,7 +201,7 @@ def get_stats():
         
         return jsonify(stats), 200
     except Exception as e:
-        logger.error(f"Error getting stats: {e}")
+        logger.exception(f"Error getting stats: {e}")
         return jsonify({"error": "Failed to fetch stats"}), 500
     
 def _get_donation_datetime(event):
@@ -229,10 +229,10 @@ def stripe_webhook():
             payload, sig_header, endpoint_secret
         )
     except ValueError as e:
-        logger.error(f"Invalid payload: {e}")
+        logger.exception(f"Invalid payload: {e}")
         return jsonify({"error": "Invalid payload"}), 400
     except stripe.SignatureVerificationError as e:
-        logger.error(f"Invalid signature: {e}")
+        logger.exception(f"Invalid signature: {e}")
         return jsonify({"error": "Invalid signature"}), 400
     
     if event["type"] == "payment_intent.succeeded":
@@ -345,7 +345,7 @@ def create_or_update_donation():
         }), 200
     
     except Exception as e:
-        logger.error(f"Error creating/udating donation: {e}")
+        logger.exception(f"Error creating/udating donation: {e}")
         return jsonify({"error": "Failed to create or update payment intent"}), 500
 
 @bp.route("/api/health", methods=["GET"])
