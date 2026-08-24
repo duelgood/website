@@ -38,7 +38,7 @@ def get_cached_stats():
         donors = [json.loads(d) for d in donors_raw]
         
         if not causes and not states and not donors:
-            logger.warning("Redis cache empty, rebuilding stats from Stripe")
+            logger.exception("Redis cache empty, rebuilding stats from Stripe")
             return rebuild_stats_from_stripe()
         
         return {
@@ -48,7 +48,7 @@ def get_cached_stats():
             "monthly_causes": {k: float(v) for k, v in monthly_causes.items()}
         }
     except Exception as e:
-        logger.warning(f"Redis error for stats: {e}")
+        logger.exception(f"Redis error for stats: {e}")
     
     return rebuild_stats_from_stripe()
 
@@ -249,7 +249,7 @@ def stripe_webhook():
             )
             amount_dollars = charge.balance_transaction.net / 100
         except Exception as e:
-            logger.warning(f"Could not fetch balance_transaction, using gross amount: {e}")
+            logger.exception(f"Could not fetch balance_transaction, using gross amount: {e}")
             amount_dollars = gross_amount
         
         fee_ratio = amount_dollars / gross_amount if gross_amount > 0 else 1
@@ -355,7 +355,7 @@ def get_health():
         current_app.redis_client.ping()
         redis_status = "ok"
     except Exception as e:
-        logger.warning(f"Redis health check failed: {e}")
+        logger.exception(f"Redis health check failed: {e}")
         redis_status = "error"
     
     return jsonify({
