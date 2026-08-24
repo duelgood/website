@@ -7,10 +7,10 @@ document.addEventListener("DOMContentLoaded", function () {
       const response = await fetch("/api/stats");
       const data = await response.json();
       if (data.givewell !== undefined) {
-        totalElement.textContent = `${data.givewell.toLocaleString()}`;
+        totalElement.textContent = `${(Math.round(data.givewell * 100) / 100).toLocaleString()}`;
         // https://www.givewell.org/how-much-does-it-cost-to-save-a-life
         livesElement.textContent = `${Math.round(
-          data.givewell / 3000
+          data.givewell / 3000 
         ).toLocaleString()}`;
         renderCausesChart(data.causes, data.givewell);
         renderStatesMap(data.states);
