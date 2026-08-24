@@ -77,7 +77,7 @@ def rebuild_stats_from_stripe():
                 charge = pi.latest_charge
                 amount_dollars = charge.balance_transaction.net / 100
                 total += amount_dollars
-                metadata = pi.metadata
+                metadata = pi.metadata.to_dict()
 
                 gross_amount = pi.amount / 100
                 fee_ratio = amount_dollars / gross_amount if gross_amount > 0 else 1
