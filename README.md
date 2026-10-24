@@ -85,9 +85,9 @@ To apply any new changes and start the container, run the following commands.
 
 ```sh
 sudo curl -sSL "https://raw.githubusercontent.com/duelgood/website/refs/heads/main/compose.yml?$(date +%s)" -o /opt/duelgood/compose.yml
-cd "/opt/duelgood" || exit 1
+cd "/opt/duelgood"
 podman-compose -p duelgood pull
-podman-compose down --volumes --remove-orphans || true
-podman rm -f duelgood-redis duelgood-backend duelgood-frontend 2>/dev/null || true
+podman-compose down --volumes --remove-orphans
+podman rm -f duelgood-redis duelgood-backend duelgood-frontend
 podman-compose --verbose -p duelgood up -d
 ```
