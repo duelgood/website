@@ -28,16 +28,17 @@ podman-backend:
 
 container: podman-frontend podman-backend
 
-scan:
-	gitleaks detect --report-format json --report-path gitleaks-report.json
-
 git:
 	git add .
 	git commit -m "$(TIMESTAMP)"
 	git push
 
+publish: git container
+
+scan:
+	gitleaks detect --report-format json --report-path gitleaks-report.json
+
 login:
 	podman login ghcr.io --username $(PODMAN_USERNAME) --password $(GITHUB_GHCR_PAT)
 
-.PHONY: podman-frontend podman-backend podman-mail container scan git
-
+.PHONY: podman-frontend podman-backend container scan git
